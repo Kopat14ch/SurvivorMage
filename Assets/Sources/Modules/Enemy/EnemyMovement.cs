@@ -4,7 +4,7 @@ using Pathfinding;
 
 namespace Sources.Modules.Enemy
 {
-    public class EnemyMovement : MonoBehaviour
+    internal class EnemyMovement : MonoBehaviour
     {
         [SerializeField] private AIPath _aiPath;
         [SerializeField] private Transform _gfxTransform;
