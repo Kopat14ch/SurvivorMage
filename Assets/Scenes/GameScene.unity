@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420034}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -161,7 +162,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.36931288, g: 0.7924528, b: 0.4703583, a: 0}
+  m_BackGroundColor: {r: 0.54734784, g: 0.5637191, b: 0.5660378, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -262,6 +263,40 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1552666676
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,25 +329,9 @@ MonoBehaviour:
   m_ExcludedPropertiesInInspector:
   - m_Script
   m_LockStageInInspector: 
-  m_ValidatingStreamVersion: 20170927
-  m_OnValidateCalled: 1
   m_StreamingVersion: 20170927
   m_Priority: 10
-  m_ActivationId: 1
   m_StandbyUpdate: 2
-  <mExtensions>k__BackingField: []
-  <PreviousStateIsValid>k__BackingField: 1
-  m_WasStarted: 1
-  mSlaveStatusUpdated: 1
-  m_parentVcam: {fileID: 0}
-  m_QueuePriority: 10
-  m_blendStartPosition: 0
-  m_CachedFollowTarget: {fileID: 1633039355}
-  m_CachedFollowTargetVcam: {fileID: 0}
-  m_CachedLookAtTarget: {fileID: 0}
-  m_CachedLookAtTargetVcam: {fileID: 0}
-  <FollowTargetChanged>k__BackingField: 0
-  <LookAtTargetChanged>k__BackingField: 0
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1633039355}
   m_Lens:
@@ -326,21 +345,14 @@ MonoBehaviour:
     GateFit: 2
     FocusDistance: 10
     m_SensorSize: {x: 1, y: 1}
-    m_OrthoFromCamera: 1
-    m_PhysicalFromCamera: 0
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
-      m_CallsDirty: 1
   m_LegacyBlendHint: 0
-  m_ComponentPipeline:
-  - {fileID: 1861880684}
   m_ComponentOwner: {fileID: 1861880683}
-  mCachedLookAtTarget: {fileID: 0}
-  mCachedLookAtTargetVcam: {fileID: 0}
 --- !u!4 &1552666678
 Transform:
   m_ObjectHideFlags: 0
@@ -388,7 +400,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6771e27ac9c32704fac6637e9bef6db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveDirection: {x: 0, y: 0}
 --- !u!114 &1633039353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,7 +526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_vcamOwner: {fileID: 1552666677}
   m_BindingMode: 1
   m_FollowOffset: {x: 0, y: 0, z: -10}
   m_XDamping: 3
@@ -526,12 +536,6 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
-  <HideOffsetInInspector>k__BackingField: 0
-  m_PreviousTargetPosition: {x: 0, y: 0, z: 0}
-  m_PreviousReferenceOrientation: {x: 0, y: 0, z: 0, w: 1}
-  m_targetOrientationOnAssign: {x: 0, y: 0, z: 0, w: 1}
-  m_PreviousOffset: {x: 0, y: 0, z: -10}
-  m_previousTarget: {fileID: 1633039355}
 --- !u!114 &1861880686
 MonoBehaviour:
   m_ObjectHideFlags: 3
