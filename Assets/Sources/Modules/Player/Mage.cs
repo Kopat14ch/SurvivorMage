@@ -2,7 +2,7 @@
 
 namespace Sources.Modules.Player
 {
-    public class Mage
+    public class Mage : MonoBehaviour
     {
     }
 }
