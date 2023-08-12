@@ -5,7 +5,11 @@ namespace Sources.Modules.Pools
 {
     public abstract class Pool<T> : MonoBehaviour
     {
-        [SerializeField] protected List<T> _gameObjects;
+        [SerializeField] protected List<T> GameObjects;
+
+        protected List<T> GameObjectsInPool;
+
+        protected const int Capacity = 20;
 
         public abstract void Init();
 
