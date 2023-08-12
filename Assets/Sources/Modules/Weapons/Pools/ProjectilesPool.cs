@@ -7,10 +7,12 @@ namespace Sources.Modules.Weapons.Pools
 {
     public class ProjectilesPool : Pool<Projectile>
     {
+        
         public override void Init()
         {
             GameObjectsInPool = new List<Projectile>();
-            
+            Capacity = 20;
+
             foreach (var projectile in GameObjects)
             {
                 for (int i = 0; i < Capacity; i++)

@@ -9,7 +9,7 @@ namespace Sources.Modules.Pools
 
         protected List<T> GameObjectsInPool;
 
-        protected const int Capacity = 20;
+        protected int Capacity;
 
         public abstract void Init();
 
