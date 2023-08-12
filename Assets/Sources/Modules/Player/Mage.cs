@@ -1,8 +1,3 @@
 ﻿using UnityEngine;
 
-namespace Sources.Modules.Player
-{
-    public class Mage : MonoBehaviour
-    {
-    }
-}
+namespace Sources.Modules.Player { public class Mage : MonoBehaviour { } }
