@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sources.Modules.Common;
+using Sources.Modules.Finder;
 using Sources.Modules.Weapons.Pools;
 using UnityEngine;
 
@@ -15,14 +15,14 @@ namespace Sources.Modules.Weapons.Common
         protected List<Projectile> Projectiles;
         protected Coroutine ShootingWork;
         protected bool StopShooting;
-        protected float CurrentCooldown;
-        
+
         private const int MinCooldown = 1;
         private const int MaxCooldown = 60;
+        
+        private float _currentCooldown;
 
-        protected bool CanShoot => CurrentCooldown <= 0;
-        protected ShootPoint ShootPoint => _shootPoint;
-        protected float Cooldown => _cooldown;
+        private bool CanShoot => _currentCooldown <= 0;
+        private float Cooldown => _cooldown;
 
         public abstract void Init(ProjectilesPool projectilesPool, FindCloseEnemy findCloseEnemy);
 
@@ -36,12 +36,12 @@ namespace Sources.Modules.Weapons.Common
             {
                 if (CanShoot == false)
                 {
-                    CurrentCooldown -= Time.deltaTime;
+                    _currentCooldown -= Time.deltaTime;
                 }
                 else
                 {
-                    Projectiles[indexShoot].Launch(ShootPoint, FindCloseEnemy.GetCloseEnemyPosition());
-                    CurrentCooldown = Cooldown;
+                    Projectiles[indexShoot].Launch(_shootPoint, FindCloseEnemy.GetCloseEnemyPosition());
+                    _currentCooldown = Cooldown;
                     indexShoot++;
                     indexShoot %= Projectiles.Count;
                 }

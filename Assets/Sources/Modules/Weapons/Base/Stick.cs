@@ -1,4 +1,4 @@
-using Sources.Modules.Common;
+using Sources.Modules.Finder;
 using Sources.Modules.Weapons.Common;
 using Sources.Modules.Weapons.Pools;
 using UnityEngine;

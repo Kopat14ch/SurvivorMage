@@ -1,9 +1,9 @@
 {
-    "name": "Weapons",
+    "name": "Finder",
     "rootNamespace": "",
     "references": [
         "GUID:40909cc57c2e6914ba070aa441e87b34",
-        "GUID:e4a9efe726a572d429a9a7c450593d9c"
+        "GUID:797b9584909357f44ad9c33f6bd88314"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

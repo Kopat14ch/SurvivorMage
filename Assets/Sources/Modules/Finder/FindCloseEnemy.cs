@@ -3,7 +3,7 @@ using Sources.Modules.Enemy;
 using Sources.Modules.Player;
 using UnityEngine;
 
-namespace Sources.Modules.Common
+namespace Sources.Modules.Finder
 {
     public class FindCloseEnemy : MonoBehaviour
     {

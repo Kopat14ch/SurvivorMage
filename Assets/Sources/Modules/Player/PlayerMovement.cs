@@ -1,13 +1,18 @@
 using System.Collections;
+using Sources.Modules.Common;
 using UnityEngine;
 
 namespace Sources.Modules.Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Flipper))]
     internal class PlayerMovement : MonoBehaviour
     {
         private const float Speed = 15f;
         private const float MinMoveDirection = 0.1f;
 
+        private Flipper _flipper;
+        private Rigidbody2D _rigidbody2D;
         private PlayerInput _playerInput;
         private Vector2 _moveDirection;
         private Coroutine _moveWork;
@@ -15,6 +20,8 @@ namespace Sources.Modules.Player
         private void Awake()
         {
             _playerInput = new PlayerInput();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _flipper = GetComponent<Flipper>();
             
             _playerInput.Player.Move.performed += ctx => OnMove();
         }
@@ -39,20 +46,18 @@ namespace Sources.Modules.Player
 
         private IEnumerator Move()
         {
-            Vector3 newPosition; 
-            float scaledMove;
             SetMoveDirection();
             
             while (_moveDirection.magnitude > MinMoveDirection)
             {
-                scaledMove = Speed * Time.deltaTime;
+                _rigidbody2D.velocity = Speed * _moveDirection;
+                _flipper.TryFlip(_rigidbody2D.velocity.x);
 
-                newPosition = new Vector3(_moveDirection.x, _moveDirection.y, 0);
-
-                transform.position += newPosition * scaledMove;
                 SetMoveDirection();
                 yield return null;
             }
+
+            _rigidbody2D.velocity = Vector2.zero;
         }
 
         private void SetMoveDirection() => _moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
