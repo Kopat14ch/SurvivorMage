@@ -12,7 +12,7 @@ namespace Sources.Modules.Weapons.Pools
 
         private const int Capacity = 20;
 
-        private void Awake()
+        public void Init()
         {
             _projectilesObjects = new List<Projectile>();
             
@@ -39,7 +39,7 @@ namespace Sources.Modules.Weapons.Pools
 
             for (int i = index; i < lastIndex; i++)
                 tempProjectile.Add(_projectilesObjects[i]);
-
+            
             return tempProjectile;
         }
     }

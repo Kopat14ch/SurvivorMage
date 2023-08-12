@@ -24,6 +24,7 @@ namespace Sources.SurvivorMage.Scripts
             _findCloseEnemy = GetComponent<FindCloseEnemy>();
             _projectilesPool = GetComponent<ProjectilesPool>();
             
+            _projectilesPool.Init();
             _findCloseEnemy.Init(_enemyUnits, _mage);
             _stick.Init(_projectilesPool, _findCloseEnemy);
         }
