@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2925680284692248864, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1633039355}
     - target: {fileID: 7887795546891781231, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -236,6 +240,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2925680284692248864, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1633039355}
     - target: {fileID: 7887795546891781231, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -601,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1dd36b7719d7a4e85cd504de95ddfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectiles:
+  GameObjects:
   - {fileID: 1727644642498907562, guid: ffccb989c51fb3746bb2ed7ece380185, type: 3}
 --- !u!114 &519420038
 MonoBehaviour:
@@ -935,6 +943,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2925680284692248864, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1633039355}
     - target: {fileID: 7887795546891781231, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -1129,6 +1141,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2925680284692248864, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1633039355}
     - target: {fileID: 7887795546891781231, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
       propertyPath: m_Name
       value: Enemy (4)
@@ -1323,6 +1339,10 @@ PrefabInstance:
     - target: {fileID: 6578771999819475476, guid: cc7cd448558b0064f987b7a1fcfdbcba, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304608215332844224, guid: cc7cd448558b0064f987b7a1fcfdbcba, type: 3}
+      propertyPath: data.dataString
+      value: UEsDBBQAAAgIAAAYIeyyGiVmWgIAABQFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMlu2zAQ/RWD56aQHRtOemsVx+nBiRG3yEUXihxZhClS4BJv8L93SEmW6qInUW/ezLxZyDMRytbAnDZLI/hKcyDfRiScyZdRb3yBA91qtREn6DgfgrsykGjkvFMnNOLj4GZ1Bc4I9l1tZSAnCHolCm2qBd9Cqq2zCBdUWkCT0S54K4TOI3LAz91jcDniaTIPpxOeHpPRBY8MlAPTUztiR2tYXjFJqxp4kNyTZx171tAUFtMygnCmpRS2VULcsY6VprS2HutAAhcUK4vpZ/hbgtiWLqgcOr8VhQXXSjL0+CQMNqiJSn7opmsVtbtG1yeVPgpIJtMoqom6+odwN47mwujqpUs8TkISVwq2e6dHRq0b9HUIP/XKx7E/eyp3NJfwUYJ61UujveJodMYHV29h8tT/XmtLS2C7Hm+k3oC+/v90Qg2XWP4hlaLKg+nrtAE2UseGx9mDwdH8RMFxM2wbAtGg4reFX3Q7XKHW8CyMdWhqq1RBXq69CVSyiD0L1XiXaqMgwq3oGhSV7rjGMO52hje2QdobyzMNl6VN3tq6O3DjEuGenyQ3prXeX4dlS71fgS3fvJNCQS86GF6xT6lWqlmxYU86t403BWUDt60X/O/VImOWQ/IAvJjlc3oP07vJfZ5PHx/mQNmETRJK4u4JhXVSuW6Etu3Bqak+uMI9696Q0dLQOq47N3S/FKdKDwUKVegNMwDqrQlxVQ4Gs+C95AsusEMbcE6oOHByzojUbAc8u+bMYqmLgzM066NkpBaf2gUkI2l8NTIS4Osyrw18CtiH5F2wC7n8AVBLAwQUAAAICAAAGCHstk40T20AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0kmFyUqqBRWpKmmmSeaJxqomukXFSkomlhXlqYrJRspFBolIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAGCHssholZloCAAAUBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAGCHstk40T20AAAB4AAAACQAkAAAAAAAAAAAAAACnAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAF8DAAAAAA==
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2039,6 +2059,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2925680284692248864, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1633039355}
     - target: {fileID: 7887795546891781231, guid: 34426e95900385243adf8cc3d0500a74, type: 3}
       propertyPath: m_Name
       value: Enemy (3)
