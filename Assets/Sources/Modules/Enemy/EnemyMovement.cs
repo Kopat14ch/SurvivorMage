@@ -1,28 +1,22 @@
 using System;
 using UnityEngine;
 using Pathfinding;
+using Sources.Modules.Common;
 
 namespace Sources.Modules.Enemy
 {
+    [RequireComponent(typeof(Flipper))]
     internal class EnemyMovement : MonoBehaviour
     {
         [SerializeField] private AIPath _aiPath;
-        [SerializeField] private Transform _gfxTransform;
+
+        private Flipper _flipper;
+
+        private void Awake() => _flipper = GetComponent<Flipper>();
+
         private void Update()
         {
-            TryFlip();
-        }
-
-        private void TryFlip()
-        {
-            if (_aiPath.desiredVelocity.x >= 0.01f)
-            {
-                _gfxTransform.localScale = new Vector3(1f, 1f, 1f);
-            }
-            else if(_aiPath.desiredVelocity.x <= -0.01f)
-            {
-                _gfxTransform.localScale = new Vector3(-1f, 1f, 1f);
-            }
+            _flipper.TryFlip(_aiPath.desiredVelocity.x);
         }
     }
 }

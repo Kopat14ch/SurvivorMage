@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Sources.Modules.Common;
 using Sources.Modules.Enemy;
+using Sources.Modules.Finder;
 using Sources.Modules.Player;
 using Sources.Modules.Weapons.Common;
 using Sources.Modules.Weapons.Pools;
@@ -8,6 +8,8 @@ using UnityEngine;
 
 namespace Sources.SurvivorMage.Scripts
 {
+    [RequireComponent(typeof(FindCloseEnemy),
+        typeof(ProjectilesPool))]
     internal class SurvivorMageRoot : MonoBehaviour
     {
         [SerializeField] private Mage _mage;
