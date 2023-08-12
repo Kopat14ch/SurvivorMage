@@ -11,7 +11,7 @@ namespace Sources.Modules.Weapons.Base
 
         public override void Init(ProjectilesPool projectilesPool, FindCloseEnemy findCloseEnemy)
         {
-            Projectiles = projectilesPool.TryGetProjectiles(_projectile);
+            Projectiles = projectilesPool.TryGetObjects(_projectile);
             FindCloseEnemy = findCloseEnemy;
             
             StartShooting();

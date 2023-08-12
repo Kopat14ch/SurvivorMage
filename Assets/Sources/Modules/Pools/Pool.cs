@@ -1,0 +1,14 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+namespace Sources.Modules.Pools
+{
+    public abstract class Pool<T> : MonoBehaviour
+    {
+        [SerializeField] protected List<T> _gameObjects;
+
+        public abstract void Init();
+
+        public abstract List<T> TryGetObjects(T gameObjectToGet);
+    }
+}

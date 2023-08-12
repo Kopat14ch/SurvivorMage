@@ -1,22 +1,21 @@
 using System.Collections.Generic;
+using Sources.Modules.Pools;
 using Sources.Modules.Weapons.Common;
 using UnityEngine;
 
 namespace Sources.Modules.Weapons.Pools
 {
-    public class ProjectilesPool : MonoBehaviour
+    public class ProjectilesPool : Pool<Projectile>
     {
-        [SerializeField] private List<Projectile> _projectiles;
-
         private List<Projectile> _projectilesObjects;
 
         private const int Capacity = 20;
 
-        public void Init()
+        public override void Init()
         {
             _projectilesObjects = new List<Projectile>();
             
-            foreach (var projectile in _projectiles)
+            foreach (var projectile in _gameObjects)
             {
                 for (int i = 0; i < Capacity; i++)
                 {
@@ -28,13 +27,13 @@ namespace Sources.Modules.Weapons.Pools
             }
         }
 
-        public List<Projectile> TryGetProjectiles(Projectile projectile)
+        public override List<Projectile> TryGetObjects(Projectile projectile)
         {
-            if (_projectiles.Contains(projectile) == false)
+            if (_gameObjects.Contains(projectile) == false)
                 return null;
 
             List<Projectile> tempProjectile = new List<Projectile>();
-            int index = _projectiles.IndexOf(projectile) * Capacity;
+            int index = _gameObjects.IndexOf(projectile) * Capacity;
             int lastIndex = index + Capacity - 1;
 
             for (int i = index; i < lastIndex; i++)
