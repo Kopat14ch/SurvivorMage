@@ -5,6 +5,7 @@ namespace Sources.Modules.Enemy
 {
     public class EnemyAttack : MonoBehaviour
     {
+        [SerializeField] private int _damage;
         [SerializeField] private float _cooldown;
 
         private float _passedTime;

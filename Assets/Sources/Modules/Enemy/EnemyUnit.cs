@@ -4,20 +4,20 @@ namespace Sources.Modules.Enemy
 {
     public class EnemyUnit : MonoBehaviour
     {
-        [SerializeField] private int _maxHp;
+        [SerializeField] private int _maxHealth;
 
-        private int _currentHp;
+        private int _currentHealth;
 
         public void TakeDamage(int damage)
         {
-            _currentHp -= damage;
-            _currentHp = Mathf.Clamp(_currentHp, 0, _maxHp);
+            _currentHealth -= damage;
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
             TryDie();
         }
 
         private void TryDie()
         {
-            if (_currentHp == 0)
+            if (_currentHealth == 0)
             {
                 
             }
