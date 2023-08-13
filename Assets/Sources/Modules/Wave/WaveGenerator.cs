@@ -17,22 +17,22 @@ namespace Sources.Modules.Wave
         private const int StartMinEnemySpawn = 3;
         private const int StartMaxEnemySpawn = 6;
         private const int Step = 3;
-
-        private HashSet<EnemyUnit> _enemiesHashSet;
+        
         private List<EnemyWaveConfig> _enemyConfigs;
         private List<EnemyUnit> _currentWave;
-        private Dictionary<EnemyType, int> _wave;
+        private Dictionary<List<EnemyType>, int> _wave;
 
+        private WaveConfigs _waveConfigs;
+
+        private int _waveCount;
         private int _minEnemySpawn;
         private int _maxEnemySpawn;
 
         private void Awake()
         {
-            _enemiesHashSet = new HashSet<EnemyUnit>();
-            _wave = new Dictionary<EnemyType, int>();
-
-            foreach (var enemy in _enemies)
-                _enemiesHashSet.Add(enemy);
+            _wave = new Dictionary<List<EnemyType>, int>();
+            _waveConfigs = new WaveConfigs();
+            _waveCount = 1;
 
             _minEnemySpawn = StartMinEnemySpawn;
             _maxEnemySpawn = StartMaxEnemySpawn;
@@ -41,7 +41,7 @@ namespace Sources.Modules.Wave
             StartWave(_wave);
         }
 
-        private void StartWave(Dictionary<EnemyType, int> wave)
+        private void StartWave(Dictionary<List<EnemyType>, int> wave)
         {
             _currentWave = _spawner.SpawnEnemies(wave);
 
@@ -59,21 +59,20 @@ namespace Sources.Modules.Wave
             _currentWave.Remove(unit);
 
             if (_currentWave.Count == 0)
-            {
-                EndWave();
-            }
+                NextWave();
         }
 
         private void SetRandomUnits()
         {
-            int numberVariationEnemies = Random.Range(1, _enemiesHashSet.Count + 1);
+            int numberVariationEnemies = Random.Range(1, _enemies.Count + 1);
             _enemyConfigs = new List<EnemyWaveConfig>();
 
             for (int i = 0; i < numberVariationEnemies; i++)
             {
-                EnemyWaveConfig tempEnemyWaveConfig = new();
-                tempEnemyWaveConfig.Init(_enemiesHashSet.ElementAt(i).EnemyType,
-                    Random.Range(_minEnemySpawn, _maxEnemySpawn));
+                _waveCount %= _waveConfigs.GetWaveConfigsCount();
+
+                EnemyWaveConfig tempEnemyWaveConfig = new EnemyWaveConfig(_waveConfigs.GetWaveConfig(_waveCount -1).GetEnemyTypes());
+                tempEnemyWaveConfig.Init(Random.Range(_minEnemySpawn, _maxEnemySpawn));
 
                 _enemyConfigs.Add(tempEnemyWaveConfig);
             }
@@ -85,14 +84,15 @@ namespace Sources.Modules.Wave
 
             SetRandomUnits();
 
-            foreach (var enemyConfig in _enemyConfigs)
-                _wave.Add(enemyConfig.EnemyType, enemyConfig.SpawnCount);
+            for (int i = 0; i < _enemyConfigs.Count; i++)
+                _wave.Add(_enemyConfigs[i].GetEnemyTypes(), _enemyConfigs[i].SpawnCount);
         }
         
-        private void EndWave()
+        private void NextWave()
         {
             _minEnemySpawn += Step;
             _maxEnemySpawn += Step;
+            _waveCount++;
             
             SetNewWave();
             StartWave(_wave);

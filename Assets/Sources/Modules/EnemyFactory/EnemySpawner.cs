@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory.Pool;
 using UnityEngine;
@@ -19,15 +20,21 @@ namespace Sources.Modules.EnemyFactory
             _enemyPool = enemyPool;
         }
 
-        public List<EnemyUnit> SpawnEnemies(Dictionary<EnemyType, int> wave)
+        public List<EnemyUnit> SpawnEnemies(Dictionary<List<EnemyType>, int> wave)
         {
             _currentUnits = new List<EnemyUnit>();
             _allWaveUnits = new List<EnemyUnit>();
 
-            foreach (KeyValuePair<EnemyType, int> entry in wave)
-            {
-                _currentUnits = _enemyPool.GetObjects(entry.Key, entry.Value);
+            int enemyTypeIndex = 0;
 
+            for (int i = 0; i < wave.Count; i++, enemyTypeIndex++)
+            {
+                enemyTypeIndex %= wave.Keys.ElementAt(i).Count;
+                
+                Debug.Log(wave.Keys.ElementAt(i)[enemyTypeIndex]);
+
+                _currentUnits = _enemyPool.GetObjects(wave.Keys.ElementAt(i)[enemyTypeIndex], wave.Values.ElementAt(i));
+                
                 foreach (EnemyUnit unit in _currentUnits)
                 {
                     _allWaveUnits.Add(unit);
