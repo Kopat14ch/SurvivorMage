@@ -15,9 +15,9 @@ namespace Sources.Modules.Enemy
         public event Action<EnemyUnit> Died;
         private float _currentHealth;
 
-        private void OnDisable()
+        private void OnEnable()
         {
-            Died?.Invoke(this);
+            _currentHealth = _maxHealth;
         }
 
         public void SetTarget(Transform target)
@@ -37,7 +37,8 @@ namespace Sources.Modules.Enemy
         {
             if (_currentHealth == 0)
             {
-                
+                Died?.Invoke(this);
+                gameObject.SetActive(false);
             }
         }
     }

@@ -14,8 +14,8 @@ namespace Sources.Modules.Wave
         [SerializeField] private FinderCloseEnemy _finder;
         [SerializeField] private List<EnemyUnit> _enemies;
 
-        private const int StartMinEnemySpawn = 10;
-        private const int StartMaxEnemySpawn = 20;
+        private const int StartMinEnemySpawn = 3;
+        private const int StartMaxEnemySpawn = 6;
         private const int Step = 3;
 
         private HashSet<EnemyUnit> _enemiesHashSet;

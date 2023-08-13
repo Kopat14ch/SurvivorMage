@@ -6,10 +6,14 @@ namespace Sources.Modules.Weapons.Base
 {
     internal class Snowball : Projectile
     {
-        protected override void OnTriggerEnter2D(Collider2D collider2D)
+        protected override void OnTriggerEnter2D(Collider2D other)
         {
-            if (collider2D.TryGetComponent(out EnemyUnit enemy))
-                gameObject.SetActive(false);
+            if (other.gameObject.TryGetComponent(out EnemyUnit enemy))
+            {
+                enemy.TakeDamage(Damage);
+            }
+
+            gameObject.SetActive(false);
         }
 
         public override void Launch(ShootPoint shootPoint, Vector3 position)
