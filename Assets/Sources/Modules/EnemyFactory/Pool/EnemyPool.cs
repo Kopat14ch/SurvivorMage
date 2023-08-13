@@ -7,27 +7,34 @@ namespace Sources.Modules.EnemyFactory.Pool
     public class EnemyPool : MonoBehaviour
     {
         [SerializeField] private List<EnemyUnit> _prefabs;
-        [SerializeField] private List<Container> _containers;
         [SerializeField] private int _startCapacity;
-        
-        
+        [SerializeField] private Container _prefabContainer;
+
+        private List<Container> _containers;
+
         public void Init()
         {
+            _containers = new List<Container>();
+            int enemyTypeIndex = 0;
+
             foreach (EnemyUnit prefab in _prefabs)
             {
-                foreach (Container container in _containers)
+                Container container = Instantiate(_prefabContainer, transform.position, Quaternion.identity,
+                    transform);
+                container.Init((EnemyType) enemyTypeIndex, prefab);
+                _containers.Add(container);
+                
+                for (int i = 0; i < _startCapacity; i++)
                 {
-                    if (prefab.EnemyType == container.EnemyType)
-                    {
-                        for (int i = 0; i < _startCapacity; i++)
-                        {
-                            EnemyUnit spawned = Instantiate(prefab, transform.position, Quaternion.identity,
-                                container.transform);
-                            spawned.gameObject.SetActive(false);
-                            container.AddUnit(spawned);
-                        }
-                    }
+                    EnemyUnit spawned = Instantiate(prefab, transform.position, Quaternion.identity, container.transform);
+                    spawned.gameObject.SetActive(false);
+                    container.AddUnit(spawned);
                 }
+                
+                if ((EnemyType) enemyTypeIndex == EnemyType.Other3)
+                    break;
+                
+                enemyTypeIndex++;
             }
         }
 
@@ -40,6 +47,7 @@ namespace Sources.Modules.EnemyFactory.Pool
                 if (container.EnemyType == enemyType)
                 {
                     units = container.GetUnits(unitCount);
+                    
                     break;
                 }
             }

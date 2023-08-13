@@ -8,25 +8,25 @@ namespace Sources.Modules.EnemyFactory
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private List<Transform> _spawnPoints;
-        [SerializeField] private EnemyPool _pool;
         [SerializeField] private Transform _playerPosition;
 
+        private EnemyPool _enemyPool;
         private List<EnemyUnit> _currentUnits;
         private List<EnemyUnit> _allWaveUnits;
 
-        public void OnEnable()
+        public void Init(EnemyPool enemyPool)
         {
-            _pool.Init();
+            _enemyPool = enemyPool;
         }
 
         public List<EnemyUnit> SpawnEnemies(Dictionary<EnemyType, int> wave)
         {
             _currentUnits = new List<EnemyUnit>();
             _allWaveUnits = new List<EnemyUnit>();
-            
+
             foreach (KeyValuePair<EnemyType, int> entry in wave)
             {
-                _currentUnits = _pool.GetObjects(entry.Key, entry.Value);
+                _currentUnits = _enemyPool.GetObjects(entry.Key, entry.Value);
 
                 foreach (EnemyUnit unit in _currentUnits)
                 {
