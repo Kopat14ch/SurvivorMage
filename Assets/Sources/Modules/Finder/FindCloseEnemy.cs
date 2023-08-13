@@ -19,7 +19,7 @@ namespace Sources.Modules.Finder
             _enemyUnits = new List<EnemyUnit>();
             _mage = mage;
         }
-
+        
         public void SetEnemyList(List<EnemyUnit> enemyUnits) => _enemyUnits = enemyUnits;
 
         public Vector3 GetCloseEnemyPosition()

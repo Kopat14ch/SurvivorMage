@@ -12,6 +12,7 @@ namespace Sources.Modules.Weapons.Common
         [SerializeField, Range(MinCooldown, MaxCooldown)] private float _cooldown;
 
         private bool _stopShooting;
+
         protected FindCloseEnemy FindCloseEnemy;
         protected List<Projectile> Projectiles;
         protected Coroutine ShootingWork;
