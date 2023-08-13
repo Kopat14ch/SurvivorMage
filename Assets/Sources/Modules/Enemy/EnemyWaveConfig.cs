@@ -1,6 +1,6 @@
 ﻿namespace Sources.Modules.Enemy
 {
-    public class EnemyConfig
+    public class EnemyWaveConfig
     {
         public EnemyType EnemyType { get; private set; }
         public int SpawnCount { get; private set; }

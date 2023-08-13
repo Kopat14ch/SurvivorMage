@@ -13,7 +13,7 @@ namespace Sources.Modules.Weapons.Common
 
         private bool _stopShooting;
 
-        protected FindCloseEnemy FindCloseEnemy;
+        protected FinderCloseEnemy FinderCloseEnemy;
         protected List<Projectile> Projectiles;
         protected Coroutine ShootingWork;
 
@@ -25,7 +25,7 @@ namespace Sources.Modules.Weapons.Common
         private bool CanShoot => _currentCooldown <= 0;
         private float Cooldown => _cooldown;
 
-        public abstract void Init(ProjectilesPool projectilesPool, FindCloseEnemy findCloseEnemy);
+        public abstract void Init(ProjectilesPool projectilesPool, FinderCloseEnemy finderCloseEnemy);
 
         protected abstract void StartShooting();
 
@@ -41,7 +41,7 @@ namespace Sources.Modules.Weapons.Common
                 }
                 else
                 {
-                    Projectiles[indexShoot].Launch(_shootPoint, FindCloseEnemy.GetCloseEnemyPosition());
+                    Projectiles[indexShoot].Launch(_shootPoint, FinderCloseEnemy.GetCloseEnemyPosition());
                     _currentCooldown = Cooldown;
                     indexShoot++;
                     indexShoot %= Projectiles.Count;

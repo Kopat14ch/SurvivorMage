@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Sources.Modules.Finder
 {
-    public class FindCloseEnemy : MonoBehaviour
+    public class FinderCloseEnemy : MonoBehaviour
     {
         private List<EnemyUnit> _enemyUnits;
         private Mage _mage;

@@ -11,7 +11,7 @@ namespace Sources.Modules.Wave
     public class WaveGenerator : MonoBehaviour
     {
         [SerializeField] private EnemySpawner _spawner;
-        [SerializeField] private FindCloseEnemy _finder;
+        [SerializeField] private FinderCloseEnemy _finder;
         [SerializeField] private List<EnemyUnit> _enemies;
 
         private const int StartMinEnemySpawn = 10;
@@ -19,7 +19,7 @@ namespace Sources.Modules.Wave
         private const int Step = 3;
 
         private HashSet<EnemyUnit> _enemiesHashSet;
-        private List<EnemyConfig> _enemyConfigs;
+        private List<EnemyWaveConfig> _enemyConfigs;
         private List<EnemyUnit> _currentWave;
         private Dictionary<EnemyType, int> _wave;
 
@@ -67,14 +67,15 @@ namespace Sources.Modules.Wave
         private void SetRandomUnits()
         {
             int numberVariationEnemies = Random.Range(1, _enemiesHashSet.Count + 1);
-            _enemyConfigs = new List<EnemyConfig>();
+            _enemyConfigs = new List<EnemyWaveConfig>();
 
             for (int i = 0; i < numberVariationEnemies; i++)
             {
-                EnemyConfig tempEnemyConfig = new();
-                tempEnemyConfig.Init(_enemiesHashSet.ElementAt(i).EnemyType, Random.Range(_minEnemySpawn, _maxEnemySpawn));
-                
-                _enemyConfigs.Add(tempEnemyConfig);
+                EnemyWaveConfig tempEnemyWaveConfig = new();
+                tempEnemyWaveConfig.Init(_enemiesHashSet.ElementAt(i).EnemyType,
+                    Random.Range(_minEnemySpawn, _maxEnemySpawn));
+
+                _enemyConfigs.Add(tempEnemyWaveConfig);
             }
         }
 

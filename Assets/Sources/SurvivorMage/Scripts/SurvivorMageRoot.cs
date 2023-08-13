@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Sources.SurvivorMage.Scripts
 {
-    [RequireComponent(typeof(FindCloseEnemy),
+    [RequireComponent(typeof(FinderCloseEnemy),
         typeof(ProjectilesPool))]
     internal class SurvivorMageRoot : MonoBehaviour
     {
@@ -17,17 +17,17 @@ namespace Sources.SurvivorMage.Scripts
         [SerializeField] private EnemyPool _enemyPool;
         [SerializeField] private EnemySpawner _enemySpawner;
 
-        private FindCloseEnemy _findCloseEnemy;
+        private FinderCloseEnemy _finderCloseEnemy;
         private ProjectilesPool _projectilesPool;
 
         private void Awake()
         {
-            _findCloseEnemy = GetComponent<FindCloseEnemy>();
+            _finderCloseEnemy = GetComponent<FinderCloseEnemy>();
             _projectilesPool = GetComponent<ProjectilesPool>();
             
             _projectilesPool.Init();
-            _findCloseEnemy.Init(_mage);
-            _stick.Init(_projectilesPool, _findCloseEnemy);
+            _finderCloseEnemy.Init(_mage);
+            _stick.Init(_projectilesPool, _finderCloseEnemy);
             _enemyPool.Init();
             _enemySpawner.Init(_enemyPool);
         }
