@@ -1,6 +1,6 @@
+using System;
 using UnityEngine;
 using Pathfinding;
-using UnityEngine.Serialization;
 
 namespace Sources.Modules.Enemy
 {
@@ -8,11 +8,18 @@ namespace Sources.Modules.Enemy
     {
         [SerializeField] private EnemyType _enemyType;
         [SerializeField] private float _maxHealth;
-        [FormerlySerializedAs("_aiPath")] [SerializeField] private AIDestinationSetter _destinationSetter;
+        [SerializeField] private AIDestinationSetter _destinationSetter;
         
         public EnemyType EnemyType => _enemyType;
+
+        public event Action<EnemyUnit> Died;
         private float _currentHealth;
-        
+
+        private void OnDisable()
+        {
+            Died?.Invoke(this);
+        }
+
         public void SetTarget(Transform target)
         {
             _destinationSetter.target = target;

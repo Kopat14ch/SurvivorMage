@@ -21,9 +21,10 @@ namespace Sources.Modules.EnemyFactory.Pool
                     {
                         for (int i = 0; i < _startCapacity; i++)
                         {
-                             EnemyUnit spawned = Instantiate(prefab, transform.position, Quaternion.identity, container.transform);
-                             spawned.gameObject.SetActive(false);
-                             container.AddUnit(spawned);
+                            EnemyUnit spawned = Instantiate(prefab, transform.position, Quaternion.identity,
+                                container.transform);
+                            spawned.gameObject.SetActive(false);
+                            container.AddUnit(spawned);
                         }
                     }
                 }

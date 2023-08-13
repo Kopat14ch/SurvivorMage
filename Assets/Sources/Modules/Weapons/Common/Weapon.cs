@@ -11,10 +11,10 @@ namespace Sources.Modules.Weapons.Common
         [SerializeField] private ShootPoint _shootPoint;
         [SerializeField, Range(MinCooldown, MaxCooldown)] private float _cooldown;
         
+        public bool StopShooting = true;
         protected FindCloseEnemy FindCloseEnemy;
         protected List<Projectile> Projectiles;
         protected Coroutine ShootingWork;
-        protected bool StopShooting;
 
         private const int MinCooldown = 1;
         private const int MaxCooldown = 60;
@@ -27,7 +27,7 @@ namespace Sources.Modules.Weapons.Common
         public abstract void Init(ProjectilesPool projectilesPool, FindCloseEnemy findCloseEnemy);
 
         protected abstract void StartShooting();
-        
+
         protected IEnumerator Shooting()
         {
             int indexShoot = 0;

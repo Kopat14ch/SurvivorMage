@@ -22,23 +22,32 @@ namespace Sources.Modules.EnemyFactory.Pool
         {
             List<EnemyUnit> inactiveUnits = new List<EnemyUnit>();
 
-            foreach (var unit in _units)
+            if (_units.Count < desiredCount)
             {
-                if (unit.gameObject.activeSelf == false)
-                    inactiveUnits.Add(unit);
-            }
+                foreach (var unit in _units)
+                {
+                    if (unit.gameObject.activeSelf == false)
+                        inactiveUnits.Add(unit);
+                }
 
-            if (inactiveUnits.Count < desiredCount)
-            {
                 int difference = desiredCount - inactiveUnits.Count;
-                
+
                 for (int i = 0; i < difference; i++)
                 {
-                    GameObject spawned = Instantiate(_prefab, transform.position, Quaternion.identity, gameObject.transform);
-                    spawned.gameObject.SetActive(false);
+                    GameObject spawned = Instantiate(_prefab, transform.position, Quaternion.identity,
+                        gameObject.transform);
+                    //spawned.gameObject.SetActive(false);
                     EnemyUnit enemy = spawned.GetComponent<EnemyUnit>();
                     _units.Add(enemy);
                     inactiveUnits.Add(enemy);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < desiredCount; i++)
+                {
+                    if (_units[i].gameObject.activeSelf == false)
+                        inactiveUnits.Add(_units[i]);
                 }
             }
             

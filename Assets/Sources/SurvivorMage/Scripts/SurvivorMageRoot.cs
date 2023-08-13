@@ -14,8 +14,7 @@ namespace Sources.SurvivorMage.Scripts
     {
         [SerializeField] private Mage _mage;
         [SerializeField] private Weapon _stick;
-        [SerializeField] private List<EnemyUnit> _enemyUnits;
-        
+
         private FindCloseEnemy _findCloseEnemy;
         private ProjectilesPool _projectilesPool;
 
@@ -25,7 +24,7 @@ namespace Sources.SurvivorMage.Scripts
             _projectilesPool = GetComponent<ProjectilesPool>();
             
             _projectilesPool.Init();
-            _findCloseEnemy.Init(_enemyUnits, _mage);
+            _findCloseEnemy.Init(_mage);
             _stick.Init(_projectilesPool, _findCloseEnemy);
         }
     }

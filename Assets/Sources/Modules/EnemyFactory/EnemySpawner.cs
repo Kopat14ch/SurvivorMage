@@ -10,31 +10,34 @@ namespace Sources.Modules.EnemyFactory
         [SerializeField] private List<Transform> _spawnPoints;
         [SerializeField] private EnemyPool _pool;
         [SerializeField] private Transform _playerPosition;
-        [SerializeField] private EnemyType _enemyType;
-        [SerializeField] private int _enemyCount;
 
         private List<EnemyUnit> _currentUnits;
+        private List<EnemyUnit> _allWaveUnits;
 
-        private void OnEnable()
+        public void OnEnable()
         {
             _pool.Init();
-            _currentUnits = _pool.GetObjects(_enemyType, _enemyCount);
-            SpawnEnemies();
         }
 
-        public void SpawnEnemies()
+        public List<EnemyUnit> SpawnEnemies(Dictionary<EnemyType, int> wave)
         {
-            foreach (EnemyUnit unit in _currentUnits)
+            _currentUnits = new List<EnemyUnit>();
+            _allWaveUnits = new List<EnemyUnit>();
+            
+            foreach (KeyValuePair<EnemyType, int> entry in wave)
             {
-                unit.SetTarget(_playerPosition);
-                unit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
-                unit.gameObject.SetActive(true);
+                _currentUnits = _pool.GetObjects(entry.Key, entry.Value);
+
+                foreach (EnemyUnit unit in _currentUnits)
+                {
+                    _allWaveUnits.Add(unit);
+                    unit.SetTarget(_playerPosition);
+                    unit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
+                    unit.gameObject.SetActive(true);
+                }
             }
-        }
-        
-        public List<EnemyUnit> GetEnemies()
-        {
-            return _currentUnits;
+
+            return _allWaveUnits;
         }
     }
 }
