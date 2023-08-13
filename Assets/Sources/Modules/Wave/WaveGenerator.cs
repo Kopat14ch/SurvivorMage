@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory;
@@ -12,6 +13,9 @@ namespace Sources.Modules.Wave
         [SerializeField] private EnemySpawner _spawner;
         [SerializeField] private FinderCloseEnemy _finder;
         [SerializeField] private List<EnemyUnit> _enemies;
+
+        public event Action UnitDied;
+        public event Action<int> WaveStarted; 
 
         private const int StartMinEnemySpawn = 3;
         private const int StartMaxEnemySpawn = 6;
@@ -49,6 +53,7 @@ namespace Sources.Modules.Wave
                 unit.Died += OnUnitDied;
             }
             
+            WaveStarted?.Invoke(_currentWave.Count);
             _finder.SetEnemyList(_currentWave);
         }
         
@@ -57,6 +62,8 @@ namespace Sources.Modules.Wave
             unit.Died -= OnUnitDied;
             _currentWave.Remove(unit);
 
+            UnitDied?.Invoke();
+            
             if (_currentWave.Count == 0)
                 NextWave();
         }

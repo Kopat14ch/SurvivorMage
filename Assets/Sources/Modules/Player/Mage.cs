@@ -1,4 +1,5 @@
-﻿using Sources.Modules.Player.Animation;
+﻿using System;
+using Sources.Modules.Player.Animation;
 using UnityEngine;
 
 namespace Sources.Modules.Player
@@ -7,15 +8,19 @@ namespace Sources.Modules.Player
     public class Mage : MonoBehaviour
     {
         private Animator _animator;
-        
-        private const float MaxHealth = 100;
 
+        public event Action<float> HealthChanged;
+        public event Action<float> MaxHealthIncreased;
+
+        private float _maxHealth = 100;
         private float _currentHealth;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            _currentHealth = MaxHealth;
+            _currentHealth = _maxHealth;
+            MaxHealthIncreased?.Invoke(_maxHealth);
+            HealthChanged?.Invoke(_currentHealth);
         }
 
 
@@ -26,7 +31,9 @@ namespace Sources.Modules.Player
                 _animator.Play(PlayerAnimator.States.Hit);
                 
                 _currentHealth -= damage;
-                _currentHealth = Mathf.Clamp(_currentHealth, 0, MaxHealth);
+                _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+                
+                HealthChanged?.Invoke(_currentHealth);
 
                 if (_currentHealth <= 0)
                 {
