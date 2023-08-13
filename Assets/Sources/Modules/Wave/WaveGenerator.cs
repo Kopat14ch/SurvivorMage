@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory;
 using Sources.Modules.Finder;
