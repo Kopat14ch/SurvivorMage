@@ -22,7 +22,6 @@ namespace Sources.Modules.Finder
         public void SetEnemyList(List<EnemyUnit> enemyUnits)
         {
             _enemyUnits = enemyUnits;
-            Debug.Log(_enemyUnits.Count());
         }
 
         public Vector3 GetCloseEnemyPosition()

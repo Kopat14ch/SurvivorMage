@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory;
@@ -26,8 +25,8 @@ namespace Sources.Modules.WaveService
         [SerializeField] private EnemyType _enemyType23;
         [SerializeField] private int _enemyCount23;
 
-        public event Action WaveStarted;
-        public event Action WaveEnded;
+        //public event Action WaveStarted;
+        //public event Action WaveEnded;
         
         private List<EnemyUnit> _currentWave;
         private Dictionary<EnemyType, int> _wave1;
@@ -60,7 +59,7 @@ namespace Sources.Modules.WaveService
             }
             
             _finder.SetEnemyList(_currentWave);
-            _weapon.StopShooting = false;
+            //_weapon.StopShooting = false;
             //WaveStarted?.Invoke();
         }
         
@@ -78,7 +77,7 @@ namespace Sources.Modules.WaveService
         
         private void EndWave()
         {
-            _weapon.StopShooting = true;
+            //_weapon.StopShooting = true;
             StartWave(_wave2);
             //WaveEnded?.Invoke();
         }
