@@ -10,8 +10,8 @@ namespace Sources.Modules.Weapons.Common
     {
         [SerializeField] private ShootPoint _shootPoint;
         [SerializeField, Range(MinCooldown, MaxCooldown)] private float _cooldown;
-        
-        public bool StopShooting = true;
+
+        private bool _stopShooting;
         protected FindCloseEnemy FindCloseEnemy;
         protected List<Projectile> Projectiles;
         protected Coroutine ShootingWork;
@@ -32,7 +32,7 @@ namespace Sources.Modules.Weapons.Common
         {
             int indexShoot = 0;
             
-            while (StopShooting == false)
+            while (_stopShooting == false)
             {
                 if (CanShoot == false)
                 {

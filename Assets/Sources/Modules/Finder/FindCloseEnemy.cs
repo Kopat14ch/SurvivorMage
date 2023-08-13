@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using Sources.Modules.Enemy;
 using Sources.Modules.Player;
 using UnityEngine;
@@ -14,41 +14,34 @@ namespace Sources.Modules.Finder
         private float _currentDistance;
         private float _tempDistance;
 
-        public void Init( Mage mage)
+        public void Init(Mage mage)
         {
+            _enemyUnits = new List<EnemyUnit>();
             _mage = mage;
         }
 
-        public void SetEnemyList(List<EnemyUnit> enemyUnits)
-        {
-            _enemyUnits = enemyUnits;
-            Debug.Log(_enemyUnits.Count());
-        }
+        public void SetEnemyList(List<EnemyUnit> enemyUnits) => _enemyUnits = enemyUnits;
 
         public Vector3 GetCloseEnemyPosition()
         {
-            _currentDistance = 0;
-            _tempDistance = 0;
-            
-            if (_enemyUnits != null)
-            {
-                foreach (var enemyUnit in _enemyUnits)
-                {
-                    if (enemyUnit.gameObject.activeSelf == true)
-                    {
-                        _tempDistance = Vector3.Distance(enemyUnit.transform.position, _mage.transform.position);
+            if (_enemyUnits.Count < 0)
+                throw new Exception();
 
-                        if (_currentDistance == 0)
-                        {
-                            SetCloseEnemy(enemyUnit);
-                        }
-                        else if (_tempDistance < _currentDistance)
-                        {
-                            SetCloseEnemy(enemyUnit);
-                        }
+            foreach (var enemyUnit in _enemyUnits)
+            {
+                if (enemyUnit.gameObject.activeSelf)
+                {
+                    _tempDistance = Vector3.Distance(enemyUnit.transform.position, _mage.transform.position);
+
+                    if (_currentDistance == 0)
+                    {
+                        SetCloseEnemy(enemyUnit);
+                    }
+                    else if (_tempDistance < _currentDistance)
+                    {
+                        SetCloseEnemy(enemyUnit);
                     }
                 }
-
             }
 
             return _closePosition;
