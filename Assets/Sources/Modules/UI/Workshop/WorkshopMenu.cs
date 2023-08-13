@@ -1,7 +1,7 @@
-using System;
+using Sources.Modules.Workshop;
 using UnityEngine;
 
-namespace Sources.Modules.Workshop
+namespace Sources.Modules.UI.Workshop
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class WorkshopMenu : MonoBehaviour
