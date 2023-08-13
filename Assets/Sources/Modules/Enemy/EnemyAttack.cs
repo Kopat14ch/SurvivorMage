@@ -15,7 +15,7 @@ namespace Sources.Modules.Enemy
             CountDown();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionStay2D(Collision2D other)
         {
             if (other.gameObject.TryGetComponent(out Mage mage) && _passedTime >= _cooldown)
             {

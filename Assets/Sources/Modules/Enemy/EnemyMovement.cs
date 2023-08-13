@@ -11,7 +11,7 @@ namespace Sources.Modules.Enemy
         [SerializeField] private AIPath _aiPath;
 
         private Flipper _flipper;
-
+        
         private void Awake() => _flipper = GetComponent<Flipper>();
 
         private void Update()
