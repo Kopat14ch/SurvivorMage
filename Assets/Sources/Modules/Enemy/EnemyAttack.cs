@@ -32,7 +32,7 @@ namespace Sources.Modules.Enemy
         
         private void Attack(Mage mage)
         {
-            Debug.Log("Attack!");
+            mage.TryTakeDamage(_damage);
         }
     }
 }

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3010961522539026561}
   - component: {fileID: 5461112087330444183}
   - component: {fileID: 1740668863535328209}
-  - component: {fileID: 5215680124213465006}
+  - component: {fileID: 8776009841963394764}
   m_Layer: 0
   m_Name: Demon1
   m_TagString: Untagged
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _maxHealth: 0
+  _maxHealth: 3.3
   _destinationSetter: {fileID: 8646821525671392517}
 --- !u!114 &3010961522539026561
 MonoBehaviour:
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11abe583a684434caf101ce1482fadf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 10
   _cooldown: 1
 --- !u!114 &1740668863535328209
 MonoBehaviour:
@@ -206,8 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415e6514baf24329a945c1d5063c95ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!58 &5215680124213465006
-CircleCollider2D:
+--- !u!70 &8776009841963394764
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -235,12 +235,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.1, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.7
+  m_Offset: {x: 0.110461235, y: -0.1380527}
+  m_Size: {x: 1.0634403, y: 1.4091849}
+  m_Direction: 0
 --- !u!1001 &7512455698843315774
 PrefabInstance:
   m_ObjectHideFlags: 0
