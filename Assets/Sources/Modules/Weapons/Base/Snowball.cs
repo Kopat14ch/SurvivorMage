@@ -1,4 +1,5 @@
-﻿using Sources.Modules.Enemy;
+﻿using Sources.Modules.Common;
+using Sources.Modules.Enemy;
 using Sources.Modules.Weapons.Common;
 using UnityEngine;
 
@@ -11,9 +12,14 @@ namespace Sources.Modules.Weapons.Base
             if (other.gameObject.TryGetComponent(out EnemyUnit enemy))
             {
                 enemy.TakeDamage(Damage);
+                gameObject.SetActive(false);
             }
 
-            gameObject.SetActive(false);
+            if (other.gameObject.TryGetComponent<Obstacle>(out _))
+            {
+                gameObject.SetActive(false);
+            }
+                
         }
 
         public override void Launch(ShootPoint shootPoint, Vector3 position)

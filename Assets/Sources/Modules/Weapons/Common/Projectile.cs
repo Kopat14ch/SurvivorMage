@@ -11,7 +11,7 @@ namespace Sources.Modules.Weapons.Common
         [SerializeField, Range(MinTimeToDestroy, MaxTimeToDestroy)] private float _timeToDestroy;
 
         [SerializeField] protected float Damage;
-        
+
         protected Coroutine DisablingWork;
         protected ShootPoint ShootPoint;
         
