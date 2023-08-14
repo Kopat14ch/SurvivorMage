@@ -11,7 +11,7 @@ namespace Sources.Modules.Player.MVP
         public event Action<float> DamageScalerChanged;
         public event Action<float> SpeedChanged;
 
-        public PlayerPresenter(PlayerModel model, PlayerView view )
+        public PlayerPresenter(PlayerModel model, PlayerView view)
         {
             _model = model;
             _view = view;
