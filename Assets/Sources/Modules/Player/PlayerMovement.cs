@@ -10,9 +10,9 @@ namespace Sources.Modules.Player
     [RequireComponent(typeof(Animator))]
     internal class PlayerMovement : MonoBehaviour
     {
-        private const float Speed = 15f;
         private const float MinMoveDirection = 0.1f;
 
+        private float _speed;
         private Flipper _flipper;
         private Rigidbody2D _rigidbody2D;
         private Animator _animator;
@@ -40,6 +40,11 @@ namespace Sources.Modules.Player
             _playerInput.Disable();
         }
 
+        public void SetSpeed(float speed)
+        {
+            _speed = speed;
+        }
+
         private void OnMove()
         {
             if (_moveWork != null)
@@ -55,7 +60,7 @@ namespace Sources.Modules.Player
             
             while (_moveDirection.magnitude > MinMoveDirection)
             {
-                _rigidbody2D.velocity = Speed * _moveDirection;
+                _rigidbody2D.velocity = _speed * _moveDirection;
                 _flipper.TryFlip(_rigidbody2D.velocity.x);
 
                 SetMoveDirection();
