@@ -28,9 +28,7 @@ namespace Sources.Modules.Player
             if (damage > 0 && _currentHealth > 0)
             {
                 _animator.Play(PlayerAnimator.States.Hit);
-                
-                Debug.Log("hit");
-                
+
                 _currentHealth -= damage;
                 _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
                 

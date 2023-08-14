@@ -25,7 +25,6 @@ namespace Sources.Modules.UI.InGame
 
         private void UpdateMaxValue(float value)
         {
-            Debug.Log("update");
             Slider.maxValue = value;
         }
     }
