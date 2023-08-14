@@ -36,7 +36,7 @@ namespace Sources.Modules.Player.MVP
 
         private void OnDisable()
         {
-            _presenter.MaxHealthChanged += _mage.SetMaxHealth;
+            _presenter.MaxHealthChanged -= _mage.SetMaxHealth;
             _presenter.SpeedChanged -= _playerMovement.SetSpeed;
             
             _presenter.Disable();
