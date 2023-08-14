@@ -30,8 +30,6 @@ namespace Sources.Modules.EnemyFactory
             for (int i = 0; i < wave.Count; i++, enemyTypeIndex++)
             {
                 enemyTypeIndex %= wave.Keys.ElementAt(i).Count;
-                
-                Debug.Log(wave.Keys.ElementAt(i)[enemyTypeIndex]);
 
                 _currentUnits = _enemyPool.GetObjects(wave.Keys.ElementAt(i)[enemyTypeIndex], wave.Values.ElementAt(i));
                 
