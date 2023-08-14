@@ -5,6 +5,7 @@ namespace Sources.Modules.Enemy
 {
     public class EnemyAttack : MonoBehaviour
     {
+        [SerializeField] private int _damage;
         [SerializeField] private float _cooldown;
 
         private float _passedTime;
@@ -14,7 +15,7 @@ namespace Sources.Modules.Enemy
             CountDown();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionStay2D(Collision2D other)
         {
             if (other.gameObject.TryGetComponent(out Mage mage) && _passedTime >= _cooldown)
             {
@@ -31,7 +32,7 @@ namespace Sources.Modules.Enemy
         
         private void Attack(Mage mage)
         {
-            Debug.Log("Attack!");
+            mage.TryTakeDamage(_damage);
         }
     }
 }

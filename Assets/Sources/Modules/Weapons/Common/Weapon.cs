@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sources.Modules.Common;
+using Sources.Modules.Finder;
 using Sources.Modules.Weapons.Pools;
 using UnityEngine;
 
@@ -10,38 +10,39 @@ namespace Sources.Modules.Weapons.Common
     {
         [SerializeField] private ShootPoint _shootPoint;
         [SerializeField, Range(MinCooldown, MaxCooldown)] private float _cooldown;
-        
-        protected FindCloseEnemy FindCloseEnemy;
+
+        private bool _stopShooting;
+
+        protected FinderCloseEnemy FinderCloseEnemy;
         protected List<Projectile> Projectiles;
         protected Coroutine ShootingWork;
-        protected bool StopShooting;
-        protected float CurrentCooldown;
-        
+
         private const int MinCooldown = 1;
         private const int MaxCooldown = 60;
+        
+        private float _currentCooldown;
 
-        protected bool CanShoot => CurrentCooldown <= 0;
-        protected ShootPoint ShootPoint => _shootPoint;
-        protected float Cooldown => _cooldown;
+        private bool CanShoot => _currentCooldown <= 0;
+        private float Cooldown => _cooldown;
 
-        public abstract void Init(ProjectilesPool projectilesPool, FindCloseEnemy findCloseEnemy);
+        public abstract void Init(ProjectilesPool projectilesPool, FinderCloseEnemy finderCloseEnemy);
 
         protected abstract void StartShooting();
-        
+
         protected IEnumerator Shooting()
         {
             int indexShoot = 0;
             
-            while (StopShooting == false)
+            while (_stopShooting == false)
             {
                 if (CanShoot == false)
                 {
-                    CurrentCooldown -= Time.deltaTime;
+                    _currentCooldown -= Time.deltaTime;
                 }
                 else
                 {
-                    Projectiles[indexShoot].Launch(ShootPoint, FindCloseEnemy.GetCloseEnemyPosition());
-                    CurrentCooldown = Cooldown;
+                    Projectiles[indexShoot].Launch(_shootPoint, FinderCloseEnemy.GetCloseEnemyPosition());
+                    _currentCooldown = Cooldown;
                     indexShoot++;
                     indexShoot %= Projectiles.Count;
                 }

@@ -9,6 +9,8 @@ namespace Sources.Modules.Weapons.Common
         [SerializeField, Range(MinSpeed, MaxSpeed)] private float _speed;
 
         [SerializeField, Range(MinTimeToDestroy, MaxTimeToDestroy)] private float _timeToDestroy;
+
+        [SerializeField] protected float Damage;
         
         protected Coroutine DisablingWork;
         protected ShootPoint ShootPoint;
@@ -22,8 +24,8 @@ namespace Sources.Modules.Weapons.Common
         private float _currentTimeToDisable;
 
         private void Awake() => _rigidbody2D = GetComponent<Rigidbody2D>();
-        
-        protected abstract void OnTriggerEnter2D(Collider2D collider2D);
+
+        protected abstract void OnTriggerEnter2D(Collider2D other);
         
         public abstract void Launch(ShootPoint shootPoint, Vector3 position);
 

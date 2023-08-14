@@ -1,4 +1,4 @@
-using Sources.Modules.Common;
+using Sources.Modules.Finder;
 using Sources.Modules.Weapons.Common;
 using Sources.Modules.Weapons.Pools;
 using UnityEngine;
@@ -9,10 +9,10 @@ namespace Sources.Modules.Weapons.Base
     {
         [SerializeField] private Projectile _projectile;
 
-        public override void Init(ProjectilesPool projectilesPool, FindCloseEnemy findCloseEnemy)
+        public override void Init(ProjectilesPool projectilesPool, FinderCloseEnemy finderCloseEnemy)
         {
-            Projectiles = projectilesPool.TryGetProjectiles(_projectile);
-            FindCloseEnemy = findCloseEnemy;
+            Projectiles = projectilesPool.TryGetObjects(_projectile);
+            FinderCloseEnemy = finderCloseEnemy;
             
             StartShooting();
         }
