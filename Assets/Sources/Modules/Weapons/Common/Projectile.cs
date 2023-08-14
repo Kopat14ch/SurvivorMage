@@ -1,4 +1,6 @@
 using System.Collections;
+using Sources.Modules.Common;
+using Sources.Modules.Enemy;
 using UnityEngine;
 
 namespace Sources.Modules.Weapons.Common
@@ -25,7 +27,21 @@ namespace Sources.Modules.Weapons.Common
 
         private void Awake() => _rigidbody2D = GetComponent<Rigidbody2D>();
 
-        protected abstract void OnTriggerEnter2D(Collider2D other);
+        protected virtual void OnTriggerEnter2D(Collider2D other)
+        {
+            bool enemyReceived = other.gameObject.TryGetComponent(out EnemyUnit enemy);
+            bool obstacleReceived = other.gameObject.TryGetComponent<Obstacle>(out _);
+            
+            if (obstacleReceived || enemyReceived)
+            {
+                gameObject.SetActive(false);
+            }
+            
+            if (enemyReceived)
+            {
+                enemy.TakeDamage(Damage);
+            }
+        }
         
         public abstract void Launch(ShootPoint shootPoint, Vector3 position);
 
