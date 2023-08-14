@@ -329,6 +329,90 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: X
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 231
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 434db36371879d04eb29e61b90a505d1
+      internalID: 212057244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: V
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 230
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3540b55ba63ac0e4192451845110555e
+      internalID: -274848739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pause
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 212
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 840fcc43e3ccb9740aa531578375850b
+      internalID: -356469218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: House
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 214
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0d7827a58ef8ef429a83e79c54e7dbc
+      internalID: -1524679907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -341,13 +425,18 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       DarkBlueButton: -110336346
+      GUI_0: 286715400
+      House: -1524679907
       LongBar: -2131304409
       MiniBar: -1448783724
       MiniBlueFill: -1816669507
       MiniSilverPanel: -87500215
       MiniWoodPanel: 1758932274
+      Pause: -356469218
       RedFill: -672142858
+      V: -274848739
       WoodPanel: 653795774
+      X: 212057244
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
