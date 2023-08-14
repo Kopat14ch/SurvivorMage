@@ -9,17 +9,18 @@ namespace Sources.Modules.Weapons.Base
     {
         protected override void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.TryGetComponent(out EnemyUnit enemy))
+            bool enemyReceived = other.gameObject.TryGetComponent(out EnemyUnit enemy);
+            bool obstacleReceived = other.gameObject.TryGetComponent<Obstacle>(out _);
+            
+            if (enemyReceived)
             {
                 enemy.TakeDamage(Damage);
-                gameObject.SetActive(false);
             }
 
-            if (other.gameObject.TryGetComponent<Obstacle>(out _))
+            if (obstacleReceived || enemyReceived)
             {
                 gameObject.SetActive(false);
             }
-                
         }
 
         public override void Launch(ShootPoint shootPoint, Vector3 position)
