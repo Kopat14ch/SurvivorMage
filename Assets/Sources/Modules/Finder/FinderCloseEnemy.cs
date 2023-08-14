@@ -26,10 +26,12 @@ namespace Sources.Modules.Finder
         {
             if (_enemyUnits.Count < 0)
                 throw new Exception();
-
+            
+            _currentDistance = 0;
+            
             foreach (var enemyUnit in _enemyUnits)
             {
-                if (enemyUnit.gameObject.activeSelf)
+                if (enemyUnit.isActiveAndEnabled)
                 {
                     _tempDistance = Vector3.Distance(enemyUnit.transform.position, _mage.transform.position);
 
