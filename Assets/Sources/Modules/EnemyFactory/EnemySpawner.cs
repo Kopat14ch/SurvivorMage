@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sources.Modules.Common;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory.Pool;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Sources.Modules.EnemyFactory
 {
     public class EnemySpawner : MonoBehaviour
     {
-        [SerializeField] private List<Transform> _spawnPoints;
+        [SerializeField] private List<SpawnPoint> _spawnPoints;
         [SerializeField] private Transform _playerPosition;
 
         private const float SpawningCooldown = 0.5f;
@@ -63,9 +64,8 @@ namespace Sources.Modules.EnemyFactory
             {
                 if (enemyUnit.IsDie)
                     continue;
-
-                enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].position;
-
+                
+                enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
                 enemyUnit.gameObject.SetActive(true);
 
                 yield return waitForSeconds;

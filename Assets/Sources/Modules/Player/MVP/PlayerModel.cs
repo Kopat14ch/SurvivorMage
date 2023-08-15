@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Sources.Modules.Player.MVP
 {
@@ -13,9 +12,9 @@ namespace Sources.Modules.Player.MVP
         private const float DamageScalerLimit = 3f;
         private const float SpeedLimit = 25f;
 
-        public event Action<float, float> MaxHealthChanged;
-        public event Action<float, float> SpeedChanged;
-        public event Action<float, float> DamageScalerChanged;
+        public event Action<float, float, bool> MaxHealthChanged;
+        public event Action<float, float, bool> DamageScalerChanged;
+        public event Action<float, float, bool> SpeedChanged;
         
         public float MaxHealth { get; private set; }
         public float DamageScaler { get; private set; }
@@ -30,36 +29,45 @@ namespace Sources.Modules.Player.MVP
 
         public void InvokeAll()
         {
-            MaxHealthChanged?.Invoke(MaxHealth, MaxHealthIncreaseValue);
-            DamageScalerChanged?.Invoke(DamageScaler, DamageScalerIncreaseValue);
-            SpeedChanged?.Invoke(Speed, SpeedIncreaseValue);
+            MaxHealthChanged?.Invoke(MaxHealth, MaxHealthIncreaseValue, true);
+            DamageScalerChanged?.Invoke(DamageScaler, DamageScalerIncreaseValue, true);
+            SpeedChanged?.Invoke(Speed, SpeedIncreaseValue, true);
         }
 
         public void TryAddMaxHealth()
         {
-            if (MaxHealth + MaxHealthIncreaseValue >= MaxHealthLimit)
-                return;
-            
-            MaxHealth += MaxHealthIncreaseValue;
-            MaxHealthChanged?.Invoke(MaxHealth, MaxHealthIncreaseValue);
+            bool canBeIncreased = MaxHealth + MaxHealthIncreaseValue <= MaxHealthLimit;
+            bool canBeIncreasedTwice = MaxHealth + (2 * MaxHealthIncreaseValue) <= MaxHealthLimit;
+
+            if (canBeIncreased)
+            {
+                MaxHealth += MaxHealthIncreaseValue;
+                MaxHealthChanged?.Invoke(MaxHealth, MaxHealthIncreaseValue, canBeIncreasedTwice);
+            }
         }
 
         public void TryAddDamageScaler()
         {
-            if (DamageScaler + DamageScalerIncreaseValue >= DamageScalerLimit)
-                return;
+            bool canBeIncreased = DamageScaler + DamageScalerIncreaseValue <= DamageScalerLimit;
+            bool canBeIncreasedTwice = DamageScaler + (2 * DamageScalerIncreaseValue) <= DamageScalerLimit;
 
-            DamageScaler += DamageScalerIncreaseValue;
-            DamageScalerChanged?.Invoke(DamageScaler, DamageScalerIncreaseValue);
+            if (canBeIncreased)
+            {
+                DamageScaler += DamageScalerIncreaseValue;
+                DamageScalerChanged?.Invoke(DamageScaler, DamageScalerIncreaseValue, canBeIncreasedTwice);
+            }
         }
         
         public void TryAddSpeed()
         {
-            if (Speed + SpeedIncreaseValue >= SpeedLimit)
-                return;
-            
-            Speed += SpeedIncreaseValue;
-            SpeedChanged?.Invoke(Speed, SpeedIncreaseValue);
+            bool canBeIncreased = Speed + SpeedIncreaseValue <= SpeedLimit;
+            bool canBeIncreasedTwice = Speed + (2 * SpeedIncreaseValue) <= SpeedLimit;
+
+            if (canBeIncreased)
+            {
+                Speed += SpeedIncreaseValue;
+                SpeedChanged?.Invoke(Speed, SpeedIncreaseValue , canBeIncreasedTwice);
+            }
         }
     }
 }

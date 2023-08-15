@@ -6,25 +6,41 @@ namespace Sources.Modules.Wallet.MVP
     public class WalletModel
     {
         private const int BaseAddValue = 1;
-        private const float MinMultiplier = 1;
-        private const float MaxMultiplier = 3;
-        private const float AddMultiplier = 0.1f;
+        private const int MinMultiplier = 0;
+        private const int MaxMultiplier = 5;
+        private const int AddMultiplier = 1;
         
-        private float _coins;
-        private float _coinMultiplier;
+        private int _coins;
+        private int _coinMultiplier;
 
-        public event Action<float> CoinsChanged; 
-        public event Action<float, float> MultiplierChanged;
+        public event Action<int> CoinsChanged; 
+        public event Action<int, int> MultiplierChanged;
 
-        public WalletModel(float coins, float coinMultiplier)
+        public WalletModel(int coins, int coinMultiplier)
         {
             _coins = coins;
             _coinMultiplier = Mathf.Clamp(coinMultiplier, MinMultiplier, MaxMultiplier);
         }
 
+        public void UpdateCoins()
+        {
+            CoinsChanged?.Invoke(_coins);
+        }
+        
         public void AddCoin()
         {
-            _coins += BaseAddValue * _coinMultiplier;
+            _coins += BaseAddValue + _coinMultiplier;
+            CoinsChanged?.Invoke(_coins);
+        }
+
+        public bool IsCoinsEnough(int value)
+        {
+            return _coins >= value;
+        }
+        
+        public void TakeOffCoins(int value)
+        {
+            _coins -= value;
             CoinsChanged?.Invoke(_coins);
         }
 

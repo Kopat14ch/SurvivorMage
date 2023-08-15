@@ -20,9 +20,9 @@ namespace Sources.Modules.Player.MVP
 
         public void Enable()
         {
-            _view.ButtonAddMaxHealthPressed += OnButtonAddMaxHealthPressed;
-            _view.ButtonAddDamageScalerPressed += OnButtonAddDamageScalerPressed;
-            _view.ButtonAddSpeedPressed += OnButtonAddSpeedPressed;
+            _view.MaxHealthIncreasingBought += OnMaxHealthIncreasingBought;
+            _view.DamageScalerIncreasingBought += OnDamageScalerIncreasingBought;
+            _view.SpeedIncreasingBought += OnSpeedIncreasingBought;
 
             _model.MaxHealthChanged += OnMaxHealthChanged;
             _model.DamageScalerChanged += OnDamageScalerChanged;
@@ -33,44 +33,44 @@ namespace Sources.Modules.Player.MVP
 
         public void Disable()
         {
-            _view.ButtonAddMaxHealthPressed -= OnButtonAddMaxHealthPressed;
-            _view.ButtonAddDamageScalerPressed -= OnButtonAddDamageScalerPressed;
-            _view.ButtonAddSpeedPressed -= OnButtonAddSpeedPressed;
+            _view.MaxHealthIncreasingBought -= OnMaxHealthIncreasingBought;
+            _view.DamageScalerIncreasingBought -= OnDamageScalerIncreasingBought;
+            _view.SpeedIncreasingBought -= OnSpeedIncreasingBought;
             
             _model.MaxHealthChanged -= OnMaxHealthChanged;
             _model.DamageScalerChanged -= OnDamageScalerChanged;
             _model.SpeedChanged -= OnSpeedChanged;
         }
         
-        private void OnMaxHealthChanged(float maxHealth, float increase)
+        private void OnMaxHealthChanged(float maxHealth, float increase, bool canBeIncreased)
         {
-            _view.ChangeMaxHealthText(maxHealth, increase);
+            _view.ChangeMaxHealthText(maxHealth, increase, canBeIncreased);
             MaxHealthChanged?.Invoke(maxHealth);
         }
 
-        private void OnDamageScalerChanged(float damageScaler, float increase)
+        private void OnDamageScalerChanged(float damageScaler, float increase, bool canBeIncreased)
         {
-            _view.ChangeDamageScalerText(damageScaler, increase);
+            _view.ChangeDamageScalerText(damageScaler, increase, canBeIncreased);
             DamageScalerChanged?.Invoke(damageScaler);
         }
 
-        private void OnSpeedChanged(float speed, float increase)
+        private void OnSpeedChanged(float speed, float increase, bool canBeIncreased)
         {
-            _view.ChangeSpeedText(speed, increase);
+            _view.ChangeSpeedText(speed, increase, canBeIncreased);
             SpeedChanged?.Invoke(speed);
         }
 
-        private void OnButtonAddMaxHealthPressed()
+        private void OnMaxHealthIncreasingBought()
         {
             _model.TryAddMaxHealth();
         }
         
-        private void OnButtonAddDamageScalerPressed()
+        private void OnDamageScalerIncreasingBought()
         {
             _model.TryAddDamageScaler();
         }
 
-        private void OnButtonAddSpeedPressed()
+        private void OnSpeedIncreasingBought()
         {
             _model.TryAddSpeed();
         }

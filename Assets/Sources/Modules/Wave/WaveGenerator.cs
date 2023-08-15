@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory;
 using Sources.Modules.Finder;
+using Sources.Modules.Wallet;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +14,7 @@ namespace Sources.Modules.Wave
         [SerializeField] private EnemySpawner _spawner;
         [SerializeField] private FinderCloseEnemy _finder;
         [SerializeField] private List<EnemyUnit> _enemiesToSpawn;
+        [SerializeField] private CoinSpawner _coinSpawner;
 
         public event Action UnitDied;
         public event Action<int> WaveStarted; 
@@ -57,6 +59,7 @@ namespace Sources.Modules.Wave
             
             WaveStarted?.Invoke(_spawnedEnemies.Count);
             _finder.SetEnemyList(_spawnedEnemies);
+            _coinSpawner.SetEnemies(_spawnedEnemies);
         }
         
         private void OnUnitDied(EnemyUnit unit)

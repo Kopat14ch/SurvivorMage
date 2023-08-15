@@ -6,13 +6,13 @@ namespace Sources.Modules.Wallet
 {
     public class Coin : MonoBehaviour
     {
-        public event Action Taken;
+        public event Action<Coin> Taken;
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out Mage _))
             {
-                Taken?.Invoke();
+                Taken?.Invoke(this);
                 gameObject.SetActive(false);
             }
         }

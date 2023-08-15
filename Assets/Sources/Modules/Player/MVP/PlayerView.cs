@@ -1,58 +1,73 @@
 ﻿using System;
+using Sources.Modules.Player.UI;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 namespace Sources.Modules.Player.MVP
 {
     public class PlayerView : MonoBehaviour
     {
-        [SerializeField] private Button _maxHealthButton;
-        [SerializeField] private Button _addDamageButton;
-        [SerializeField] private Button _addSpeedButton;
-        [SerializeField] private TMP_Text _currentHealthText;
-        [SerializeField] private TMP_Text _upgradeHealthText;
-        [SerializeField] private TMP_Text _currentDamageText;
-        [SerializeField] private TMP_Text _upgradeDamageText;
-        [SerializeField] private TMP_Text _currentSpeedText;
-        [SerializeField] private TMP_Text _upgradeSpeedText;
-        
-        public event Action ButtonAddMaxHealthPressed;
-        public event Action ButtonAddDamageScalerPressed;
-        public event Action ButtonAddSpeedPressed;
-        
-        
+        [SerializeField] private UpgradePanel _healthPanel;
+        [SerializeField] private UpgradePanel _damagePanel;
+        [SerializeField] private UpgradePanel _speedPanel;
+
+        public event Action<int> MaxHealthIncreasingButtonPressed;
+        public event Action<int> DamageScalerIncreasingButtonPressed;
+        public event Action<int> SpeedIncreasingButtonPressed;
+        public event Action MaxHealthIncreasingBought;
+        public event Action DamageScalerIncreasingBought;
+        public event Action SpeedIncreasingBought;
+
+
         private void OnEnable()
         {
-            _maxHealthButton.onClick.AddListener((() => ButtonAddMaxHealthPressed?.Invoke()));
-            _addDamageButton.onClick.AddListener((() => ButtonAddDamageScalerPressed?.Invoke()));
-            _addSpeedButton.onClick.AddListener((() => ButtonAddSpeedPressed?.Invoke()));
+            _healthPanel.BuyButton.onClick.AddListener((() =>
+                MaxHealthIncreasingButtonPressed?.Invoke(_healthPanel.Price)));
+            _damagePanel.BuyButton.onClick.AddListener((() =>
+                DamageScalerIncreasingButtonPressed?.Invoke(_damagePanel.Price)));
+            _speedPanel.BuyButton.onClick.AddListener((() => SpeedIncreasingButtonPressed?.Invoke(_speedPanel.Price)));
         }
-        
+
         private void OnDisable()
         {
-            _maxHealthButton.onClick.RemoveListener((() => ButtonAddMaxHealthPressed?.Invoke()));
-            _addDamageButton.onClick.RemoveListener((() => ButtonAddDamageScalerPressed?.Invoke()));
-            _addSpeedButton.onClick.RemoveListener((() => ButtonAddSpeedPressed?.Invoke()));
+            _healthPanel.BuyButton.onClick.RemoveListener((() =>
+                MaxHealthIncreasingButtonPressed?.Invoke(_healthPanel.Price)));
+            _damagePanel.BuyButton.onClick.RemoveListener((() =>
+                DamageScalerIncreasingButtonPressed?.Invoke(_damagePanel.Price)));
+            _speedPanel.BuyButton.onClick.RemoveListener(
+                (() => SpeedIncreasingButtonPressed?.Invoke(_speedPanel.Price)));
         }
 
-        public void ChangeMaxHealthText(float maxHealth, float increase)
+        public void ChangeMaxHealthText(float maxHealth, float increase, bool canBeIncreased)
         {
-            _currentHealthText.text = Mathf.CeilToInt(maxHealth).ToString();
-            _upgradeHealthText.text =
-                Mathf.CeilToInt(maxHealth + increase).ToString();
+            _healthPanel.ChangeCurrentValueText(Mathf.CeilToInt(maxHealth).ToString());
+            _healthPanel.ChangeUpgradeValueText(Mathf.CeilToInt(maxHealth + increase).ToString());
+            
+            if (canBeIncreased == false)
+                _healthPanel.MaximizeValue();
         }
         
-        public void ChangeDamageScalerText(float damageScaler, float increase)
+        public void ChangeDamageScalerText(float damageScaler, float increase, bool canBeIncreased)
         {
-            _currentDamageText.text = damageScaler.ToString("F1");
-            _upgradeDamageText.text = (damageScaler + increase).ToString("F1");
+            _damagePanel.ChangeCurrentValueText(damageScaler.ToString("F1"));
+            _damagePanel.ChangeUpgradeValueText((damageScaler + increase).ToString("F1"));
+            
+            if (canBeIncreased == false)
+                _damagePanel.MaximizeValue();
         }
 
-        public void ChangeSpeedText(float speed, float increase)
+        public void ChangeSpeedText(float speed, float increase, bool canBeIncreased)
         {
-            _currentSpeedText.text = speed.ToString("F1");
-            _upgradeSpeedText.text = (speed + increase).ToString("F1");
+            _speedPanel.ChangeCurrentValueText(speed.ToString("F1"));
+            _speedPanel.ChangeUpgradeValueText((speed + increase).ToString("F1"));
+            
+            if (canBeIncreased == false)
+                _speedPanel.MaximizeValue();
         }
+
+        public void AddMaxHealth() => MaxHealthIncreasingBought?.Invoke();
+
+        public void AddDamageScaler() => DamageScalerIncreasingBought?.Invoke();
+
+        public void AddSpeed() => SpeedIncreasingBought?.Invoke();
     }
 }
