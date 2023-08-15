@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 4
+  radius: 1
   height: 2
   canMove: 1
   maxSpeed: 2
@@ -132,7 +132,7 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 0.7
+  pickNextWaypointDist: 1.7
   endReachedDistance: 0.2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
@@ -238,8 +238,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.049480915, y: -0.10944784}
-  m_Size: {x: 1.218009, y: 1.4895384}
+  m_Offset: {x: 0.018408477, y: -0.036336184}
+  m_Size: {x: 1.3537878, y: 1.6357617}
   m_Direction: 0
 --- !u!1001 &1281725928880866534
 PrefabInstance:
@@ -255,11 +255,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2577896855446829584, guid: 9051ed6dc43e6f74a9af789b8a5dbb9c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 2577896855446829584, guid: 9051ed6dc43e6f74a9af789b8a5dbb9c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.44
+      value: 0.42
       objectReference: {fileID: 0}
     - target: {fileID: 2577896855446829584, guid: 9051ed6dc43e6f74a9af789b8a5dbb9c, type: 3}
       propertyPath: m_LocalPosition.z

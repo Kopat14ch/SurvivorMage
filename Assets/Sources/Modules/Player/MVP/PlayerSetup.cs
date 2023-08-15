@@ -19,6 +19,7 @@ namespace Sources.Modules.Player.MVP
         {
             PlayerModel playerModel = new (BaseMaxHealth,BaseSpeed,DamageScaler);
             _view = GetComponent<PlayerView>();
+            _view.SetPlayerModel(playerModel);
             _presenter = new PlayerPresenter(playerModel, _view);
             _mage = mage;
             

@@ -4,9 +4,9 @@ namespace Sources.Modules.Player.MVP
 {
     public class PlayerModel
     {
-        private const float MaxHealthIncreaseValue = 3.5f;
-        private const float DamageScalerIncreaseValue = 0.1f;
-        private const float SpeedIncreaseValue = 0.4f;
+        public readonly float MaxHealthIncreaseValue = 3.5f;
+        public readonly float DamageScalerIncreaseValue = 0.1f;
+        public readonly float SpeedIncreaseValue = 0.4f;
 
         private const float MaxHealthLimit = 500;
         private const float DamageScalerLimit = 3f;
