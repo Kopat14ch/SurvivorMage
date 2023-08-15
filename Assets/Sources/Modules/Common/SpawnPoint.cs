@@ -4,7 +4,7 @@ namespace Sources.Modules.Common
 {
     public class SpawnPoint : MonoBehaviour
     {
-        private bool _isReadyToSpawn;
+        private bool _isReadyToSpawn = true;
 
         public bool IsReadyToSpawn => _isReadyToSpawn;
 

@@ -62,8 +62,8 @@ namespace Sources.Modules.EnemyFactory
 
             foreach (var enemyUnit in _allWaveUnits)
             {
-                if (enemyUnit.IsDie)
-                    continue;
+                //if (enemyUnit.IsDie)
+                    //continue;
                 
                 enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
                 enemyUnit.gameObject.SetActive(true);
