@@ -11,13 +11,17 @@ namespace Sources.Modules.Wave
             new(
                 new List<EnemyType>()
                 {
-                    EnemyType.Demon1
+                    EnemyType.Demon1,
+                    
+                    EnemyType.Demon5
                 }
             ),
             new(
                 new List<EnemyType>()
                 {
-                    EnemyType.Demon2
+                    EnemyType.Demon2,
+                    
+                    EnemyType.Demon5
                 }
             ),
             new(

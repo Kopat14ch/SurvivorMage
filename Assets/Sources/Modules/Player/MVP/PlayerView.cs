@@ -62,12 +62,11 @@ namespace Sources.Modules.Player.MVP
             _upgradeDamageText.text =
                 Mathf.CeilToInt(damageScaler + _playerModel.DamageScalerIncreaseValue).ToString();
         }
-        
+
         public void ChangeSpeedText(float speed)
         {
-            _currentSpeedText.text = Mathf.CeilToInt(speed).ToString();
-            _upgradeSpeedText.text =
-                Mathf.CeilToInt(speed + _playerModel.SpeedIncreaseValue).ToString();
+            _currentSpeedText.text = speed.ToString("F1");
+            _upgradeSpeedText.text = (speed + _playerModel.SpeedIncreaseValue).ToString("F1");
         }
     }
 }

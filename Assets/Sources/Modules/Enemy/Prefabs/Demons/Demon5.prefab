@@ -51,9 +51,9 @@ Rigidbody2D:
   m_GameObject: {fileID: 4884284883474729721}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 4
+  radius: 1.7
   height: 2
   canMove: 1
   maxSpeed: 2
@@ -132,7 +132,7 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 0.7
+  pickNextWaypointDist: 1.7
   endReachedDistance: 0.2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
@@ -238,8 +238,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01816225, y: -0.45308173}
-  m_Size: {x: 2.281619, y: 3.0955417}
+  m_Offset: {x: 0.02283287, y: 0.0095767975}
+  m_Size: {x: 2.3167577, y: 2.8086987}
   m_Direction: 0
 --- !u!1001 &9081953749150043865
 PrefabInstance:
@@ -259,7 +259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2703839172732522875, guid: 8ed3d6549bfb47a419031504fd6994a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.11
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 2703839172732522875, guid: 8ed3d6549bfb47a419031504fd6994a3, type: 3}
       propertyPath: m_LocalPosition.z
