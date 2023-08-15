@@ -11,7 +11,7 @@ namespace Sources.Modules.Player.MVP
         private PlayerPresenter _presenter;
         private Mage _mage;
 
-        private const float BaseMaxHealth = 125;
+        private const float BaseMaxHealth = 127;
         private const float BaseSpeed = 15f;
         private const float DamageScaler = 1f;
 
@@ -19,10 +19,10 @@ namespace Sources.Modules.Player.MVP
         {
             PlayerModel playerModel = new (BaseMaxHealth,BaseSpeed,DamageScaler);
             _view = GetComponent<PlayerView>();
-            _view.SetPlayerModel(playerModel);
             _presenter = new PlayerPresenter(playerModel, _view);
             _mage = mage;
-            
+
+
             _playerMovement.SetSpeed(playerModel.Speed);
             _mage.SetMaxHealth(playerModel.MaxHealth);
         }

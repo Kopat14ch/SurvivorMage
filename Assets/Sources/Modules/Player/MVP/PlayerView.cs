@@ -20,23 +20,15 @@ namespace Sources.Modules.Player.MVP
         public event Action ButtonAddMaxHealthPressed;
         public event Action ButtonAddDamageScalerPressed;
         public event Action ButtonAddSpeedPressed;
-
-        private PlayerModel _playerModel;
         
-        private void Awake()
+        
+        private void OnEnable()
         {
             _maxHealthButton.onClick.AddListener((() => ButtonAddMaxHealthPressed?.Invoke()));
             _addDamageButton.onClick.AddListener((() => ButtonAddDamageScalerPressed?.Invoke()));
             _addSpeedButton.onClick.AddListener((() => ButtonAddSpeedPressed?.Invoke()));
         }
-
-        private void OnEnable()
-        {
-            ChangeMaxHealthText(_playerModel.MaxHealth);
-            ChangeDamageScalerText(_playerModel.DamageScaler);
-            ChangeSpeedText(_playerModel.Speed);
-        }
-
+        
         private void OnDisable()
         {
             _maxHealthButton.onClick.RemoveListener((() => ButtonAddMaxHealthPressed?.Invoke()));
@@ -44,29 +36,24 @@ namespace Sources.Modules.Player.MVP
             _addSpeedButton.onClick.RemoveListener((() => ButtonAddSpeedPressed?.Invoke()));
         }
 
-        public void SetPlayerModel(PlayerModel model)
-        {
-            _playerModel = model;
-        }
-        
-        public void ChangeMaxHealthText(float maxHealth)
+        public void ChangeMaxHealthText(float maxHealth, float increase)
         {
             _currentHealthText.text = Mathf.CeilToInt(maxHealth).ToString();
             _upgradeHealthText.text =
-                Mathf.CeilToInt(_playerModel.MaxHealthIncreaseValue + maxHealth).ToString();
+                Mathf.CeilToInt(maxHealth + increase).ToString();
         }
         
-        public void ChangeDamageScalerText(float damageScaler)
+        public void ChangeDamageScalerText(float damageScaler, float increase)
         {
             _currentDamageText.text = Mathf.CeilToInt(damageScaler).ToString();
             _upgradeDamageText.text =
-                Mathf.CeilToInt(damageScaler + _playerModel.DamageScalerIncreaseValue).ToString();
+                Mathf.CeilToInt(damageScaler + increase).ToString();
         }
 
-        public void ChangeSpeedText(float speed)
+        public void ChangeSpeedText(float speed, float increase)
         {
             _currentSpeedText.text = speed.ToString("F1");
-            _upgradeSpeedText.text = (speed + _playerModel.SpeedIncreaseValue).ToString("F1");
+            _upgradeSpeedText.text = (speed + increase).ToString("F1");
         }
     }
 }
