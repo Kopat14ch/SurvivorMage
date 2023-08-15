@@ -12,8 +12,8 @@ namespace Sources.Modules.Wallet
         {
             if (other.TryGetComponent(out Mage _))
             {
-                gameObject.SetActive(false);
                 Taken?.Invoke();
+                gameObject.SetActive(false);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Sources.Modules.Wave
     {
         [SerializeField] private EnemySpawner _spawner;
         [SerializeField] private FinderCloseEnemy _finder;
-        [SerializeField] private List<EnemyUnit> _enemies;
+        [SerializeField] private List<EnemyUnit> _enemiesToSpawn;
 
         public event Action UnitDied;
         public event Action<int> WaveStarted; 
@@ -22,7 +22,7 @@ namespace Sources.Modules.Wave
         private const int Step = 3;
         
         private List<EnemyWaveConfig> _enemyConfigs;
-        private List<EnemyUnit> _currentWave;
+        private List<EnemyUnit> _spawnedEnemies;
         private Dictionary<List<EnemyType>, int> _wave;
 
         private WaveConfigs _waveConfigs;
@@ -46,31 +46,33 @@ namespace Sources.Modules.Wave
 
         private void StartWave(Dictionary<List<EnemyType>, int> wave)
         {
-            _currentWave = _spawner.SpawnEnemies(wave);
+            _spawner.SpawnEnemies(wave);
 
-            foreach (EnemyUnit unit in _currentWave)
+            _spawnedEnemies = _spawner.GetEnemies();
+
+            foreach (EnemyUnit unit in _spawnedEnemies)
             {
                 unit.Died += OnUnitDied;
             }
             
-            WaveStarted?.Invoke(_currentWave.Count);
-            _finder.SetEnemyList(_currentWave);
+            WaveStarted?.Invoke(_spawnedEnemies.Count);
+            _finder.SetEnemyList(_spawnedEnemies);
         }
         
         private void OnUnitDied(EnemyUnit unit)
         {
             unit.Died -= OnUnitDied;
-            _currentWave.Remove(unit);
+            _spawnedEnemies.Remove(unit);
 
             UnitDied?.Invoke();
             
-            if (_currentWave.Count == 0)
+            if (_spawnedEnemies.Count == 0)
                 NextWave();
         }
 
         private void SetRandomUnits()
         {
-            int numberVariationEnemies = Random.Range(1, _enemies.Count + 1);
+            int numberVariationEnemies = Random.Range(1, _enemiesToSpawn.Count + 1);
             _enemyConfigs = new List<EnemyWaveConfig>();
 
             for (int i = 0; i < numberVariationEnemies; i++)

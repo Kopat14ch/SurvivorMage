@@ -22,7 +22,7 @@ namespace Sources.Modules.Player
             MaxHealthIncreased?.Invoke(_maxHealth);
             HealthChanged?.Invoke(_currentHealth);
         }
-        
+
         public void TryTakeDamage(float damage)
         {
             if (damage > 0 && _currentHealth > 0)
