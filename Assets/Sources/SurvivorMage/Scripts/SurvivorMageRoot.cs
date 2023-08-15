@@ -2,13 +2,14 @@ using Sources.Modules.EnemyFactory;
 using Sources.Modules.EnemyFactory.Pool;
 using Sources.Modules.Finder;
 using Sources.Modules.Player;
+using Sources.Modules.Player.MVP;
 using Sources.Modules.Weapons.Common;
 using Sources.Modules.Weapons.Pools;
 using UnityEngine;
 
 namespace Sources.SurvivorMage.Scripts
 {
-    [RequireComponent(typeof(FindCloseEnemy),
+    [RequireComponent(typeof(FinderCloseEnemy),
         typeof(ProjectilesPool))]
     internal class SurvivorMageRoot : MonoBehaviour
     {
@@ -16,18 +17,20 @@ namespace Sources.SurvivorMage.Scripts
         [SerializeField] private Weapon _stick;
         [SerializeField] private EnemyPool _enemyPool;
         [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private PlayerSetup _setup;
 
-        private FindCloseEnemy _findCloseEnemy;
+        private FinderCloseEnemy _finderCloseEnemy;
         private ProjectilesPool _projectilesPool;
 
         private void Awake()
         {
-            _findCloseEnemy = GetComponent<FindCloseEnemy>();
+            _finderCloseEnemy = GetComponent<FinderCloseEnemy>();
             _projectilesPool = GetComponent<ProjectilesPool>();
-            
+
+            _setup.Init(_mage);
             _projectilesPool.Init();
-            _findCloseEnemy.Init(_mage);
-            _stick.Init(_projectilesPool, _findCloseEnemy);
+            _finderCloseEnemy.Init(_mage);
+            _stick.Init(_projectilesPool, _finderCloseEnemy);
             _enemyPool.Init();
             _enemySpawner.Init(_enemyPool);
         }

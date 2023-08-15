@@ -7,7 +7,6 @@ namespace Sources.Modules.Weapons.Pools
 {
     public class ProjectilesPool : Pool<Projectile>
     {
-        
         public override void Init()
         {
             GameObjectsInPool = new List<Projectile>();

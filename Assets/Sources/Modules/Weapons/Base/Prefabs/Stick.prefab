@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5178978600411678627}
   - component: {fileID: 5734257678989965979}
   - component: {fileID: 3918622268320162151}
+  - component: {fileID: 3703184401388093543}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1123354500543602336}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.78, z: 0.3}
+  m_LocalScale: {x: 1.3909514, y: 1.3899859, z: 0.33269653}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3061473707629520558}
@@ -74,9 +75,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.26415092, g: 0.20309716, b: 0.20309716, a: 1}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: d39ccc65e9bb44743a135d72e40e65e8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.98039216}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,9 +100,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootPoint: {fileID: 6285437581901037352}
-  _cooldown: 2
+  _cooldown: 1
   _projectile: {fileID: 1727644642498907562, guid: ffccb989c51fb3746bb2ed7ece380185, type: 3}
-  _projectilesPool: {fileID: 0}
+--- !u!95 &3703184401388093543
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123354500543602336}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53c3e8cef88acb54dad627a2d32fd7ad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5020712423532969782
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5020712423532969782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0.01, y: 0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

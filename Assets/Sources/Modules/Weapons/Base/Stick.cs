@@ -9,10 +9,10 @@ namespace Sources.Modules.Weapons.Base
     {
         [SerializeField] private Projectile _projectile;
 
-        public override void Init(ProjectilesPool projectilesPool, FindCloseEnemy findCloseEnemy)
+        public override void Init(ProjectilesPool projectilesPool, FinderCloseEnemy finderCloseEnemy)
         {
             Projectiles = projectilesPool.TryGetObjects(_projectile);
-            FindCloseEnemy = findCloseEnemy;
+            FinderCloseEnemy = finderCloseEnemy;
             
             StartShooting();
         }

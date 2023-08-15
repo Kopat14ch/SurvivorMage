@@ -1,4 +1,6 @@
 using System.Collections;
+using Sources.Modules.Common;
+using Sources.Modules.Enemy;
 using UnityEngine;
 
 namespace Sources.Modules.Weapons.Common
@@ -9,7 +11,9 @@ namespace Sources.Modules.Weapons.Common
         [SerializeField, Range(MinSpeed, MaxSpeed)] private float _speed;
 
         [SerializeField, Range(MinTimeToDestroy, MaxTimeToDestroy)] private float _timeToDestroy;
-        
+
+        [SerializeField] protected float Damage;
+
         protected Coroutine DisablingWork;
         protected ShootPoint ShootPoint;
         
@@ -22,8 +26,22 @@ namespace Sources.Modules.Weapons.Common
         private float _currentTimeToDisable;
 
         private void Awake() => _rigidbody2D = GetComponent<Rigidbody2D>();
-        
-        protected abstract void OnTriggerEnter2D(Collider2D collider2D);
+
+        protected virtual void OnTriggerEnter2D(Collider2D other)
+        {
+            bool enemyReceived = other.gameObject.TryGetComponent(out EnemyUnit enemy);
+            bool obstacleReceived = other.gameObject.TryGetComponent<Obstacle>(out _);
+            
+            if (obstacleReceived || enemyReceived)
+            {
+                gameObject.SetActive(false);
+            }
+            
+            if (enemyReceived)
+            {
+                enemy.TakeDamage(Damage);
+            }
+        }
         
         public abstract void Launch(ShootPoint shootPoint, Vector3 position);
 
