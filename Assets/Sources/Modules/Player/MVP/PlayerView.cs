@@ -45,9 +45,8 @@ namespace Sources.Modules.Player.MVP
         
         public void ChangeDamageScalerText(float damageScaler, float increase)
         {
-            _currentDamageText.text = Mathf.CeilToInt(damageScaler).ToString();
-            _upgradeDamageText.text =
-                Mathf.CeilToInt(damageScaler + increase).ToString();
+            _currentDamageText.text = damageScaler.ToString("F1");
+            _upgradeDamageText.text = (damageScaler + increase).ToString("F1");
         }
 
         public void ChangeSpeedText(float speed, float increase)

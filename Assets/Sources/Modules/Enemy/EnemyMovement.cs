@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Pathfinding;
 using Sources.Modules.Common;
@@ -14,7 +13,7 @@ namespace Sources.Modules.Enemy
         
         private void Awake() => _flipper = GetComponent<Flipper>();
 
-        private void Update()
+        private void FixedUpdate()
         {
             _flipper.TryFlip(_aiPath.desiredVelocity.x);
         }

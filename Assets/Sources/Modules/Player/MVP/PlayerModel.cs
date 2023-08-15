@@ -37,7 +37,7 @@ namespace Sources.Modules.Player.MVP
 
         public void TryAddMaxHealth()
         {
-            if (MaxHealth >= MaxHealthLimit)
+            if (MaxHealth + MaxHealthIncreaseValue >= MaxHealthLimit)
                 return;
             
             MaxHealth += MaxHealthIncreaseValue;
@@ -46,7 +46,7 @@ namespace Sources.Modules.Player.MVP
 
         public void TryAddDamageScaler()
         {
-            if (DamageScaler >= DamageScalerLimit)
+            if (DamageScaler + DamageScalerIncreaseValue >= DamageScalerLimit)
                 return;
 
             DamageScaler += DamageScalerIncreaseValue;
@@ -55,7 +55,7 @@ namespace Sources.Modules.Player.MVP
         
         public void TryAddSpeed()
         {
-            if (Speed >= SpeedLimit)
+            if (Speed + SpeedIncreaseValue >= SpeedLimit)
                 return;
             
             Speed += SpeedIncreaseValue;

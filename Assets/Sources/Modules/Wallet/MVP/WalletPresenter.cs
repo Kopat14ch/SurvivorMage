@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Sources.Modules.Wallet.MVP
 {
-    public class WalletPresenter : MonoBehaviour
+    public class WalletPresenter
     {
         private readonly WalletModel _model;
         private readonly WalletView _view;

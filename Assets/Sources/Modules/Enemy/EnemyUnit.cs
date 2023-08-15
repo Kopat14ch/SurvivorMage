@@ -9,11 +9,13 @@ namespace Sources.Modules.Enemy
         [SerializeField] private EnemyType _enemyType;
         [SerializeField] private float _maxHealth;
         [SerializeField] private AIDestinationSetter _destinationSetter;
+
+        private float _currentHealth;
+
+        public bool IsDie => _currentHealth <= 0;
         
         public EnemyType EnemyType => _enemyType;
-
         public event Action<EnemyUnit> Died;
-        private float _currentHealth;
 
         private void OnEnable()
         {
@@ -35,7 +37,7 @@ namespace Sources.Modules.Enemy
 
         private void TryDie()
         {
-            if (_currentHealth == 0)
+            if (_currentHealth <= 0)
             {
                 Died?.Invoke(this);
                 gameObject.SetActive(false);

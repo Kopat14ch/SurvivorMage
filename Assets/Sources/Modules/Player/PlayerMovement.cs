@@ -10,6 +10,7 @@ namespace Sources.Modules.Player
     [RequireComponent(typeof(Animator))]
     internal class PlayerMovement : MonoBehaviour
     {
+        private const float IdleTick = 1;
         private const float MinMoveDirection = 0.1f;
 
         private float _speed;
@@ -19,6 +20,9 @@ namespace Sources.Modules.Player
         private PlayerInput _playerInput;
         private Vector2 _moveDirection;
         private Coroutine _moveWork;
+        private Coroutine _idleWork;
+
+        private bool CanMove => _moveDirection.magnitude > MinMoveDirection;
 
         private void Awake()
         {
@@ -28,6 +32,7 @@ namespace Sources.Modules.Player
             _animator = GetComponent<Animator>();
             
             _playerInput.Player.Move.performed += ctx => OnMove();
+            StartIdle();
         }
 
         private void OnEnable()
@@ -58,7 +63,7 @@ namespace Sources.Modules.Player
             SetMoveDirection();
             _animator.Play(PlayerAnimator.States.Run);
             
-            while (_moveDirection.magnitude > MinMoveDirection)
+            while (CanMove)
             {
                 _rigidbody2D.velocity = _speed * _moveDirection;
                 _flipper.TryFlip(_rigidbody2D.velocity.x);
@@ -67,9 +72,29 @@ namespace Sources.Modules.Player
 
                 yield return null;
             }
-
+            
             _rigidbody2D.velocity = Vector2.zero;
+            StartIdle();
+        }
+
+        private void StartIdle()
+        {
+            if (_idleWork != null)
+                StopCoroutine(_idleWork);
+
+            _idleWork = StartCoroutine(Idle());
+        }
+
+        private IEnumerator Idle()
+        {
+            WaitForSeconds waitForSeconds = new(IdleTick);
             _animator.Play(PlayerAnimator.States.Idle);
+
+            while (CanMove == false)
+            {
+                _rigidbody2D.velocity = Vector2.zero;
+                yield return waitForSeconds;
+            }
         }
 
         private void SetMoveDirection() => _moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
