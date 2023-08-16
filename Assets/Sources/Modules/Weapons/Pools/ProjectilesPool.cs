@@ -1,42 +1,51 @@
 using System.Collections.Generic;
-using Sources.Modules.Pools;
 using Sources.Modules.Weapons.Common;
 using UnityEngine;
 
 namespace Sources.Modules.Weapons.Pools
 {
-    public class ProjectilesPool : Pool<Projectile>
+    public class ProjectilesPool : MonoBehaviour
     {
-        public override void Init()
-        {
-            GameObjectsInPool = new List<Projectile>();
-            Capacity = 20;
+        [SerializeField] private List<Projectile> _prefabs;
+        [SerializeField] private int _startCapacity;
+        [SerializeField] private ProjectileContainer _prefabContainer;
 
-            foreach (var projectile in GameObjects)
+        private List<ProjectileContainer> _containers;
+
+        public void Init()
+        {
+            _containers = new List<ProjectileContainer>();
+
+            foreach (Projectile prefab in _prefabs)
             {
-                for (int i = 0; i < Capacity; i++)
+                ProjectileContainer container = Instantiate(_prefabContainer, transform.position, Quaternion.identity,
+                    transform);
+                container.Init(prefab.SpellType, prefab);
+                _containers.Add(container);
+                
+                for (int i = 0; i < _startCapacity; i++)
                 {
-                    Projectile projectileInstance = Instantiate(projectile, transform.position, Quaternion.identity);
-                    
-                    GameObjectsInPool.Add(projectileInstance);
-                    projectileInstance.Disable();
+                    Projectile spawned = Instantiate(prefab, transform.position, Quaternion.identity, container.transform);
+                    spawned.Disable();
+                    container.AddProjectile(spawned);
                 }
             }
         }
 
-        public override List<Projectile> TryGetObjects(Projectile projectile)
+        public Projectile GetObject(SpellType spellType)
         {
-            if (GameObjects.Contains(projectile) == false)
-                return null;
+            Projectile projectile = null;
 
-            List<Projectile> tempProjectile = new List<Projectile>();
-            int index = GameObjects.IndexOf(projectile) * Capacity;
-            int lastIndex = index + Capacity - 1;
+            foreach (ProjectileContainer container in _containers)
+            {
+                if (container.SpellType == spellType)
+                {
+                    projectile = container.GetProjectile();
+                    break;
+                }
+            }
 
-            for (int i = index; i < lastIndex; i++)
-                tempProjectile.Add(GameObjectsInPool[i]);
-            
-            return tempProjectile;
+            return projectile;
         }
     }
 }

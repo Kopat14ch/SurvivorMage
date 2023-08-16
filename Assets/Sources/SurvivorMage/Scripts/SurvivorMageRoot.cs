@@ -3,36 +3,34 @@ using Sources.Modules.EnemyFactory.Pool;
 using Sources.Modules.Finder;
 using Sources.Modules.Player;
 using Sources.Modules.Player.MVP;
-using Sources.Modules.Weapons.Common;
+using Sources.Modules.Weapons.Base;
 using Sources.Modules.Weapons.Pools;
 using UnityEngine;
 
 namespace Sources.SurvivorMage.Scripts
 {
-    [RequireComponent(typeof(FinderCloseEnemy),
-        typeof(ProjectilesPool))]
+    [RequireComponent(typeof(FinderCloseEnemy))]
     internal class SurvivorMageRoot : MonoBehaviour
     {
         [SerializeField] private Mage _mage;
-        [SerializeField] private Weapon _stick;
+        [SerializeField] private Staff _staff;
+        [SerializeField] private ProjectilesPool _projectilesPool;
         [SerializeField] private EnemyPool _enemyPool;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private PlayerSetup _setup;
 
         private FinderCloseEnemy _finderCloseEnemy;
-        private ProjectilesPool _projectilesPool;
 
         private void Awake()
         {
             _finderCloseEnemy = GetComponent<FinderCloseEnemy>();
-            _projectilesPool = GetComponent<ProjectilesPool>();
 
             _setup.Init(_mage);
-            _projectilesPool.Init();
             _finderCloseEnemy.Init(_mage);
-            _stick.Init(_projectilesPool, _finderCloseEnemy);
             _enemyPool.Init();
             _enemySpawner.Init(_enemyPool);
+            _projectilesPool.Init();
+            _staff.Init(_finderCloseEnemy, _projectilesPool);
         }
     }
 }

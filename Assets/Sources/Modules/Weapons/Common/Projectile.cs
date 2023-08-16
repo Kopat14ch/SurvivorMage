@@ -14,6 +14,8 @@ namespace Sources.Modules.Weapons.Common
 
         [SerializeField] protected float Damage;
 
+        [SerializeField] private SpellType _spellType;
+
         protected Coroutine DisablingWork;
         protected ShootPoint ShootPoint;
         
@@ -24,6 +26,8 @@ namespace Sources.Modules.Weapons.Common
 
         private Rigidbody2D _rigidbody2D;
         private float _currentTimeToDisable;
+        
+        public SpellType SpellType => _spellType;
 
         private void Awake() => _rigidbody2D = GetComponent<Rigidbody2D>();
 

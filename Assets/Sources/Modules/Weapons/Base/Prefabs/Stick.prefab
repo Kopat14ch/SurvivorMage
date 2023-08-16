@@ -99,9 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12c88704ff660d43993f320036bbc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spellCasterPrefabs:
+  - {fileID: 7035063006754400363, guid: 51a56227909b5e3429bd17c19d958ef8, type: 3}
+  - {fileID: 7035063006754400363, guid: 2e4162e2b3fc607408372ea1f31af232, type: 3}
   _shootPoint: {fileID: 6285437581901037352}
-  _cooldown: 1
-  _projectile: {fileID: 1727644642498907562, guid: ffccb989c51fb3746bb2ed7ece380185, type: 3}
+  _startShooting: {fileID: 0}
 --- !u!95 &3703184401388093543
 Animator:
   serializedVersion: 5

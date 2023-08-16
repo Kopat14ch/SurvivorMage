@@ -29,7 +29,10 @@ namespace Sources.Modules.Wallet.Pool
             foreach (Coin coin in _coins)
             {
                 if (coin.isActiveAndEnabled == false)
+                {
                     inactiveCoin = coin;
+                    break;
+                }
             }
 
             if (inactiveCoin == null)
