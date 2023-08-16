@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using Sources.Modules.Player.MVP;
 using UnityEngine;
 
 namespace Sources.Modules.Wallet.MVP
@@ -6,19 +6,21 @@ namespace Sources.Modules.Wallet.MVP
     [RequireComponent(typeof(WalletView))]
     public class WalletSetup : MonoBehaviour
     {
-        private List<Coin> _coins;
+        [SerializeField] private CoinSpawner _spawner;
+        [SerializeField] private PlayerView _playerView;
+
         private WalletView _view;
         private WalletPresenter _presenter;
 
-        private const float BaseCoins = 500;
-        private const float BaseMultiplier = 1;
+        private const int BaseCoins = 200;
+        private const int BaseMultiplier = 0;
 
         private void Awake()
         {
             _view = GetComponent<WalletView>();
             
             WalletModel walletModel = new (BaseCoins, BaseMultiplier);
-            _presenter = new (walletModel, _view, _coins);
+            _presenter = new (walletModel, _view, _spawner, _playerView);
         }
 
         private void OnEnable() => _presenter.Enable();

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Sources.Modules.Enemy;
-using UnityEngine;
 
 namespace Sources.Modules.Wave
 {

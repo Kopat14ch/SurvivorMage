@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _maxHealth: 3.3
+  _maxHealth: 1
   _destinationSetter: {fileID: 8646821525671392517}
 --- !u!114 &3010961522539026561
 MonoBehaviour:
