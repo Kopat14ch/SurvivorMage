@@ -5,13 +5,13 @@ namespace Sources.Modules.Wallet.MVP
 {
     public class WalletView : MonoBehaviour
     {
-        [SerializeField] private TMP_Text InGameText;
-        [SerializeField] private TMP_Text WorkshopText;
+        [SerializeField] private TMP_Text _inGameText;
+        [SerializeField] private TMP_Text _workshopText;
         
         public void ChangeCoinText(int coin)
         {
-            InGameText.text = coin.ToString();
-            WorkshopText.text = coin.ToString();
+            _inGameText.text = coin.ToString();
+            _workshopText.text = coin.ToString();
         }
     }
 }

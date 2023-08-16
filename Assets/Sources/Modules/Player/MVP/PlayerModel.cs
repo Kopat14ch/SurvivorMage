@@ -37,7 +37,7 @@ namespace Sources.Modules.Player.MVP
         public void TryAddMaxHealth()
         {
             bool canBeIncreased = MaxHealth + MaxHealthIncreaseValue <= MaxHealthLimit;
-            bool canBeIncreasedTwice = MaxHealth + (2 * MaxHealthIncreaseValue) <= MaxHealthLimit;
+            bool canBeIncreasedTwice = MaxHealth + (DamageScalerIncreaseValue + MaxHealthIncreaseValue) <= MaxHealthLimit;
 
             if (canBeIncreased)
             {
@@ -49,7 +49,7 @@ namespace Sources.Modules.Player.MVP
         public void TryAddDamageScaler()
         {
             bool canBeIncreased = DamageScaler + DamageScalerIncreaseValue <= DamageScalerLimit;
-            bool canBeIncreasedTwice = DamageScaler + (2 * DamageScalerIncreaseValue) <= DamageScalerLimit;
+            bool canBeIncreasedTwice = DamageScaler + (DamageScalerIncreaseValue + DamageScalerIncreaseValue) <= DamageScalerLimit;
 
             if (canBeIncreased)
             {
@@ -61,7 +61,7 @@ namespace Sources.Modules.Player.MVP
         public void TryAddSpeed()
         {
             bool canBeIncreased = Speed + SpeedIncreaseValue <= SpeedLimit;
-            bool canBeIncreasedTwice = Speed + (2 * SpeedIncreaseValue) <= SpeedLimit;
+            bool canBeIncreasedTwice = Speed + (SpeedIncreaseValue + SpeedIncreaseValue) <= SpeedLimit;
 
             if (canBeIncreased)
             {

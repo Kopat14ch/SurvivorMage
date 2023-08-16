@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 130
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
   m_sharedMaterial: {fileID: -7962205595782950856, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.85
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 125
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
   m_sharedMaterial: {fileID: -7962205595782950856, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.85
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 12
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
   m_sharedMaterial: {fileID: -7962205595782950856, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
@@ -710,7 +710,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 79.7
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1053,7 +1053,7 @@ GameObject:
   - component: {fileID: 2573398486060888369}
   - component: {fileID: 4324657156443219413}
   m_Layer: 5
-  m_Name: UpgradeSlotHealth
+  m_Name: UpgradeSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   _upgradeValue: {fileID: 387815220749799032}
   _priceText: {fileID: 749215079828060108}
   _buyButton: {fileID: 9085955345203896575}
-  _price: 10
+  _price: 0
   _maxText: MAX
 --- !u!1 &9187509888489930945
 GameObject:
@@ -1154,7 +1154,7 @@ GameObject:
   - component: {fileID: 5766735519999476946}
   - component: {fileID: 9085955345203896575}
   m_Layer: 5
-  m_Name: PriceButton
+  m_Name: BuyButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -9,32 +9,32 @@ namespace Sources.Modules.Player.MVP
         [SerializeField] private UpgradePanel _healthPanel;
         [SerializeField] private UpgradePanel _damagePanel;
         [SerializeField] private UpgradePanel _speedPanel;
+        [SerializeField] private UpgradePanel _coinsDropPanel;
 
         public event Action<int> MaxHealthIncreasingButtonPressed;
         public event Action<int> DamageScalerIncreasingButtonPressed;
         public event Action<int> SpeedIncreasingButtonPressed;
+        public event Action<int> CoinCostIncreasingButtonPressed;
         public event Action MaxHealthIncreasingBought;
         public event Action DamageScalerIncreasingBought;
         public event Action SpeedIncreasingBought;
+        public event Action CoinCostIncreasingBought;
 
 
         private void OnEnable()
         {
-            _healthPanel.BuyButton.onClick.AddListener((() =>
-                MaxHealthIncreasingButtonPressed?.Invoke(_healthPanel.Price)));
-            _damagePanel.BuyButton.onClick.AddListener((() =>
-                DamageScalerIncreasingButtonPressed?.Invoke(_damagePanel.Price)));
+            _healthPanel.BuyButton.onClick.AddListener((() => MaxHealthIncreasingButtonPressed?.Invoke(_healthPanel.Price)));
+            _damagePanel.BuyButton.onClick.AddListener((() => DamageScalerIncreasingButtonPressed?.Invoke(_damagePanel.Price)));
             _speedPanel.BuyButton.onClick.AddListener((() => SpeedIncreasingButtonPressed?.Invoke(_speedPanel.Price)));
+            _coinsDropPanel.BuyButton.onClick.AddListener((() => CoinCostIncreasingButtonPressed?.Invoke(_coinsDropPanel.Price)));
         }
 
         private void OnDisable()
         {
-            _healthPanel.BuyButton.onClick.RemoveListener((() =>
-                MaxHealthIncreasingButtonPressed?.Invoke(_healthPanel.Price)));
-            _damagePanel.BuyButton.onClick.RemoveListener((() =>
-                DamageScalerIncreasingButtonPressed?.Invoke(_damagePanel.Price)));
-            _speedPanel.BuyButton.onClick.RemoveListener(
-                (() => SpeedIncreasingButtonPressed?.Invoke(_speedPanel.Price)));
+            _healthPanel.BuyButton.onClick.RemoveListener((() => MaxHealthIncreasingButtonPressed?.Invoke(_healthPanel.Price)));
+            _damagePanel.BuyButton.onClick.RemoveListener((() => DamageScalerIncreasingButtonPressed?.Invoke(_damagePanel.Price)));
+            _speedPanel.BuyButton.onClick.RemoveListener((() => SpeedIncreasingButtonPressed?.Invoke(_speedPanel.Price)));
+            _coinsDropPanel.BuyButton.onClick.RemoveListener((() => CoinCostIncreasingButtonPressed?.Invoke(_coinsDropPanel.Price)));
         }
 
         public void ChangeMaxHealthText(float maxHealth, float increase, bool canBeIncreased)
@@ -69,5 +69,7 @@ namespace Sources.Modules.Player.MVP
         public void AddDamageScaler() => DamageScalerIncreasingBought?.Invoke();
 
         public void AddSpeed() => SpeedIncreasingBought?.Invoke();
+
+        public void AddCoinCost() => CoinCostIncreasingBought?.Invoke();
     }
 }
