@@ -11,7 +11,6 @@ namespace Sources.Modules.Weapons.Base
     {
         [SerializeField] private List<SpellCaster> _spellCasterPrefabs;
         [SerializeField] private ShootPoint _shootPoint;
-        [SerializeField] private Button _startShooting;
 
         private List<SpellCaster> _spellCasters;
         private FinderCloseEnemy _finder;
@@ -29,13 +28,8 @@ namespace Sources.Modules.Weapons.Base
                 spawned.Init(_shootPoint, _finder, _projectilesPool);
                 _spellCasters.Add(spawned);
             }
-
-            _startShooting.onClick.AddListener( StartShooting);
-        }
-
-        private void OnDisable()
-        {
-            _startShooting.onClick.RemoveListener(StartShooting);
+            
+            StartShooting();
         }
 
         private void StartShooting()
