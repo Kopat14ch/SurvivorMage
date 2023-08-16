@@ -20,26 +20,16 @@ namespace Sources.Modules.Player.MVP
 
         public void Enable()
         {
-            _view.MaxHealthIncreasingBought += OnMaxHealthIncreasingBought;
-            _view.DamageScalerIncreasingBought += OnDamageScalerIncreasingBought;
-            _view.SpeedIncreasingBought += OnSpeedIncreasingBought;
-
-            _model.MaxHealthChanged += OnMaxHealthChanged;
-            _model.DamageScalerChanged += OnDamageScalerChanged;
-            _model.SpeedChanged += OnSpeedChanged;
+            ViewEnable();
+            ModelEnable();
             
             _model.InvokeAll();
         }
 
         public void Disable()
         {
-            _view.MaxHealthIncreasingBought -= OnMaxHealthIncreasingBought;
-            _view.DamageScalerIncreasingBought -= OnDamageScalerIncreasingBought;
-            _view.SpeedIncreasingBought -= OnSpeedIncreasingBought;
-            
-            _model.MaxHealthChanged -= OnMaxHealthChanged;
-            _model.DamageScalerChanged -= OnDamageScalerChanged;
-            _model.SpeedChanged -= OnSpeedChanged;
+            ViewDisable();
+            ModelDisable();
         }
         
         private void OnMaxHealthChanged(float maxHealth, float increase, bool canBeIncreased)
@@ -60,19 +50,36 @@ namespace Sources.Modules.Player.MVP
             SpeedChanged?.Invoke(speed);
         }
 
-        private void OnMaxHealthIncreasingBought()
+        private void ViewEnable()
         {
-            _model.TryAddMaxHealth();
-        }
-        
-        private void OnDamageScalerIncreasingBought()
-        {
-            _model.TryAddDamageScaler();
+            _view.MaxHealthIncreasingBought += OnMaxHealthIncreasingBought;
+            _view.DamageScalerIncreasingBought += OnDamageScalerIncreasingBought;
+            _view.SpeedIncreasingBought += OnSpeedIncreasingBought;
         }
 
-        private void OnSpeedIncreasingBought()
+        private void ViewDisable()
         {
-            _model.TryAddSpeed();
+            _view.MaxHealthIncreasingBought -= OnMaxHealthIncreasingBought;
+            _view.DamageScalerIncreasingBought -= OnDamageScalerIncreasingBought;
+            _view.SpeedIncreasingBought -= OnSpeedIncreasingBought;
         }
+
+        private void ModelEnable()
+        {
+            _model.MaxHealthChanged += OnMaxHealthChanged;
+            _model.DamageScalerChanged += OnDamageScalerChanged;
+            _model.SpeedChanged += OnSpeedChanged;
+        }
+
+        private void ModelDisable()
+        {
+            _model.MaxHealthChanged -= OnMaxHealthChanged;
+            _model.DamageScalerChanged -= OnDamageScalerChanged;
+            _model.SpeedChanged -= OnSpeedChanged;
+        }
+        
+        private void OnMaxHealthIncreasingBought() => _model.TryAddMaxHealth();
+        private void OnDamageScalerIncreasingBought() => _model.TryAddDamageScaler();
+        private void OnSpeedIncreasingBought() => _model.TryAddSpeed();
     }
 }

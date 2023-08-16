@@ -8,10 +8,12 @@ namespace Sources.Modules.Wallet.Pool
         [SerializeField] private Coin _prefab;
         [SerializeField] private int _startCapacity;
 
-        private List<Coin> _coins = new List<Coin>();
+        private List<Coin> _coins;
 
         private void Awake()
         {
+            _coins = new List<Coin>();
+            
             for (int i = 0; i < _startCapacity; i++)
             {
                 Coin spawned = InitCoin();
@@ -26,7 +28,7 @@ namespace Sources.Modules.Wallet.Pool
 
             foreach (Coin coin in _coins)
             {
-                if (coin.gameObject.activeSelf == false)
+                if (coin.isActiveAndEnabled == false)
                     inactiveCoin = coin;
             }
 
@@ -44,6 +46,7 @@ namespace Sources.Modules.Wallet.Pool
         {
             Coin spawned = Instantiate(_prefab, transform.position, Quaternion.identity,
                 transform);
+            
             return spawned;
         }
     }

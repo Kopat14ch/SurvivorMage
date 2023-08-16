@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Sources.Modules.Player.MVP;
+using UnityEngine;
 
 namespace Sources.Modules.Wallet.MVP
 {
@@ -7,27 +8,29 @@ namespace Sources.Modules.Wallet.MVP
     {
         private readonly WalletModel _model;
         private readonly WalletView _view;
-        private List<Coin> _coins;
+        private readonly List<Coin> _coins;
         
-        private CoinSpawner _spawner;
+        private CoinSpawner _coinSpawner;
         private PlayerView _playerView;
 
-        public WalletPresenter(WalletModel model, WalletView view, CoinSpawner spawner, PlayerView playerView)
+        public WalletPresenter(WalletModel model, WalletView view, CoinSpawner coinSpawner, PlayerView playerView)
         {
             _model = model;
             _view = view;
-            _spawner = spawner;
+            _coinSpawner = coinSpawner;
             _playerView = playerView;
             _coins = new List<Coin>();
         }
 
         public void Enable()
         {
-            _playerView.MaxHealthIncreasingButtonPressed += TryBuyHealthIncreasing;
-            _playerView.DamageScalerIncreasingButtonPressed += TryBuyDamageScalerIncreasing;
-            _playerView.SpeedIncreasingButtonPressed += TryBuySpeedIncreasing;
-            
-            _spawner.CoinSpawned += OnCoinSpawned;
+            PlayerViewEnable();
+
+            if (_coins.Count > 0)
+                foreach (var coin in _coins)
+                    coin.Taken += OnCoinTaken;
+
+            _coinSpawner.CoinSpawned += OnCoinSpawned;
             _model.CoinsChanged += OnCoinsChanged;
             
             _model.UpdateCoins();
@@ -35,46 +38,39 @@ namespace Sources.Modules.Wallet.MVP
 
         public void Disable()
         {
-            _playerView.MaxHealthIncreasingButtonPressed -= TryBuyHealthIncreasing;
-            _playerView.DamageScalerIncreasingButtonPressed -= TryBuyDamageScalerIncreasing;
-            _playerView.SpeedIncreasingButtonPressed -= TryBuySpeedIncreasing;
+            PlayerViewDisable();
             
             foreach (Coin coin in _coins)
                 coin.Taken -= OnCoinTaken;
             
-            _spawner.CoinSpawned -= OnCoinSpawned;
+            _coinSpawner.CoinSpawned -= OnCoinSpawned;
             _model.CoinsChanged -= OnCoinsChanged;
         }
 
-        public void TryBuyHealthIncreasing(int price)
+        private void OnMaxHealthIncreasingButtonPressed(int price)
         {
-            if (TryBuy(price))
+            if (_model.TryBuy(price))
                 _playerView.AddMaxHealth();
         }
         
-        public void TryBuyDamageScalerIncreasing(int price)
+        private void OnDamageScalerIncreasingButtonPressed(int price)
         {
-            if (TryBuy(price))
+            if (_model.TryBuy(price))
                 _playerView.AddDamageScaler();
         }
         
-        public void TryBuySpeedIncreasing(int price)
+        private void OnSpeedIncreasingButtonPressed(int price)
         {
-            if (TryBuy(price))
+            if (_model.TryBuy(price))
                 _playerView.AddSpeed();
         }
 
-        private bool TryBuy(int price)
+        private void OnCoinCostIncreasingButtonPressed(int price)
         {
-            if (_model.IsCoinsEnough(price))
-            {
-                _model.TakeOffCoins(price);
-                return true;
-            }
-
-            return false;
+            if (_model.TryAddMultiplier(price))
+                _playerView.AddCoinCost();
         }
-        
+
         private void OnCoinSpawned(Coin coin)
         {
             _coins.Add(coin);
@@ -89,7 +85,23 @@ namespace Sources.Modules.Wallet.MVP
 
         private void OnCoinsChanged(int coins)
         {
-            _view.ChangeCoinText(coins);
+            _view.ChangeCoinText(coins); 
+        }
+
+        private void PlayerViewEnable()
+        {
+            _playerView.MaxHealthIncreasingButtonPressed += OnMaxHealthIncreasingButtonPressed;
+            _playerView.DamageScalerIncreasingButtonPressed += OnDamageScalerIncreasingButtonPressed;
+            _playerView.SpeedIncreasingButtonPressed += OnSpeedIncreasingButtonPressed;
+            _playerView.CoinCostIncreasingButtonPressed += OnCoinCostIncreasingButtonPressed;
+        }
+
+        private void PlayerViewDisable()
+        {
+            _playerView.MaxHealthIncreasingButtonPressed -= OnMaxHealthIncreasingButtonPressed;
+            _playerView.DamageScalerIncreasingButtonPressed -= OnDamageScalerIncreasingButtonPressed;
+            _playerView.SpeedIncreasingButtonPressed -= OnSpeedIncreasingButtonPressed;
+            _playerView.CoinCostIncreasingButtonPressed -= OnCoinCostIncreasingButtonPressed;
         }
     }
 }

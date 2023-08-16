@@ -12,7 +12,7 @@ namespace Sources.Modules.Wallet.MVP
         
         private int _coins;
         private int _coinMultiplier;
-
+        
         public event Action<int> CoinsChanged; 
         public event Action<int, int> MultiplierChanged;
 
@@ -29,28 +29,28 @@ namespace Sources.Modules.Wallet.MVP
         
         public void AddCoin()
         {
+            Debug.Log("ADD");
             _coins += BaseAddValue + _coinMultiplier;
             CoinsChanged?.Invoke(_coins);
         }
 
-        public bool IsCoinsEnough(int value)
+        public bool TryBuy(int price)
         {
-            return _coins >= value;
-        }
-        
-        public void TakeOffCoins(int value)
-        {
-            _coins -= value;
+            if (_coins - price < 0)
+                return false;
+            
             CoinsChanged?.Invoke(_coins);
+            return true;
         }
 
-        public void TryAddMultiplier()
+        public bool TryAddMultiplier(int price)
         {
-            if (_coinMultiplier >= MaxMultiplier)
-                return;
+            if (_coinMultiplier >= MaxMultiplier || _coins - price < 0)
+                return false;
 
             _coinMultiplier += AddMultiplier;
             MultiplierChanged?.Invoke(_coinMultiplier, AddMultiplier);
+            return true;
         }
     }
 }
