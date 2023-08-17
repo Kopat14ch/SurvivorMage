@@ -12,6 +12,9 @@ namespace Sources.Modules.Weapons.Scripts.Common
 
         [SerializeField, Range(MinTimeToDestroy, MaxTimeToDestroy)] private float _timeToDestroy;
 
+        [SerializeField, Range(MinDistanceToLaunch, MaxDistanceToLaunch)]
+        protected float DistanceToLaunch;
+        
         [SerializeField] protected float Damage;
 
         [SerializeField] private SpellType _spellType;
@@ -20,9 +23,11 @@ namespace Sources.Modules.Weapons.Scripts.Common
         protected ShootPoint ShootPoint;
         
         private const int MinSpeed = 1;
-        private const int MaxSpeed = 500;
+        private const int MaxSpeed = 50;
         private const int MinTimeToDestroy = 5;
         private const int MaxTimeToDestroy = 30;
+        private const int MinDistanceToLaunch = 1;
+        private const int MaxDistanceToLaunch = 100;
 
         private Rigidbody2D _rigidbody2D;
         private float _currentTimeToDisable;
@@ -47,7 +52,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
             }
         }
         
-        public abstract void Launch(ShootPoint shootPoint, Vector3 position);
+        public abstract void TryLaunch(ShootPoint shootPoint, Vector3 position);
 
         public void Enable() => gameObject.SetActive(true);
         public void Disable() => gameObject.SetActive(false);
@@ -63,7 +68,27 @@ namespace Sources.Modules.Weapons.Scripts.Common
                 yield return null;
             }
         }
-        
+
+        protected IEnumerator Rotating(Transform center, float radius)
+        {
+            float positionX;
+            float positionY;
+            float angle = 0;
+            
+            while (_currentTimeToDisable > 0)
+            {
+                positionX = center.position.x + Mathf.Cos(angle) * radius;
+                positionY = center.position.y + Mathf.Sin(angle) * radius;
+                transform.position = new Vector2(positionX, positionY);
+                angle = angle + Time.deltaTime * _speed;
+
+                if (angle >= 360f)
+                    angle = 0;
+
+                yield return null;
+            }
+        }
+
         protected IEnumerator Disabling()
         {
             _currentTimeToDisable = _timeToDestroy;
