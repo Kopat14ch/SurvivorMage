@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8392913545961343920
 SpriteRenderer:
@@ -97,12 +97,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6247920045468174129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb12ce702f09ee040b5c108773b7396a, type: 3}
+  m_Script: {fileID: 11500000, guid: 80d1070edef94806abe5decc653a03fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
-  _timeToDestroy: 7
-  Damage: 2
+  _speed: 7
+  _timeToDestroy: 10
+  DistanceToLaunch: 10
+  Damage: 3.5
   _spellType: 1
 --- !u!58 &6794698981804839795
 CircleCollider2D:

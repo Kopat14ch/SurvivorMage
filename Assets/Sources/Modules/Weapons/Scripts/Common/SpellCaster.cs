@@ -51,7 +51,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
                 else
                 {
                     Projectile projectile = _pool.GetObject(_spellType);
-                    projectile.Launch(_shootPoint, _finderCloseEnemy.GetCloseEnemyPosition());
+                    projectile.TryLaunch(_shootPoint, _finderCloseEnemy.GetCloseEnemyPosition());
                     _currentCooldown = Cooldown;
                 }
 
