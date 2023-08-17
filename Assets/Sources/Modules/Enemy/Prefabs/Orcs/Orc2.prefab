@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 6040922709015798258}
   - component: {fileID: 8915671461286466419}
   - component: {fileID: 1948324040714068286}
-  - component: {fileID: 4404422174252133184}
   - component: {fileID: 1531591889707572308}
+  - component: {fileID: 1300296791103314834}
   m_Layer: 0
   m_Name: Orc2
   m_TagString: Untagged
@@ -194,18 +194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 5
   _cooldown: 1
---- !u!114 &4404422174252133184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6355801680407724946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 415e6514baf24329a945c1d5063c95ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!70 &1531591889707572308
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -241,6 +229,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0.006407857, y: 0.0016645193}
   m_Size: {x: 1.1409254, y: 2.021447}
   m_Direction: 0
+--- !u!114 &1300296791103314834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6355801680407724946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c16d9ce2f5bd34b9958deb8505edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2323669435714324458
 PrefabInstance:
   m_ObjectHideFlags: 0

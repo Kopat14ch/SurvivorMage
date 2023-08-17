@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 5001768242433025463}
   - component: {fileID: 944505702045182537}
   - component: {fileID: 1050873959910111902}
-  - component: {fileID: 4922229494024279911}
   - component: {fileID: 6955347507585685038}
+  - component: {fileID: 2671975538983129333}
   m_Layer: 0
   m_Name: Demon5
   m_TagString: Untagged
@@ -194,18 +194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _cooldown: 1
---- !u!114 &4922229494024279911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4884284883474729721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 415e6514baf24329a945c1d5063c95ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!70 &6955347507585685038
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -241,6 +229,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0.02283287, y: 0.0095767975}
   m_Size: {x: 2.3167577, y: 2.8086987}
   m_Direction: 0
+--- !u!114 &2671975538983129333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884284883474729721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c16d9ce2f5bd34b9958deb8505edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9081953749150043865
 PrefabInstance:
   m_ObjectHideFlags: 0

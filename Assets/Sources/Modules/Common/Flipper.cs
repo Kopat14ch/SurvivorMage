@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sources.Modules.Common
 {
@@ -7,7 +6,7 @@ namespace Sources.Modules.Common
     {
         private const float MinVelocityToFlip = 0.1f;
 
-        private Vector3 _flipScale = new (-1,1,1);
+        private Vector3 _flipScale;
         private Vector3 _baseScale;
 
         private bool IsFlipped => transform.localScale.x < 0;
