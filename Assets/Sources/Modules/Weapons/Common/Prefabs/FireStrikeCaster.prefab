@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2301578173094309390}
   - component: {fileID: 7035063006754400363}
   m_Layer: 0
-  m_Name: FireballCaster
+  m_Name: FireStrikeCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa40a21870684a4c9d025f7c4364f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown: 3
+  _cooldown: 5
   _spellType: 1
