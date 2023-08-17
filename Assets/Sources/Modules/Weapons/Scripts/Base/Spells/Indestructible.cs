@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Sources.Modules.Weapons.Scripts.Base.Spells
 {
-    public class Indestructible : Projectile
+    internal class Indestructible : Projectile
     {
         [SerializeField] private int _enemyCollisionsNeedToDestroy;
 

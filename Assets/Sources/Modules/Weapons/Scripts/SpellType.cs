@@ -14,6 +14,7 @@ namespace Sources.Modules.Weapons.Scripts
         MightyPush,
         FireBall,
         PureArrow,
-        Necron
+        Necron,
+        PoisonSphere
     }
 }

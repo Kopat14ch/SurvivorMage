@@ -112,6 +112,8 @@ MonoBehaviour:
   - {fileID: 7035063006754400363, guid: 2d81c220611f38c48aefa30f15fa468e, type: 3}
   - {fileID: 7035063006754400363, guid: 519b28178c7aeeb4080e6095ea52a4f8, type: 3}
   - {fileID: 7035063006754400363, guid: fa77584fc4a23584b8c72bac20dd978e, type: 3}
+  - {fileID: 7035063006754400363, guid: ecd2f9cf108ca0446aa819db612a98d0, type: 3}
+  - {fileID: 7035063006754400363, guid: 8188268b6a30ef543b032f5105a0acce, type: 3}
   _shootPoint: {fileID: 6285437581901037352}
 --- !u!95 &3703184401388093543
 Animator:
@@ -179,3 +181,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationCenter: {fileID: 0}
+  _mageDirectionPoint: {fileID: 0}
