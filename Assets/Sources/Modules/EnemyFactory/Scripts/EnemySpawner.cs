@@ -17,8 +17,8 @@ namespace Sources.Modules.EnemyFactory.Scripts
         private const float ObstacleCheckRadius = 2f;
         private const float SpawningCooldown = 0.5f;
 
-        private Collider2D[] _collidersBuffer = new Collider2D[2];
         private int _collidersCount;
+        private Collider2D[] _collidersBuffer = new Collider2D[10];
         private EnemyPool _enemyPool;
         private List<EnemyUnit> _currentUnits;
         private List<EnemyUnit> _allWaveUnits;
@@ -29,7 +29,7 @@ namespace Sources.Modules.EnemyFactory.Scripts
             _enemyPool = enemyPool;
         }
 
-        public void SpawnEnemies(Dictionary<List<EnemyType>, int> wave)
+        public void SpawnEnemies(Dictionary<List<EnemyType>, int> wave, int waveCount)
         {
             _currentUnits = new List<EnemyUnit>();
             _allWaveUnits = new List<EnemyUnit>();
@@ -39,14 +39,14 @@ namespace Sources.Modules.EnemyFactory.Scripts
             for (int i = 0; i < wave.Count; i++, enemyTypeIndex++)
             {
                 enemyTypeIndex %= wave.Keys.ElementAt(i).Count;
-
                 _currentUnits = _enemyPool.GetObjects(wave.Keys.ElementAt(i)[enemyTypeIndex], wave.Values.ElementAt(i));
-                
+
                 foreach (EnemyUnit unit in _currentUnits)
                 {
                     if (_allWaveUnits.Contains(unit))
                         continue;
                     
+                    unit.AddLevels(waveCount);
                     _allWaveUnits.Add(unit);
                     unit.SetTarget(_playerPosition);
                 }
@@ -66,9 +66,6 @@ namespace Sources.Modules.EnemyFactory.Scripts
 
             foreach (var enemyUnit in _allWaveUnits)
             {
-                if (enemyUnit.IsDie)
-                    continue;
-
                 enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
                 
                 _collidersCount = Physics2D.OverlapCircleNonAlloc(enemyUnit.transform.position, ObstacleCheckRadius, _collidersBuffer);
@@ -85,7 +82,7 @@ namespace Sources.Modules.EnemyFactory.Scripts
 
                             _collidersCount = Physics2D.OverlapCircleNonAlloc(enemyUnit.transform.position, ObstacleCheckRadius, _collidersBuffer);
                             inObstacle = _collidersBuffer[i] != enemyUnit.Collider2D && _collidersBuffer[i].TryGetComponent(out Obstacle _);
-                            
+
                             yield return waitForSeconds;
                         }
                         break;

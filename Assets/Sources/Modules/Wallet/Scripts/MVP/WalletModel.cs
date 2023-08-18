@@ -1,10 +1,12 @@
 using System;
+using UnityEngine;
 
 namespace Sources.Modules.Wallet.Scripts.MVP
 {
     public class WalletModel
     {
         private const int IncreaseCoin = 1;
+        private const int MinAddCoin = 1;
         
         private int _coins;
         private int _addCoins;
@@ -15,7 +17,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         public WalletModel(int coins, int addCoins)
         {
             _coins = coins;
-            _addCoins = addCoins;
+            _addCoins = Mathf.Clamp(addCoins, MinAddCoin, Int32.MaxValue);
         }
 
         public void InvokeAll()

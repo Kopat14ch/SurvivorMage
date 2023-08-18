@@ -7,6 +7,8 @@ namespace Sources.Modules.Player.Scripts
     [RequireComponent(typeof(Animator))]
     public class Mage : MonoBehaviour
     {
+        private const float MinDamageScaler = 1;
+
         private Animator _animator;
         private float _maxHealth = 300;
         private float _currentHealth;
@@ -14,11 +16,15 @@ namespace Sources.Modules.Player.Scripts
         public event Action<float> HealthChanged;
         public event Action<float> MaxHealthIncreased;
 
+        public float DamageScaler { get; private set; }
+
         public void Awake()
         {
+            DamageScaler = MinDamageScaler;
+
             _animator = GetComponent<Animator>();
             _currentHealth = _maxHealth;
-            
+
             MaxHealthIncreased?.Invoke(_maxHealth);
             HealthChanged?.Invoke(_currentHealth);
         }
@@ -31,7 +37,7 @@ namespace Sources.Modules.Player.Scripts
 
                 _currentHealth -= damage;
                 _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
-                
+
                 HealthChanged?.Invoke(_currentHealth);
 
                 if (_currentHealth <= 0)
@@ -40,12 +46,17 @@ namespace Sources.Modules.Player.Scripts
                 }
             }
         }
-        
+
         public void SetMaxHealth(float maxHealth)
         {
             _maxHealth = maxHealth;
 
             MaxHealthIncreased?.Invoke(_maxHealth);
+        }
+
+        public void OnChangeDamageScaler(float damageScaler)
+        {
+            DamageScaler = Mathf.Clamp(damageScaler, MinDamageScaler, float.MaxValue);
         }
 
         private void Die()

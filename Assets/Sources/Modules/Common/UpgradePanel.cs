@@ -11,8 +11,8 @@ namespace Sources.Modules.Common
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private Button _buyButton;
         [SerializeField] private int _price;
-        [SerializeField] private string _maxText;
 
+        private int _addPrice;
         public Button BuyButton => _buyButton;
         public int Price => _price;
 
@@ -31,7 +31,21 @@ namespace Sources.Modules.Common
             _upgradeValue.text = text;
         }
 
-        public void ChangePriceText(string text)
+        public void SetAddPrice(int value)
+        {
+            if (value <= 0)
+                return;
+
+            _addPrice = value;
+        }
+
+        public void AddPrice()
+        {
+            _price += _addPrice;
+            ChangePriceText(_price.ToString());
+        }
+
+        private void ChangePriceText(string text)
         {
             _priceText.text = text;
         }

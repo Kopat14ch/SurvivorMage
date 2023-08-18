@@ -9,7 +9,7 @@ namespace Sources.Modules.Player.Scripts.MVP
         [SerializeField] private UpgradePanel _healthPanel;
         [SerializeField] private UpgradePanel _damagePanel;
         [SerializeField] private UpgradePanel _speedPanel;
-
+        
         public event Action<int> MaxHealthIncreasingButtonPressed;
         public event Action<int> DamageScalerIncreasingButtonPressed;
         public event Action<int> SpeedIncreasingButtonPressed;

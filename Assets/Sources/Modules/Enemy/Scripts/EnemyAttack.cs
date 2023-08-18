@@ -1,4 +1,3 @@
-using Sources.Modules.Player;
 using Sources.Modules.Player.Scripts;
 using UnityEngine;
 
@@ -9,6 +8,7 @@ namespace Sources.Modules.Enemy
         [SerializeField] private int _damage;
         [SerializeField] private float _cooldown;
 
+        private const int AddDamage = 10;
         private float _passedTime;
         
         private void Update()
@@ -22,6 +22,16 @@ namespace Sources.Modules.Enemy
             {
                 _passedTime = 0;
                 Attack(mage);
+            }
+        }
+
+        public void AddLevel(int wave, int currentLevel)
+        {
+            while (currentLevel < wave)
+            {
+                _damage += AddDamage;
+                Debug.Log(_damage);
+                currentLevel++;
             }
         }
 

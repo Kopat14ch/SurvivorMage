@@ -103,7 +103,7 @@ MonoBehaviour:
   _speed: 10
   _timeToDestroy: 10
   DistanceToLaunch: 12
-  Damage: 6
+  _baseDamage: 10
   _spellType: 9
   _enemyCollisionsNeedToDestroy: 20
 --- !u!70 &1000189938743452935

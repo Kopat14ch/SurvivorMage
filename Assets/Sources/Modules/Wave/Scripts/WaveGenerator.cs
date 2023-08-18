@@ -48,7 +48,7 @@ namespace Sources.Modules.Wave.Scripts
 
         private void StartWave(Dictionary<List<EnemyType>, int> wave)
         {
-            _spawner.SpawnEnemies(wave);
+            _spawner.SpawnEnemies(wave, _waveCount);
 
             _spawnedEnemies = _spawner.GetEnemies();
 
@@ -68,8 +68,8 @@ namespace Sources.Modules.Wave.Scripts
             _spawnedEnemies.Remove(unit);
 
             UnitDied?.Invoke();
-            
-            if (_spawnedEnemies.Count == 0)
+
+            if (_spawnedEnemies.Count <= 0)
                 NextWave();
         }
 
