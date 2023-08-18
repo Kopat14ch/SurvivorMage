@@ -11,7 +11,7 @@ namespace Sources.Modules.Particles.Scripts.Pool
 
         private List<ParticleContainer> _containers;
 
-        public void Init()
+        public void Awake()
         {
             _containers = new List<ParticleContainer>();
 

@@ -3,6 +3,9 @@ namespace Sources.Modules.Particles.Scripts
     public enum ParticleType 
     {
         MageDamaged,
-        EnemyDied
+        MageDied,
+        SmallDemonDied,
+        MedDemonDied,
+        BigDemonDied
     }
 }
