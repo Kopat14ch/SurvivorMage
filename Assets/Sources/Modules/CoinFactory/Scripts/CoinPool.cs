@@ -1,0 +1,56 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Sources.Modules.CoinFactory.Scripts
+{
+    internal class CoinPool : MonoBehaviour
+    {
+        [SerializeField] private Coin _prefab;
+        [SerializeField] private int _startCapacity;
+
+        private List<Coin> _coins;
+
+        private void Awake()
+        {
+            _coins = new List<Coin>();
+            
+            for (int i = 0; i < _startCapacity; i++)
+            {
+                Coin spawned = InitCoin();
+                spawned.gameObject.SetActive(false);
+                _coins.Add(spawned);
+            }
+        }
+
+        public Coin GetCoin()
+        {
+            Coin inactiveCoin = null;
+
+            foreach (Coin coin in _coins)
+            {
+                if (coin.isActiveAndEnabled == false)
+                {
+                    inactiveCoin = coin;
+                    break;
+                }
+            }
+
+            if (inactiveCoin == null)
+            {
+                Coin spawned = InitCoin();
+                _coins.Add(spawned);
+                inactiveCoin = spawned;
+            }
+
+            return inactiveCoin;
+        }
+
+        private Coin InitCoin()
+        {
+            Coin spawned = Instantiate(_prefab, transform.position, Quaternion.identity,
+                transform);
+            
+            return spawned;
+        }
+    }
+}

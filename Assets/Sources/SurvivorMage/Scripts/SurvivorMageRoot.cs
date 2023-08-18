@@ -1,38 +1,40 @@
-using Sources.Modules.EnemyFactory;
-using Sources.Modules.EnemyFactory.Pool;
-using Sources.Modules.Finder;
-using Sources.Modules.Player;
-using Sources.Modules.Player.MVP;
-using Sources.Modules.Weapons.Common;
-using Sources.Modules.Weapons.Pools;
+using Sources.Modules.EnemyFactory.Scripts;
+using Sources.Modules.EnemyFactory.Scripts.Pool;
+using Sources.Modules.Finder.Scripts;
+using Sources.Modules.Player.Scripts;
+using Sources.Modules.Player.Scripts.MVP;
+using Sources.Modules.Wallet.Scripts.MVP;
+using Sources.Modules.Weapons.Base;
+using Sources.Modules.Weapons.Scripts;
 using UnityEngine;
 
 namespace Sources.SurvivorMage.Scripts
 {
-    [RequireComponent(typeof(FinderCloseEnemy),
-        typeof(ProjectilesPool))]
+    [RequireComponent(typeof(FinderCloseEnemy))]
     internal class SurvivorMageRoot : MonoBehaviour
     {
         [SerializeField] private Mage _mage;
-        [SerializeField] private Weapon _stick;
+        [SerializeField] private Staff _staff;
+        [SerializeField] private ProjectilesPool _projectilesPool;
         [SerializeField] private EnemyPool _enemyPool;
         [SerializeField] private EnemySpawner _enemySpawner;
-        [SerializeField] private PlayerSetup _setup;
+        [SerializeField] private PlayerSetup _playerSetup;
+        [SerializeField] private WalletSetup _walletSetup;
+        [SerializeField] private PlayerView _playerView;
 
         private FinderCloseEnemy _finderCloseEnemy;
-        private ProjectilesPool _projectilesPool;
 
         private void Awake()
         {
             _finderCloseEnemy = GetComponent<FinderCloseEnemy>();
-            _projectilesPool = GetComponent<ProjectilesPool>();
 
-            _setup.Init(_mage);
-            _projectilesPool.Init();
+            _playerSetup.Init(_mage);
             _finderCloseEnemy.Init(_mage);
-            _stick.Init(_projectilesPool, _finderCloseEnemy);
             _enemyPool.Init();
             _enemySpawner.Init(_enemyPool);
+            _projectilesPool.Init();
+            _staff.Init(_finderCloseEnemy, _projectilesPool);
+            _walletSetup.Init(_playerView);
         }
     }
 }

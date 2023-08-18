@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 5128910512948888434}
   - component: {fileID: 2048458872966939314}
   - component: {fileID: 8989691366757257842}
-  - component: {fileID: 5505000623640911142}
   - component: {fileID: 7765023724417458078}
+  - component: {fileID: 664417090905682821}
   m_Layer: 0
   m_Name: Undead4
   m_TagString: Untagged
@@ -194,18 +194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 5
   _cooldown: 1
---- !u!114 &5505000623640911142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5403427477729420313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 415e6514baf24329a945c1d5063c95ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!70 &7765023724417458078
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -241,6 +229,18 @@ CapsuleCollider2D:
   m_Offset: {x: -0.038004816, y: 0.09209955}
   m_Size: {x: 0.95259917, y: 1.5835624}
   m_Direction: 0
+--- !u!114 &664417090905682821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5403427477729420313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c16d9ce2f5bd34b9958deb8505edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7426776156067701253
 PrefabInstance:
   m_ObjectHideFlags: 0
