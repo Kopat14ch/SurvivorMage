@@ -62,8 +62,6 @@ namespace Sources.Modules.Weapons.Scripts.Common
 
         protected float GetDamage()
         {
-            Debug.Log(_baseDamage * _damageScaler);
-            
             return _baseDamage * _damageScaler;
         }
         protected IEnumerator ChangingPosition(Vector3 position)
