@@ -69,7 +69,7 @@ namespace Sources.Modules.EnemyFactory.Scripts
                 if (enemyUnit.IsDie)
                     continue;
 
-                enemyUnit.transform.position = _spawnPoints[5].transform.position;
+                enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
                 
                 _collidersCount = Physics2D.OverlapCircleNonAlloc(enemyUnit.transform.position, ObstacleCheckRadius, _collidersBuffer);
 
