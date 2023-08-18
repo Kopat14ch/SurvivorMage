@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Sources.Modules.Common;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory.Scripts.Pool;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Sources.Modules.EnemyFactory.Scripts
 {
@@ -13,8 +17,11 @@ namespace Sources.Modules.EnemyFactory.Scripts
         [SerializeField] private List<SpawnPoint> _spawnPoints;
         [SerializeField] private Transform _playerPosition;
 
+        private const float ObstacleCheckRadius = 1.5f;
         private const float SpawningCooldown = 0.5f;
-        
+
+        private Collider2D[] _collidersBuffer = new Collider2D[2];
+        private int _collidersCount;
         private EnemyPool _enemyPool;
         private List<EnemyUnit> _currentUnits;
         private List<EnemyUnit> _allWaveUnits;
@@ -64,8 +71,30 @@ namespace Sources.Modules.EnemyFactory.Scripts
             {
                 if (enemyUnit.IsDie)
                     continue;
-                
+
                 enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
+                
+                _collidersCount = Physics2D.OverlapCircleNonAlloc(enemyUnit.transform.position, ObstacleCheckRadius, _collidersBuffer);
+
+                for (int i = 0; i < _collidersCount; i++)
+                {
+                    bool inObstacle = _collidersBuffer[i] != enemyUnit.Collider2D && _collidersBuffer[i].TryGetComponent(out Obstacle _);
+                    
+                    if (inObstacle)
+                    {
+                        while (inObstacle)
+                        {
+                            enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
+
+                            _collidersCount = Physics2D.OverlapCircleNonAlloc(enemyUnit.transform.position, ObstacleCheckRadius, _collidersBuffer);
+                            inObstacle = _collidersBuffer[i] != enemyUnit.Collider2D && _collidersBuffer[i].TryGetComponent(out Obstacle _);
+                            
+                            yield return waitForSeconds;
+                        }
+                        break;
+                    }
+                }
+                
                 enemyUnit.gameObject.SetActive(true);
 
                 yield return waitForSeconds;

@@ -14,10 +14,6 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         private readonly CoinSpawner _coinSpawner;
         private readonly PlayerView _playerView;
 
-        public event Action MaxHealthIncreased;
-        public event Action DamageScalerIncreased;
-        public event Action SpeedIncreased;
-
         public WalletPresenter(WalletModel model, WalletView view, CoinSpawner coinSpawner, PlayerView playerView)
         {
             _model = model;

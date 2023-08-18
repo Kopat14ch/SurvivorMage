@@ -4,6 +4,7 @@ using Pathfinding;
 
 namespace Sources.Modules.Enemy
 {
+    [RequireComponent(typeof(CapsuleCollider2D))]
     public class EnemyUnit : MonoBehaviour
     {
         [SerializeField] private EnemyType _enemyType;
@@ -12,10 +13,13 @@ namespace Sources.Modules.Enemy
 
         private float _currentHealth;
 
-        public bool IsDie => _currentHealth <= 0;
-        
-        public EnemyType EnemyType => _enemyType;
         public event Action<EnemyUnit> Died;
+
+        public CapsuleCollider2D Collider2D { get; private set; }
+        public bool IsDie => _currentHealth <= 0;
+        public EnemyType EnemyType => _enemyType;
+
+        private void Awake() => Collider2D = GetComponent<CapsuleCollider2D>();
 
         private void OnEnable()
         {
