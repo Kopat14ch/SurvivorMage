@@ -1,3 +1,5 @@
+using Sources.Modules.Particles.Scripts;
+using Sources.Modules.Player;
 using Sources.Modules.Player.Scripts;
 using UnityEngine;
 
@@ -9,6 +11,7 @@ namespace Sources.Modules.Enemy
         [SerializeField] private float _cooldown;
 
         private const int AddDamage = 10;
+        private ParticleSpawner _particleSpawner;
         private float _passedTime;
         
         private void Update()
@@ -20,11 +23,17 @@ namespace Sources.Modules.Enemy
         {
             if (other.gameObject.TryGetComponent(out Mage mage) && _passedTime >= _cooldown)
             {
+                foreach (ContactPoint2D contact in other.contacts)
+                {
+                    _particleSpawner.SpawnParticle(ParticleType.MageDamaged, contact.point);
+                    break;
+                }
+
                 _passedTime = 0;
                 Attack(mage);
             }
         }
-
+        
         public void AddLevel(int wave, int currentLevel)
         {
             while (currentLevel < wave)
@@ -35,6 +44,12 @@ namespace Sources.Modules.Enemy
             }
         }
 
+        
+        public void SetParticleSpawner(ParticleSpawner particleSpawner)
+        {
+            _particleSpawner = particleSpawner;
+        }
+        
         private void CountDown()
         {
             if (_passedTime < _cooldown)

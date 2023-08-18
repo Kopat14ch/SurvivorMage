@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Pathfinding;
+using Sources.Modules.Particles.Scripts;
 
 namespace Sources.Modules.Enemy
 {
@@ -11,12 +12,14 @@ namespace Sources.Modules.Enemy
         [SerializeField] private EnemyType _enemyType;
         [SerializeField] private float _maxHealth;
         [SerializeField] private AIDestinationSetter _destinationSetter;
+        [SerializeField] private ParticleType _diedType;
 
         private const float AddMaxHealth = 35;
 
         private EnemyAttack _attack;
         private float _currentHealth;
-
+        private ParticleSpawner _particleSpawner;
+        
         public event Action<EnemyUnit> Died;
 
         public CapsuleCollider2D Collider2D { get; private set; }
@@ -37,6 +40,12 @@ namespace Sources.Modules.Enemy
             _currentHealth = _maxHealth;
         }
 
+        public void SetParticleSpawner(ParticleSpawner particleSpawner)
+        {
+            _particleSpawner = particleSpawner;
+            gameObject.GetComponent<EnemyAttack>().SetParticleSpawner(particleSpawner);
+        }
+        
         public void SetTarget(Transform target)
         {
             _destinationSetter.target = target;
@@ -65,6 +74,7 @@ namespace Sources.Modules.Enemy
         {
             if (_currentHealth <= 0)
             {
+                _particleSpawner.SpawnParticle(_diedType, transform.position);
                 Died?.Invoke(this);
                 gameObject.SetActive(false);
             }
