@@ -17,7 +17,7 @@ namespace Sources.Modules.Weapons.Scripts.Base.Spells
 
             if (enemyReceived)
             {
-                enemy.TakeDamage(Damage);
+                enemy.TakeDamage(GetDamage());
                 _currentEnemyCollisionsCount++;
 
                 if (_currentEnemyCollisionsCount == _enemyCollisionsNeedToDestroy)

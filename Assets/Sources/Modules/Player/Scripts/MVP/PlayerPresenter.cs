@@ -36,21 +36,21 @@ namespace Sources.Modules.Player.Scripts.MVP
             
         }
         
-        private void OnMaxHealthChanged(float maxHealth, float increase, bool canBeIncreased)
+        private void OnMaxHealthChanged(float maxHealth, float increase)
         {
-            _view.ChangeMaxHealthText(maxHealth, increase, canBeIncreased);
+            _view.ChangeMaxHealthText(maxHealth, increase);
             MaxHealthChanged?.Invoke(maxHealth);
         }
 
-        private void OnDamageScalerChanged(float damageScaler, float increase, bool canBeIncreased)
+        private void OnDamageScalerChanged(float damageScaler, float increase)
         {
-            _view.ChangeDamageScalerText(damageScaler, increase, canBeIncreased);
+            _view.ChangeDamageScalerText(damageScaler, increase);
             DamageScalerChanged?.Invoke(damageScaler);
         }
 
-        private void OnSpeedChanged(float speed, float increase, bool canBeIncreased)
+        private void OnSpeedChanged(float speed, float increase)
         {
-            _view.ChangeSpeedText(speed, increase, canBeIncreased);
+            _view.ChangeSpeedText(speed, increase);
             SpeedChanged?.Invoke(speed);
         }
 
@@ -84,8 +84,8 @@ namespace Sources.Modules.Player.Scripts.MVP
             _model.SpeedChanged -= OnSpeedChanged;
         }
         
-        private void OnMaxHealthIncreasingBought() => _model.TryAddMaxHealth();
-        private void OnDamageScalerIncreasingBought() => _model.TryAddDamageScaler();
-        private void OnSpeedIncreasingBought() => _model.TryAddSpeed();
+        private void OnMaxHealthIncreasingBought() => _model.AddMaxHealth();
+        private void OnDamageScalerIncreasingBought() => _model.AddDamageScaler();
+        private void OnSpeedIncreasingBought() => _model.AddSpeed();
     }
 }

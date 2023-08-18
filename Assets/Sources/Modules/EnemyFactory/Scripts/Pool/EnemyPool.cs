@@ -36,10 +36,7 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
                     spawned.gameObject.SetActive(false);
                     container.AddUnit(spawned);
                 }
-                
-                if ((EnemyType) enemyTypeIndex == EnemyType.Other3)
-                    break;
-                
+
                 enemyTypeIndex++;
             }
         }

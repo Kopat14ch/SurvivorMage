@@ -10,6 +10,7 @@ namespace Sources.Modules.Enemy
         [SerializeField] private int _damage;
         [SerializeField] private float _cooldown;
 
+        private const int AddDamage = 10;
         private ParticleSpawner _particleSpawner;
         private float _passedTime;
         
@@ -33,10 +34,22 @@ namespace Sources.Modules.Enemy
             }
         }
         
+        public void AddLevel(int wave, int currentLevel)
+        {
+            while (currentLevel < wave)
+            {
+                _damage += AddDamage;
+                Debug.Log(_damage);
+                currentLevel++;
+            }
+        }
+
+        
         public void SetParticleSpawner(ParticleSpawner particleSpawner)
         {
             _particleSpawner = particleSpawner;
         }
+        
         private void CountDown()
         {
             if (_passedTime < _cooldown)

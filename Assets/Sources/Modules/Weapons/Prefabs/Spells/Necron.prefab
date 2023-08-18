@@ -103,7 +103,7 @@ MonoBehaviour:
   _speed: 1.5
   _timeToDestroy: 20
   DistanceToLaunch: 50
-  Damage: 2
+  _baseDamage: 10
   _spellType: 12
   _radius: 3.5
 --- !u!58 &6794698981804839795
