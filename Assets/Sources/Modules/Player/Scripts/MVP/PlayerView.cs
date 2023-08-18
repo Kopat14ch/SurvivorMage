@@ -31,31 +31,22 @@ namespace Sources.Modules.Player.Scripts.MVP
             _speedPanel.BuyButton.onClick.RemoveListener((() => SpeedIncreasingButtonPressed?.Invoke(_speedPanel.Price)));
         }
 
-        public void ChangeMaxHealthText(float maxHealth, float increase, bool canBeIncreased)
+        public void ChangeMaxHealthText(float maxHealth, float increase)
         {
             _healthPanel.ChangeCurrentValueText(Mathf.CeilToInt(maxHealth).ToString());
             _healthPanel.ChangeUpgradeValueText(Mathf.CeilToInt(maxHealth + increase).ToString());
-            
-            if (canBeIncreased == false)
-                _healthPanel.MaximizeValue();
         }
         
-        public void ChangeDamageScalerText(float damageScaler, float increase, bool canBeIncreased)
+        public void ChangeDamageScalerText(float damageScaler, float increase)
         {
             _damagePanel.ChangeCurrentValueText(damageScaler.ToString("F1"));
             _damagePanel.ChangeUpgradeValueText((damageScaler + increase).ToString("F1"));
-            
-            if (canBeIncreased == false)
-                _damagePanel.MaximizeValue();
         }
 
-        public void ChangeSpeedText(float speed, float increase, bool canBeIncreased)
+        public void ChangeSpeedText(float speed, float increase)
         {
             _speedPanel.ChangeCurrentValueText(speed.ToString("F1"));
             _speedPanel.ChangeUpgradeValueText((speed + increase).ToString("F1"));
-            
-            if (canBeIncreased == false)
-                _speedPanel.MaximizeValue();
         }
 
         public void AddMaxHealth() => MaxHealthIncreasingBought?.Invoke();

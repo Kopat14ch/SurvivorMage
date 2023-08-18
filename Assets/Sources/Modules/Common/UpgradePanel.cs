@@ -31,13 +31,6 @@ namespace Sources.Modules.Common
             _upgradeValue.text = text;
         }
 
-        public void MaximizeValue()
-        {
-            ChangeUpgradeValueText(_maxText);
-            ChangePriceText(_maxText);
-            _buyButton.enabled = false;
-        }
-        
         public void ChangePriceText(string text)
         {
             _priceText.text = text;

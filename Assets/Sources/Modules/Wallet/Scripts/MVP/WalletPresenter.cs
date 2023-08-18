@@ -75,9 +75,9 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _model.TryBuyIncrease(price);
         }
 
-        private void OnIncreaseChanged(int currentIncrease, int increase, bool canBeIncreased)
+        private void OnIncreaseChanged(int currentIncrease, int increase)
         {
-            _view.ChangeCoinIncreaseText(currentIncrease, increase, canBeIncreased);
+            _view.ChangeCoinIncreaseText(currentIncrease, increase);
         }
 
         private void OnCoinSpawned(Coin coin)
