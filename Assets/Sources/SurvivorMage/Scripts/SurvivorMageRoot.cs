@@ -1,6 +1,7 @@
 using Sources.Modules.EnemyFactory.Scripts;
 using Sources.Modules.EnemyFactory.Scripts.Pool;
 using Sources.Modules.Finder.Scripts;
+using Sources.Modules.Particles.Scripts;
 using Sources.Modules.Player.Scripts;
 using Sources.Modules.Player.Scripts.MVP;
 using Sources.Modules.Wallet.Scripts.MVP;
@@ -16,6 +17,7 @@ namespace Sources.SurvivorMage.Scripts
         [SerializeField] private Mage _mage;
         [SerializeField] private Staff _staff;
         [SerializeField] private ProjectilesPool _projectilesPool;
+        [SerializeField] private ParticleSpawner _particleSpawner;
         [SerializeField] private EnemyPool _enemyPool;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private PlayerSetup _playerSetup;
@@ -30,7 +32,7 @@ namespace Sources.SurvivorMage.Scripts
 
             _playerSetup.Init(_mage);
             _finderCloseEnemy.Init(_mage);
-            _enemyPool.Init();
+            _enemyPool.Init(_particleSpawner);
             _enemySpawner.Init(_enemyPool);
             _projectilesPool.Init();
             _staff.Init(_finderCloseEnemy, _projectilesPool);
