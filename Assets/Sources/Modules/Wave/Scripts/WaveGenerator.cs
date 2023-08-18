@@ -82,7 +82,7 @@ namespace Sources.Modules.Wave.Scripts
             {
                 _waveCount %= _waveConfigs.GetWaveConfigsCount();
 
-                EnemyWaveConfig tempEnemyWaveConfig = new EnemyWaveConfig(_waveConfigs.GetWaveConfig(_waveCount -1).GetEnemyTypes());
+                EnemyWaveConfig tempEnemyWaveConfig = new (_waveConfigs.GetWaveConfig(_waveCount -1).GetEnemyTypes());
                 tempEnemyWaveConfig.Init(Random.Range(_minEnemySpawn, _maxEnemySpawn));
 
                 _enemyConfigs.Add(tempEnemyWaveConfig);
@@ -95,8 +95,8 @@ namespace Sources.Modules.Wave.Scripts
 
             SetRandomUnits();
 
-            for (int i = 0; i < _enemyConfigs.Count; i++)
-                _wave.Add(_enemyConfigs[i].GetEnemyTypes(), _enemyConfigs[i].SpawnCount);
+            foreach (var enemyWaveConfig in _enemyConfigs)
+                _wave.Add(enemyWaveConfig.GetEnemyTypes(), enemyWaveConfig.SpawnCount);
         }
         
         private void NextWave()
