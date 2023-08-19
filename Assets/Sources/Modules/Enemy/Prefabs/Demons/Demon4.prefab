@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 870365401491100557}
   - component: {fileID: 9080485657008339062}
   - component: {fileID: 1021863645619692725}
+  - component: {fileID: 3123079435785541247}
   m_Layer: 0
   m_Name: Demon4
   m_TagString: Untagged
@@ -242,6 +243,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c16d9ce2f5bd34b9958deb8505edaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3123079435785541247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5721150104106420561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9337ea75c5477db25b9905dcc63ef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dieClip: {fileID: 8300000, guid: c162b3548c6bc9e4db7ea667ae05ad12, type: 3}
+  _attackClip: {fileID: 0}
 --- !u!1001 &721533852867377146
 PrefabInstance:
   m_ObjectHideFlags: 0
