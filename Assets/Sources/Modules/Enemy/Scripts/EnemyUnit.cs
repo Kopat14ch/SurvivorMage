@@ -2,11 +2,13 @@ using System;
 using UnityEngine;
 using Pathfinding;
 using Sources.Modules.Particles.Scripts;
+using Sources.Modules.Sound.Scripts;
 
 namespace Sources.Modules.Enemy
 {
     [RequireComponent(typeof(CapsuleCollider2D))]
     [RequireComponent(typeof(EnemyAttack))]
+    [RequireComponent(typeof(EnemySound))]
     public class EnemyUnit : MonoBehaviour
     {
         [SerializeField] private EnemyType _enemyType;
@@ -16,8 +18,9 @@ namespace Sources.Modules.Enemy
 
         private const float AddMaxHealth = 35;
 
-        private EnemyAttack _attack;
         private float _currentHealth;
+        private EnemySound _enemySound;
+        private EnemyAttack _attack;
         private ParticleSpawner _particleSpawner;
         
         public event Action<EnemyUnit> Died;
@@ -28,8 +31,9 @@ namespace Sources.Modules.Enemy
         public bool IsDie => _currentHealth <= 0;
         public EnemyType EnemyType => _enemyType;
 
-        private void Awake()
+        public void Init(EnemySound sound)
         {
+            _enemySound = sound;
             Collider2D = GetComponent<CapsuleCollider2D>();
             _attack = GetComponent<EnemyAttack>();
             CurrentLevel = 1;
@@ -76,6 +80,8 @@ namespace Sources.Modules.Enemy
             {
                 _particleSpawner.SpawnParticle(_diedType, transform.position);
                 Died?.Invoke(this);
+                
+                _enemySound.PlayDie(transform.position);
                 gameObject.SetActive(false);
             }
         }

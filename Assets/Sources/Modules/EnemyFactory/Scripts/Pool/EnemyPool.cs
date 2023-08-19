@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sources.Modules.Enemy;
 using Sources.Modules.Particles.Scripts;
+using Sources.Modules.Sound.Scripts;
 using UnityEngine;
 
 namespace Sources.Modules.EnemyFactory.Scripts.Pool
@@ -10,6 +11,9 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
         [SerializeField] private List<EnemyUnit> _prefabs;
         [SerializeField] private int _startCapacity;
         [SerializeField] private Container _prefabContainer;
+        [SerializeField] private SoundContainer _soundContainer;
+        [SerializeField] private AudioSource _audioSourcePrefab;
+        [SerializeField] private EnemySound _enemySoundPrefab;
 
         private List<Container> _containers;
         private ParticleSpawner _particleSpawner;
@@ -32,6 +36,9 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
                 for (int i = 0; i < _startCapacity; i++)
                 {
                     EnemyUnit spawned = Instantiate(prefab, transform.position, Quaternion.identity, container.transform);
+                    EnemySound enemySound = Instantiate(_enemySoundPrefab,_soundContainer.transform.position, Quaternion.identity, _soundContainer.transform);
+                    enemySound.Init(_soundContainer, _audioSourcePrefab);
+                    spawned.Init(enemySound);
                     spawned.SetParticleSpawner(_particleSpawner);
                     spawned.gameObject.SetActive(false);
                     container.AddUnit(spawned);
