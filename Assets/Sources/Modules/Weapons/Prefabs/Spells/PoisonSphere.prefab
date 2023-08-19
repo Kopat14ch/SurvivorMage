@@ -105,8 +105,10 @@ MonoBehaviour:
   DistanceToLaunch: 30
   _baseDamage: 10
   _spellType: 13
+  _damagedParticle: 30
+  _destroyedParticle: 31
   _radius: 5
-  _enemyCollisionsNeedToDestroy: 3
+  _enemyCollisionsNeedToDestroy: 6
 --- !u!58 &6794698981804839795
 CircleCollider2D:
   m_ObjectHideFlags: 0

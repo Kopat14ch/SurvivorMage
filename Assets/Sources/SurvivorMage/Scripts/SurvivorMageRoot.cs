@@ -5,8 +5,8 @@ using Sources.Modules.Particles.Scripts;
 using Sources.Modules.Player.Scripts;
 using Sources.Modules.Player.Scripts.MVP;
 using Sources.Modules.Wallet.Scripts.MVP;
-using Sources.Modules.Weapons.Base;
 using Sources.Modules.Weapons.Scripts;
+using Sources.Modules.Weapons.Scripts.Base;
 using UnityEngine;
 
 namespace Sources.SurvivorMage.Scripts
@@ -34,7 +34,7 @@ namespace Sources.SurvivorMage.Scripts
             _finderCloseEnemy.Init(_mage);
             _enemyPool.Init(_particleSpawner);
             _enemySpawner.Init(_enemyPool);
-            _projectilesPool.Init();
+            _projectilesPool.Init(_particleSpawner);
             _staff.Init(_finderCloseEnemy, _projectilesPool);
             _walletSetup.Init(_playerView);
         }

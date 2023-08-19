@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using Sources.Modules.Finder;
 using Sources.Modules.Finder.Scripts;
-using Sources.Modules.Weapons.Scripts;
 using Sources.Modules.Weapons.Scripts.Common;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Sources.Modules.Weapons.Base
+namespace Sources.Modules.Weapons.Scripts.Base
 {
     public class Staff : MonoBehaviour
     {
