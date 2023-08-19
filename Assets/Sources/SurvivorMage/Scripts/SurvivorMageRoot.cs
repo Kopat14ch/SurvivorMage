@@ -39,6 +39,7 @@ namespace Sources.SurvivorMage.Scripts
             _projectilesPool.Init(_particleSpawner);
             _staff.Init(_finderCloseEnemy, _projectilesPool);
             _walletSetup.Init(_playerView, _spellsShop);
+            _spellsShop.Init(_staff);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Sources.Modules.Weapons.Scripts.Common
     {
         [SerializeField, Range(MinCooldown, MaxCooldown)] private float _cooldown;
         [SerializeField] private SpellType _spellType;
+
+        public SpellType SpellType => _spellType;
         
         private ShootPoint _shootPoint;
         private ProjectilesPool _pool;

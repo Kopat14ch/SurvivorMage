@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Sources.Modules.Finder.Scripts;
 using Sources.Modules.Weapons.Scripts.Common;
@@ -14,13 +13,17 @@ namespace Sources.Modules.Weapons.Scripts.Base
         [SerializeField] private Button _startShootingButton;
         [SerializeField] private Button _stopShootingButton;
 
+        public int ActiveSpells => _activeSpellCasters.Count;
+        
         private List<SpellCaster> _spellCasters;
+        private List<SpellCaster> _activeSpellCasters;
         private FinderCloseEnemy _finder;
         private ProjectilesPool _projectilesPool;
 
         public void Init(FinderCloseEnemy finderCloseEnemy, ProjectilesPool projectilesPool)
         {
             _spellCasters = new List<SpellCaster>();
+            _activeSpellCasters = new List<SpellCaster>();
             _projectilesPool = projectilesPool;
             _finder = finderCloseEnemy;
 
@@ -35,6 +38,30 @@ namespace Sources.Modules.Weapons.Scripts.Base
             _stopShootingButton.onClick.AddListener(StopShooting);
         }
 
+        public void AddSpellCaster(SpellType spellType)
+        {
+            foreach (SpellCaster caster in _spellCasters)
+            {
+                if (caster.SpellType == spellType)
+                {
+                    _activeSpellCasters.Add(caster);
+                    break;
+                }
+            }
+        }
+
+        public void RemoveSpellCaster(SpellType spellType)
+        {
+            foreach (SpellCaster caster in _activeSpellCasters)
+            {
+                if (caster.SpellType == spellType)
+                {
+                    _activeSpellCasters.Remove(caster);
+                    break;
+                }
+            }
+        }
+        
         private void OnDisable()
         {
             _startShootingButton.onClick.RemoveListener(StartShooting);
@@ -43,13 +70,13 @@ namespace Sources.Modules.Weapons.Scripts.Base
 
         private void StartShooting()
         {
-            foreach (SpellCaster spellCaster in _spellCasters)
+            foreach (SpellCaster spellCaster in _activeSpellCasters)
                 spellCaster.StartCasting();
         }
 
         private void StopShooting()
         {
-            foreach (SpellCaster spellCaster in _spellCasters)
+            foreach (SpellCaster spellCaster in _activeSpellCasters)
                 spellCaster.StopCasting();
         }
     }

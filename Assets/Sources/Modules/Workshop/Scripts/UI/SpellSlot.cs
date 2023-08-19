@@ -1,4 +1,5 @@
 using System;
+using Sources.Modules.Weapons.Scripts;
 using Sources.Modules.Weapons.Scripts.Common;
 using TMPro;
 using UnityEngine;
@@ -11,26 +12,32 @@ namespace Sources.Modules.Workshop.Scripts.UI
         [SerializeField] private int _price;
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private TMP_Text _damageText;
-        [SerializeField] private TMP_Text _equippedText;
+        [SerializeField] private TMP_Text _equipText;
         [SerializeField] private Color _equippedColor;
         [SerializeField] private Color _unequippedColor;
         [SerializeField] private bool _isBought = false;
+        [SerializeField] private bool _isEquipped = false;
         [SerializeField] private Button _buyButton;
         [SerializeField] private Button _equipButton;
         [SerializeField] private Projectile _spellProjectile;
-        [SerializeField] private SpellCaster _spellCaster;
+        [SerializeField] private SpellType _spellCasterType;
+
+        private const string EquippedString = "Equipped";
+        private const string UnequippedString = "Unequipped";
 
         public event Action<int, SpellSlot> BuyButtonPressed;
-        public event Action EquipButtonPressed;
+        public event Action<SpellType, SpellSlot> EquipButtonPressed;
 
+        public SpellType SpellType => _spellCasterType;
         public bool IsBought => _isBought;
-        public bool IsEquipped { get; private set; }
+        public bool IsEquipped => _isEquipped;
         
         private void Awake()
         {
             _priceText.text = _price.ToString();
             _damageText.text = _spellProjectile.BaseDamage.ToString();
             
+            TryChangeEquipStatus();
             TryHideBuyButton();
         }
 
@@ -52,9 +59,40 @@ namespace Sources.Modules.Workshop.Scripts.UI
             TryHideBuyButton();
         }
         
+        public void EquipSpell()
+        {
+            _isEquipped = true;
+            TryChangeEquipStatus();
+        }
+        
+        public void UnequipSpell()
+        {
+            _isEquipped = false;
+            TryChangeEquipStatus();
+        }
+        
+        public void DisableEquipButton() => _equipButton.interactable = false;
+
+        public void EnableEquipButton() => _equipButton.interactable = true;
+
         private void OnBuyButtonPressed() => BuyButtonPressed?.Invoke(_price, this);
 
-        private void OnEquipButtonPressed() => EquipButtonPressed?.Invoke();
+        private void OnEquipButtonPressed() => EquipButtonPressed?.Invoke(_spellCasterType, this);
+
+        private void TryChangeEquipStatus()
+        {
+            if (IsEquipped)
+            {
+                _equipText.text = EquippedString;
+                _equipButton.GetComponent<Image>().color = _equippedColor;
+            }
+            else
+            {
+                _equipText.text = UnequippedString;
+                _equipButton.GetComponent<Image>().color = _unequippedColor;
+            }
+                
+        }
         
         private void TryHideBuyButton()
         {
