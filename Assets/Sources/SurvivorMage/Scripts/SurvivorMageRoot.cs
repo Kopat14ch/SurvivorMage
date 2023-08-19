@@ -5,8 +5,8 @@ using Sources.Modules.Particles.Scripts;
 using Sources.Modules.Player.Scripts;
 using Sources.Modules.Player.Scripts.MVP;
 using Sources.Modules.Wallet.Scripts.MVP;
-using Sources.Modules.Weapons.Base;
 using Sources.Modules.Weapons.Scripts;
+using Sources.Modules.Weapons.Scripts.Base;
 using UnityEngine;
 
 namespace Sources.SurvivorMage.Scripts
