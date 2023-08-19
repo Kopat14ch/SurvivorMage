@@ -18,7 +18,8 @@ namespace Sources.Modules.Weapons.Scripts.Base.Spells
             if (enemyReceived)
             {
                 _particleSpawner.SpawnParticle(_damagedParticle, transform.position);
-                enemy.TakeDamage(Damage);
+                enemy.TakeDamage(GetDamage());
+
                 _currentEnemyCollisionsCount++;
 
                 if (_currentEnemyCollisionsCount == _enemyCollisionsNeedToDestroy)

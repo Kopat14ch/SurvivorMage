@@ -29,13 +29,10 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _workshopText.text = coin.ToString();
         }
         
-        public void ChangeCoinIncreaseText(int multiplier, int increase, bool canBeIncreased)
+        public void ChangeCoinIncreaseText(int multiplier, int increase)
         {
             _coinMultiplierPanel.ChangeCurrentValueText(multiplier.ToString());
             _coinMultiplierPanel.ChangeUpgradeValueText((multiplier + increase).ToString());
-            
-            if (canBeIncreased == false)
-                _coinMultiplierPanel.MaximizeValue();
         }
         
     }

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Sources.Modules.CoinFactory.Scripts;
 using Sources.Modules.Player.Scripts.MVP;
-using Unity.Plastic.Antlr3.Runtime.Misc;
-using UnityEngine;
 
 namespace Sources.Modules.Wallet.Scripts.MVP
 {
@@ -13,6 +11,9 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         private readonly List<Coin> _coins;
         private readonly CoinSpawner _coinSpawner;
         private readonly PlayerView _playerView;
+
+        private const int MaxHealthAddPrice = 20;
+        private const int DamageScalerAddPrice = 35;
 
         public WalletPresenter(WalletModel model, WalletView view, CoinSpawner coinSpawner, PlayerView playerView)
         {
@@ -75,9 +76,9 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _model.TryBuyIncrease(price);
         }
 
-        private void OnIncreaseChanged(int currentIncrease, int increase, bool canBeIncreased)
+        private void OnIncreaseChanged(int currentIncrease, int increase)
         {
-            _view.ChangeCoinIncreaseText(currentIncrease, increase, canBeIncreased);
+            _view.ChangeCoinIncreaseText(currentIncrease, increase);
         }
 
         private void OnCoinSpawned(Coin coin)

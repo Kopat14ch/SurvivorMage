@@ -10,23 +10,18 @@ namespace Sources.Modules.Weapons.Scripts.Common
     public abstract class Projectile : MonoBehaviour
     {
         [SerializeField, Range(MinSpeed, MaxSpeed)] private float _speed;
-
         [SerializeField, Range(MinTimeToDestroy, MaxTimeToDestroy)] private float _timeToDestroy;
-
-        [SerializeField, Range(MinDistanceToLaunch, MaxDistanceToLaunch)]
-        protected float DistanceToLaunch;
-        
-        [SerializeField] protected float Damage;
-
+        [SerializeField, Range(MinDistanceToLaunch, MaxDistanceToLaunch)] protected float DistanceToLaunch;
+        [SerializeField] private float _baseDamage;
         [SerializeField] private SpellType _spellType;
-
         [SerializeField] protected ParticleType _damagedParticle;
         [SerializeField] protected ParticleType _destroyedParticle;
 
         protected Coroutine DisablingWork;
         protected ShootPoint ShootPoint;
         protected ParticleSpawner _particleSpawner;
-        
+
+        private const float MinDamageScaler = 1;
         private const int MinSpeed = 1;
         private const int MaxSpeed = 50;
         private const int MinTimeToDestroy = 5;
@@ -36,10 +31,15 @@ namespace Sources.Modules.Weapons.Scripts.Common
 
         private Rigidbody2D _rigidbody2D;
         private float _currentTimeToDisable;
+        private float _damageScaler;
         
         public SpellType SpellType => _spellType;
 
-        private void Awake() => _rigidbody2D = GetComponent<Rigidbody2D>();
+        private void Awake()
+        {
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _damageScaler = MinDamageScaler;
+        }
 
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
@@ -54,7 +54,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
             
             if (enemyReceived)
             {
-                enemy.TakeDamage(Damage);
+                enemy.TakeDamage(GetDamage());
             }
         }
 
@@ -65,6 +65,12 @@ namespace Sources.Modules.Weapons.Scripts.Common
         public void Enable() => gameObject.SetActive(true);
         public void Disable() => gameObject.SetActive(false);
         
+        public void SetDamageScaler(float damageScaler) => _damageScaler = Mathf.Clamp(damageScaler, MinDamageScaler, float.MaxValue);
+
+        protected float GetDamage()
+        {
+            return _baseDamage * _damageScaler;
+        }
         protected IEnumerator ChangingPosition(Vector3 position)
         {
             Vector2 direction = (position - ShootPoint.GetPosition()).normalized;

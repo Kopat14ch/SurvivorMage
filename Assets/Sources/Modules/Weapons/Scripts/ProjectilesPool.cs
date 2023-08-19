@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Sources.Modules.Particles.Scripts;
+using Sources.Modules.Player.Scripts;
 using Sources.Modules.Weapons.Scripts.Common;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Sources.Modules.Weapons.Scripts
         [SerializeField] private List<Projectile> _prefabs;
         [SerializeField] private int _startCapacity;
         [SerializeField] private ProjectileContainer _prefabContainer;
+        [SerializeField] private Mage _mage;
 
         private List<ProjectileContainer> _containers;
         private ParticleSpawner _particleSpawner;
@@ -45,6 +47,7 @@ namespace Sources.Modules.Weapons.Scripts
                 if (container.SpellType == spellType)
                 {
                     projectile = container.GetProjectile();
+                    projectile.SetDamageScaler(_mage.DamageScaler);
                     break;
                 }
             }
