@@ -101,10 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
-  _timeToDestroy: 10
+  _timeToDestroy: 8
   DistanceToLaunch: 12
   _baseDamage: 10
   _spellType: 9
+  _damagedParticle: 26
+  _destroyedParticle: 27
   _enemyCollisionsNeedToDestroy: 20
 --- !u!70 &1000189938743452935
 CapsuleCollider2D:

@@ -1,6 +1,7 @@
 using System.Collections;
 using Sources.Modules.Common;
 using Sources.Modules.Enemy;
+using Sources.Modules.Particles.Scripts;
 using UnityEngine;
 
 namespace Sources.Modules.Weapons.Scripts.Common
@@ -13,9 +14,12 @@ namespace Sources.Modules.Weapons.Scripts.Common
         [SerializeField, Range(MinDistanceToLaunch, MaxDistanceToLaunch)] protected float DistanceToLaunch;
         [SerializeField] private float _baseDamage;
         [SerializeField] private SpellType _spellType;
-        
+        [SerializeField] protected ParticleType _damagedParticle;
+        [SerializeField] protected ParticleType _destroyedParticle;
+
         protected Coroutine DisablingWork;
         protected ShootPoint ShootPoint;
+        protected ParticleSpawner _particleSpawner;
 
         private const float MinDamageScaler = 1;
         private const int MinSpeed = 1;
@@ -45,6 +49,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
             if (obstacleReceived || enemyReceived)
             {
                 gameObject.SetActive(false);
+                _particleSpawner.SpawnParticle(_damagedParticle, transform.position);
             }
             
             if (enemyReceived)
@@ -52,6 +57,8 @@ namespace Sources.Modules.Weapons.Scripts.Common
                 enemy.TakeDamage(GetDamage());
             }
         }
+
+        public void SetParticleSpawner(ParticleSpawner particleSpawner) => _particleSpawner = particleSpawner;
         
         public abstract void TryLaunch(ShootPoint shootPoint, Vector3 position);
 
@@ -107,6 +114,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
                 yield return null;
             }
             
+            _particleSpawner.SpawnParticle(_destroyedParticle, transform.position);
             gameObject.SetActive(false);
         }
     }

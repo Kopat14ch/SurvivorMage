@@ -6,6 +6,9 @@ namespace Sources.Modules.Weapons.Scripts.Common
     {
         [SerializeField] private Transform _rotationCenter;
         [SerializeField] private Transform _mageDirectionPoint;
+        [SerializeField] private ParticleSystem _spellCast;
+
+        public void PlaySpellCast() => _spellCast.Play();
         
         public Vector3 GetPosition() => transform.position;
 

@@ -167,6 +167,7 @@ MonoBehaviour:
   _enemyType: 10
   _maxHealth: 15
   _destinationSetter: {fileID: 3161910717016448373}
+  _diedType: 8
 --- !u!114 &207881999550698
 MonoBehaviour:
   m_ObjectHideFlags: 0

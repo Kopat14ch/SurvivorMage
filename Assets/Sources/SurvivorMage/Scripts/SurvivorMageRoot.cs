@@ -34,7 +34,7 @@ namespace Sources.SurvivorMage.Scripts
             _finderCloseEnemy.Init(_mage);
             _enemyPool.Init(_particleSpawner);
             _enemySpawner.Init(_enemyPool);
-            _projectilesPool.Init();
+            _projectilesPool.Init(_particleSpawner);
             _staff.Init(_finderCloseEnemy, _projectilesPool);
             _walletSetup.Init(_playerView);
         }
