@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Sources.Modules.Finder.Scripts;
 using Sources.Modules.Weapons.Scripts.Common;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Sources.Modules.Weapons.Scripts.Base
 {
@@ -9,6 +11,8 @@ namespace Sources.Modules.Weapons.Scripts.Base
     {
         [SerializeField] private List<SpellCaster> _spellCasterPrefabs;
         [SerializeField] private ShootPoint _shootPoint;
+        [SerializeField] private Button _startShootingButton;
+        [SerializeField] private Button _stopShootingButton;
 
         private List<SpellCaster> _spellCasters;
         private FinderCloseEnemy _finder;
@@ -27,13 +31,26 @@ namespace Sources.Modules.Weapons.Scripts.Base
                 _spellCasters.Add(spawned);
             }
             
-            StartShooting();
+            _startShootingButton.onClick.AddListener(StartShooting);
+            _stopShootingButton.onClick.AddListener(StopShooting);
+        }
+
+        private void OnDisable()
+        {
+            _startShootingButton.onClick.RemoveListener(StartShooting);
+            _stopShootingButton.onClick.RemoveListener(StopShooting);
         }
 
         private void StartShooting()
         {
             foreach (SpellCaster spellCaster in _spellCasters)
                 spellCaster.StartCasting();
+        }
+
+        private void StopShooting()
+        {
+            foreach (SpellCaster spellCaster in _spellCasters)
+                spellCaster.StopCasting();
         }
     }
 }

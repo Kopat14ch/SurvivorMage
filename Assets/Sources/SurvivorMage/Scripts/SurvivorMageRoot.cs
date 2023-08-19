@@ -7,6 +7,7 @@ using Sources.Modules.Player.Scripts.MVP;
 using Sources.Modules.Wallet.Scripts.MVP;
 using Sources.Modules.Weapons.Scripts;
 using Sources.Modules.Weapons.Scripts.Base;
+using Sources.Modules.Workshop.Scripts.UI;
 using UnityEngine;
 
 namespace Sources.SurvivorMage.Scripts
@@ -23,6 +24,7 @@ namespace Sources.SurvivorMage.Scripts
         [SerializeField] private PlayerSetup _playerSetup;
         [SerializeField] private WalletSetup _walletSetup;
         [SerializeField] private PlayerView _playerView;
+        [SerializeField] private SpellsShop _spellsShop;
 
         private FinderCloseEnemy _finderCloseEnemy;
 
@@ -36,7 +38,7 @@ namespace Sources.SurvivorMage.Scripts
             _enemySpawner.Init(_enemyPool);
             _projectilesPool.Init(_particleSpawner);
             _staff.Init(_finderCloseEnemy, _projectilesPool);
-            _walletSetup.Init(_playerView);
+            _walletSetup.Init(_playerView, _spellsShop);
         }
     }
 }

@@ -32,7 +32,8 @@ namespace Sources.Modules.Weapons.Scripts.Common
         private Rigidbody2D _rigidbody2D;
         private float _currentTimeToDisable;
         private float _damageScaler;
-        
+
+        public float BaseDamage => _baseDamage;
         public SpellType SpellType => _spellType;
 
         private void Awake()
@@ -67,7 +68,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
         
         public void SetDamageScaler(float damageScaler) => _damageScaler = Mathf.Clamp(damageScaler, MinDamageScaler, float.MaxValue);
 
-        protected float GetDamage()
+        public float GetDamage()
         {
             return _baseDamage * _damageScaler;
         }
