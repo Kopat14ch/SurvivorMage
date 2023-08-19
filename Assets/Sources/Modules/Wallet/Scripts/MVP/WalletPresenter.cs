@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sources.Modules.CoinFactory.Scripts;
 using Sources.Modules.Player.Scripts.MVP;
+using Sources.Modules.Workshop.Scripts.UI;
 
 namespace Sources.Modules.Wallet.Scripts.MVP
 {
@@ -11,22 +12,26 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         private readonly List<Coin> _coins;
         private readonly CoinSpawner _coinSpawner;
         private readonly PlayerView _playerView;
-
+        private readonly SpellsShop _spellsShop;
+        
         private const int MaxHealthAddPrice = 20;
         private const int DamageScalerAddPrice = 35;
 
-        public WalletPresenter(WalletModel model, WalletView view, CoinSpawner coinSpawner, PlayerView playerView)
+        public WalletPresenter(WalletModel model, WalletView view, CoinSpawner coinSpawner, PlayerView playerView,
+            SpellsShop spellsShop)
         {
             _model = model;
             _view = view;
             _coinSpawner = coinSpawner;
             _playerView = playerView;
+            _spellsShop = spellsShop;
             _coins = new List<Coin>();
         }
 
         public void Enable()
         {
             PlayerViewEnable();
+            _spellsShop.SlotBuyButtonPressed += OnSpellSlotButtonPressed;
             _view.CoinIncreasedButtonPressed += OnCoinIncreaseButtonPressed;
             _model.IncreaseChanged += OnIncreaseChanged;
 
@@ -43,6 +48,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         public void Disable()
         {
             PlayerViewDisable();
+            _spellsShop.SlotBuyButtonPressed -= OnSpellSlotButtonPressed;
             _view.CoinIncreasedButtonPressed -= OnCoinIncreaseButtonPressed;
             _model.IncreaseChanged -= OnIncreaseChanged;
 
@@ -81,6 +87,12 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _view.ChangeCoinIncreaseText(currentIncrease, increase);
         }
 
+        private void OnSpellSlotButtonPressed(int price, SpellSlot slot)
+        {
+            if (_model.TryBuy(price))
+                _spellsShop.BuySpell(slot);
+        }
+        
         private void OnCoinSpawned(Coin coin)
         {
             _coins.Add(coin);
@@ -104,7 +116,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _playerView.DamageScalerIncreasingButtonPressed += OnDamageScalerIncreasingButtonPressed;
             _playerView.SpeedIncreasingButtonPressed += OnSpeedIncreasingButtonPressed;
         }
-
+        
         private void PlayerViewDisable()
         {
             _playerView.MaxHealthIncreasingButtonPressed -= OnMaxHealthIncreasingButtonPressed;

@@ -100,9 +100,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spellCasterPrefabs:
-  - {fileID: 7035063006754400363, guid: 51a56227909b5e3429bd17c19d958ef8, type: 3}
+  - {fileID: 7035063006754400363, guid: 2d81c220611f38c48aefa30f15fa468e, type: 3}
+  - {fileID: 7035063006754400363, guid: 2c3ed7387f3c8a144a039eeff15b126a, type: 3}
+  - {fileID: 7035063006754400363, guid: 35979f4d7e44cd644b05b0ccdc9557c6, type: 3}
+  - {fileID: 7035063006754400363, guid: c9a4c947ac6e4dc40ad059583c6a384f, type: 3}
+  - {fileID: 7035063006754400363, guid: 33803474d9deeec47b3b746da0bf5b3d, type: 3}
   - {fileID: 7035063006754400363, guid: 2e4162e2b3fc607408372ea1f31af232, type: 3}
+  - {fileID: 7035063006754400363, guid: e3f60f656adbde5429c719e1fd868ae0, type: 3}
+  - {fileID: 7035063006754400363, guid: 7f2def3269ef2fd4eb3f9056bbe48c7b, type: 3}
+  - {fileID: 7035063006754400363, guid: 519b28178c7aeeb4080e6095ea52a4f8, type: 3}
+  - {fileID: 7035063006754400363, guid: c067b63c6432ba2459ce81bd6d28fdb0, type: 3}
+  - {fileID: 7035063006754400363, guid: fa77584fc4a23584b8c72bac20dd978e, type: 3}
+  - {fileID: 7035063006754400363, guid: ecd2f9cf108ca0446aa819db612a98d0, type: 3}
+  - {fileID: 7035063006754400363, guid: 8188268b6a30ef543b032f5105a0acce, type: 3}
+  - {fileID: 7035063006754400363, guid: 51a56227909b5e3429bd17c19d958ef8, type: 3}
   _shootPoint: {fileID: 6285437581901037352}
+  _startShootingButton: {fileID: 0}
+  _stopShootingButton: {fileID: 0}
 --- !u!95 &3703184401388093543
 Animator:
   serializedVersion: 5
