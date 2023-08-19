@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sources.Modules.Particles.Scripts;
 using Sources.Modules.Weapons.Scripts.Common;
 using UnityEngine;
 
@@ -8,13 +9,15 @@ namespace Sources.Modules.Weapons.Scripts
     {
         private Projectile _prefab;
         private List<Projectile> _projectiles;
+        private ParticleSpawner _particleSpawner;
 
         public SpellType SpellType { get; private set; }
 
-        public void Init(SpellType spellType, Projectile prefab)
+        public void Init(SpellType spellType, Projectile prefab, ParticleSpawner particleSpawner)
         {
             SpellType = spellType;
             _prefab = prefab;
+            _particleSpawner = particleSpawner;
             _projectiles = new List<Projectile>();
         }
 
@@ -40,6 +43,7 @@ namespace Sources.Modules.Weapons.Scripts
             {
                 Projectile spawned =
                     Instantiate(_prefab, transform.position, Quaternion.identity, transform);
+                spawned.SetParticleSpawner(_particleSpawner);
                 _projectiles.Add(spawned);
                 inactiveProjectile = spawned;
             }

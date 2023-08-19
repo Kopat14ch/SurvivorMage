@@ -10,7 +10,8 @@ namespace Sources.Modules.Weapons.Scripts.Base.Spells
             if ((Vector2.Distance(position, shootPoint.transform.position) <= DistanceToLaunch ))
             {
                 gameObject.SetActive(true);
-
+                shootPoint.PlaySpellCast();
+                
                 ShootPoint = shootPoint;
                 transform.position = ShootPoint.GetPosition();
 

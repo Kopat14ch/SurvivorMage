@@ -104,6 +104,8 @@ MonoBehaviour:
   DistanceToLaunch: 20
   Damage: 5
   _spellType: 4
+  _damagedParticle: 20
+  _destroyedParticle: 20
   _targetPosition: {x: 10000, y: 0}
 --- !u!58 &6794698981804839795
 CircleCollider2D:
