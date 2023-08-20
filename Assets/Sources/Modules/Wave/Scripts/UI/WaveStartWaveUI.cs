@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Sources.Modules.Wave.Scripts.UI
 {
-    public class WaveEndUI : MonoBehaviour
+    public class WaveStartWaveUI : MonoBehaviour
     {
         [SerializeField] private WaveGenerator _waveGenerator;
         [SerializeField] private Button _nextWaveButton;
@@ -13,7 +13,7 @@ namespace Sources.Modules.Wave.Scripts.UI
 
         private void Start()
         {
-            _nextWaveButton.gameObject.SetActive(false);
+            _nextWaveButton.gameObject.SetActive(true);
         }
 
         private void OnEnable()
