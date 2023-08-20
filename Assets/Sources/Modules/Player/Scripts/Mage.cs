@@ -8,9 +8,9 @@ namespace Sources.Modules.Player.Scripts
     [RequireComponent(typeof(Animator))]
     public class Mage : MonoBehaviour
     {
-        private const float MinDamageScaler = 1;
-
         [SerializeField] private ParticleSpawner _particleSpawner;
+        
+        private const float MinDamageScaler = 1;
 
         private Animator _animator;
         private float _maxHealth = 300;
@@ -65,7 +65,6 @@ namespace Sources.Modules.Player.Scripts
         private void Die()
         {
             _particleSpawner.SpawnParticle(ParticleType.MageDied, transform.position);
-            Debug.Log("die");
         }
     }
 }

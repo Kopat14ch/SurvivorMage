@@ -17,7 +17,8 @@ namespace Sources.Modules.Wave.Scripts
         [SerializeField] private CoinSpawner _coinSpawner;
 
         public event Action UnitDied;
-        public event Action<int> WaveStarted; 
+        public event Action<int> WaveStarted;
+        public event Action WaveEnded;
 
         private const int StartMinEnemySpawn = 3;
         private const int StartMaxEnemySpawn = 6;
@@ -41,7 +42,13 @@ namespace Sources.Modules.Wave.Scripts
 
             _minEnemySpawn = StartMinEnemySpawn;
             _maxEnemySpawn = StartMaxEnemySpawn;
+            
+            StartWave();
+        }
 
+
+        public void StartWave()
+        {
             SetNewWave();
             StartWave(_wave);
         }
@@ -70,7 +77,7 @@ namespace Sources.Modules.Wave.Scripts
             UnitDied?.Invoke();
 
             if (_spawnedEnemies.Count <= 0)
-                NextWave();
+                EndWave();
         }
 
         private void SetRandomUnits()
@@ -99,14 +106,13 @@ namespace Sources.Modules.Wave.Scripts
                 _wave.Add(enemyWaveConfig.GetEnemyTypes(), enemyWaveConfig.SpawnCount);
         }
         
-        private void NextWave()
+        private void EndWave()
         {
             _minEnemySpawn += Step;
             _maxEnemySpawn += Step;
             _waveCount++;
             
-            SetNewWave();
-            StartWave(_wave);
+            WaveEnded?.Invoke();
         }
     }
 }
