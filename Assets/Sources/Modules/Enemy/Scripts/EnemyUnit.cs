@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using Pathfinding;
 using Sources.Modules.Particles.Scripts;
-using Sources.Modules.Sound.Scripts;
 
 namespace Sources.Modules.Enemy
 {
