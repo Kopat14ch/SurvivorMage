@@ -3,26 +3,19 @@ using UnityEngine;
 
 namespace Sources.Modules.Enemy
 {
-    public class EnemySound : MonoBehaviour
+    public class EnemySound : SoundBase
     {
         [SerializeField] private AudioClip _dieClip;
-        [SerializeField] private AudioClip _attackClip;
+        [SerializeField] private AudioClip _damagedClip;
 
-        private AudioSource _audioSource;
-
-        public void Init(SoundContainer container, AudioSource audioSource)
+        public void PlayDamaged(Vector3 position)
         {
-            transform.parent = container.transform;
-            _audioSource = Instantiate(audioSource, container.transform.position, Quaternion.identity, container.transform);
+            PlayClip(_damagedClip, position);
         }
 
         public void PlayDie(Vector3 position)
         {
-            _audioSource.transform.position = position;
-
-            _audioSource.clip = _dieClip;
-            _audioSource.Play();
+            PlayClip(_dieClip, position);
         }
-        
     }
 }

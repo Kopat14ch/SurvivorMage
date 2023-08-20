@@ -18,7 +18,7 @@ namespace Sources.Modules.Enemy
         private const float AddMaxHealth = 35;
 
         private float _currentHealth;
-        private EnemySound _enemySound;
+        private EnemySound _sound;
         private EnemyAttack _attack;
         private ParticleSpawner _particleSpawner;
         
@@ -32,7 +32,7 @@ namespace Sources.Modules.Enemy
 
         public void Init(EnemySound sound)
         {
-            _enemySound = sound;
+            _sound = sound;
             Collider2D = GetComponent<CapsuleCollider2D>();
             _attack = GetComponent<EnemyAttack>();
             CurrentLevel = 1;
@@ -58,6 +58,7 @@ namespace Sources.Modules.Enemy
         {
             _currentHealth -= damage;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+            _sound.PlayDamaged(transform.position);
             
             TryDie();
         }
@@ -80,7 +81,7 @@ namespace Sources.Modules.Enemy
                 _particleSpawner.SpawnParticle(_diedType, transform.position);
                 Died?.Invoke(this);
                 
-                _enemySound.PlayDie(transform.position);
+                _sound.PlayDie(transform.position);
                 gameObject.SetActive(false);
             }
         }

@@ -15,13 +15,19 @@ namespace Sources.Modules.Player.Scripts
         private Animator _animator;
         private float _maxHealth = 300;
         private float _currentHealth;
+        private PlayerSound _sound;
 
         public event Action<float> HealthChanged;
         public event Action<float> MaxHealthIncreased;
 
         public float DamageScaler { get; private set; }
 
-        public void Awake()
+        public void Init(PlayerSound playerSound)
+        {
+            _sound = playerSound;
+        }
+
+        private void Awake()
         {
             DamageScaler = MinDamageScaler;
 
@@ -37,16 +43,15 @@ namespace Sources.Modules.Player.Scripts
             if (damage > 0 && _currentHealth > 0)
             {
                 _animator.Play(PlayerAnimator.States.Hit);
+                _sound.DamagedPlay(transform.position);
 
                 _currentHealth -= damage;
                 _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
                 HealthChanged?.Invoke(_currentHealth);
 
-                if (_currentHealth <= 0)
-                {
+                if (_currentHealth <= 0) 
                     Die();
-                }
             }
         }
 
@@ -64,6 +69,7 @@ namespace Sources.Modules.Player.Scripts
 
         private void Die()
         {
+            _sound.DiePlay(transform.position);
             _particleSpawner.SpawnParticle(ParticleType.MageDied, transform.position);
         }
     }
