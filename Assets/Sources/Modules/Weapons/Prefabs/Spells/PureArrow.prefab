@@ -103,8 +103,10 @@ MonoBehaviour:
   _speed: 20
   _timeToDestroy: 8
   DistanceToLaunch: 15
-  _baseDamage: 10
+  _baseDamage: 7
   _spellType: 11
+  _damagedParticle: 23
+  _destroyedParticle: 23
 --- !u!58 &6794698981804839795
 CircleCollider2D:
   m_ObjectHideFlags: 0

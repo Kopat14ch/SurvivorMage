@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace Sources.Modules.Weapons.Scripts.Common
 {
-    internal class SpellCaster : MonoBehaviour
+    public class SpellCaster : MonoBehaviour
     {
         [SerializeField, Range(MinCooldown, MaxCooldown)] private float _cooldown;
         [SerializeField] private SpellType _spellType;
+
+        public SpellType SpellType => _spellType;
         
         private ShootPoint _shootPoint;
         private ProjectilesPool _pool;
@@ -29,7 +31,6 @@ namespace Sources.Modules.Weapons.Scripts.Common
             _shootPoint = shootPoint;
             _finderCloseEnemy = finderCloseEnemy;
             _pool = pool;
-            //_stopShooting = true;
         }
 
         public void StartCasting()
@@ -38,6 +39,12 @@ namespace Sources.Modules.Weapons.Scripts.Common
                 StopCoroutine(_shootingWork);
 
             _shootingWork = StartCoroutine(Shooting());
+        }
+
+        public void StopCasting()
+        {
+            if (_shootingWork != null)
+                StopCoroutine(_shootingWork);
         }
 
         private IEnumerator Shooting()

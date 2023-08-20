@@ -102,9 +102,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _timeToDestroy: 5
-  DistanceToLaunch: 6
-  _baseDamage: 10
+  DistanceToLaunch: 7.5
+  _baseDamage: 30
   _spellType: 8
+  _damagedParticle: 22
+  _destroyedParticle: 22
 --- !u!58 &6794698981804839795
 CircleCollider2D:
   m_ObjectHideFlags: 0

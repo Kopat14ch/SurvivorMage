@@ -39,7 +39,6 @@ namespace Sources.Modules.Enemy
             while (currentLevel < wave)
             {
                 _damage += AddDamage;
-                Debug.Log(_damage);
                 currentLevel++;
             }
         }

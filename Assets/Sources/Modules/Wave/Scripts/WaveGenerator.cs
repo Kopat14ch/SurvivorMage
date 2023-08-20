@@ -47,7 +47,7 @@ namespace Sources.Modules.Wave.Scripts
         }
 
         private void StartWave(Dictionary<List<EnemyType>, int> wave)
-        {
+        { 
             _spawner.SpawnEnemies(wave, _waveCount);
 
             _spawnedEnemies = _spawner.GetEnemies();

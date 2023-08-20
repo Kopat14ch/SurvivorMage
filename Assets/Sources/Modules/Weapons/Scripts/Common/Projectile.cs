@@ -1,6 +1,7 @@
 using System.Collections;
 using Sources.Modules.Common;
 using Sources.Modules.Enemy;
+using Sources.Modules.Particles.Scripts;
 using UnityEngine;
 
 namespace Sources.Modules.Weapons.Scripts.Common
@@ -13,9 +14,12 @@ namespace Sources.Modules.Weapons.Scripts.Common
         [SerializeField, Range(MinDistanceToLaunch, MaxDistanceToLaunch)] protected float DistanceToLaunch;
         [SerializeField] private float _baseDamage;
         [SerializeField] private SpellType _spellType;
-        
+        [SerializeField] protected ParticleType _damagedParticle;
+        [SerializeField] protected ParticleType _destroyedParticle;
+
         protected Coroutine DisablingWork;
         protected ShootPoint ShootPoint;
+        protected ParticleSpawner _particleSpawner;
 
         private const float MinDamageScaler = 1;
         private const int MinSpeed = 1;
@@ -28,7 +32,8 @@ namespace Sources.Modules.Weapons.Scripts.Common
         private Rigidbody2D _rigidbody2D;
         private float _currentTimeToDisable;
         private float _damageScaler;
-        
+
+        public float BaseDamage => _baseDamage;
         public SpellType SpellType => _spellType;
 
         private void Awake()
@@ -45,6 +50,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
             if (obstacleReceived || enemyReceived)
             {
                 gameObject.SetActive(false);
+                _particleSpawner.SpawnParticle(_damagedParticle, transform.position);
             }
             
             if (enemyReceived)
@@ -52,6 +58,8 @@ namespace Sources.Modules.Weapons.Scripts.Common
                 enemy.TakeDamage(GetDamage());
             }
         }
+
+        public void SetParticleSpawner(ParticleSpawner particleSpawner) => _particleSpawner = particleSpawner;
         
         public abstract void TryLaunch(ShootPoint shootPoint, Vector3 position);
 
@@ -60,10 +68,8 @@ namespace Sources.Modules.Weapons.Scripts.Common
         
         public void SetDamageScaler(float damageScaler) => _damageScaler = Mathf.Clamp(damageScaler, MinDamageScaler, float.MaxValue);
 
-        protected float GetDamage()
+        public float GetDamage()
         {
-            Debug.Log(_baseDamage * _damageScaler);
-            
             return _baseDamage * _damageScaler;
         }
         protected IEnumerator ChangingPosition(Vector3 position)
@@ -109,6 +115,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
                 yield return null;
             }
             
+            _particleSpawner.SpawnParticle(_destroyedParticle, transform.position);
             gameObject.SetActive(false);
         }
     }
