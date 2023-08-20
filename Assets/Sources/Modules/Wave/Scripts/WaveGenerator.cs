@@ -42,8 +42,6 @@ namespace Sources.Modules.Wave.Scripts
 
             _minEnemySpawn = StartMinEnemySpawn;
             _maxEnemySpawn = StartMaxEnemySpawn;
-            
-            StartWave();
         }
 
 

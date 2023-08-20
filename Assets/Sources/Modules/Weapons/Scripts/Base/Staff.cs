@@ -13,7 +13,7 @@ namespace Sources.Modules.Weapons.Scripts.Base
         [SerializeField] private List<SpellCaster> _spellCasterPrefabs;
         [SerializeField] private ShootPoint _shootPoint;
         [SerializeField] private WaveGenerator _waveGenerator;
-        [SerializeField] private WaveEndUI _waveEndUI;
+        [SerializeField] private WaveStartWaveUI _waveStartWaveUI;
 
         public int ActiveSpells => _activeSpellCasters.Count;
         
@@ -22,21 +22,15 @@ namespace Sources.Modules.Weapons.Scripts.Base
         private FinderCloseEnemy _finder;
         private ProjectilesPool _projectilesPool;
 
-
-        private void Start()
-        {
-            StartShooting();
-        }
-
         private void OnEnable()
         {
-            _waveEndUI.NextWaveButtonPressed += StartShooting;
+            _waveStartWaveUI.NextWaveButtonPressed += StartShooting;
             _waveGenerator.WaveEnded += StopShooting;
         }
 
         private void OnDisable()
         {
-            _waveEndUI.NextWaveButtonPressed -= StartShooting;
+            _waveStartWaveUI.NextWaveButtonPressed -= StartShooting;
             _waveGenerator.WaveEnded -= StopShooting;
         }
 
