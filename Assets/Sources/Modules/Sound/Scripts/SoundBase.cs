@@ -10,6 +10,7 @@ namespace Sources.Modules.Sound.Scripts
         {
             transform.parent = soundContainer.transform;
             CurrentAudioSource = Instantiate(audioSource, soundContainer.transform.position, Quaternion.identity, soundContainer.transform);
+            soundContainer.AddAudioSource(CurrentAudioSource);
         }
         
         protected void PlayClip(AudioClip clip, Vector3 position)

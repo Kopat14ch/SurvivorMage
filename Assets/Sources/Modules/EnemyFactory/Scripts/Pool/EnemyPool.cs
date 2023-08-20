@@ -29,14 +29,17 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
             {
                 Container container = Instantiate(_prefabContainer, transform.position, Quaternion.identity,
                     transform);
-                
-                container.Init((EnemyType) enemyTypeIndex, prefab, _particleSpawner);
+
+                container.Init((EnemyType)enemyTypeIndex, prefab, _particleSpawner, _soundContainer, _audioSourcePrefab,
+                    _enemySoundPrefab);
                 _containers.Add(container);
-                
+
                 for (int i = 0; i < _startCapacity; i++)
                 {
-                    EnemyUnit spawned = Instantiate(prefab, transform.position, Quaternion.identity, container.transform);
-                    EnemySound enemySound = Instantiate(_enemySoundPrefab,_soundContainer.transform.position, Quaternion.identity, _soundContainer.transform);
+                    EnemyUnit spawned = Instantiate(prefab, transform.position, Quaternion.identity,
+                        container.transform);
+                    EnemySound enemySound = Instantiate(_enemySoundPrefab, _soundContainer.transform.position,
+                        Quaternion.identity, _soundContainer.transform);
                     enemySound.Init(_soundContainer, _audioSourcePrefab);
                     spawned.Init(enemySound);
                     spawned.SetParticleSpawner(_particleSpawner);

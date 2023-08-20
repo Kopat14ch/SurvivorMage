@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Sources.Modules.Sound.Scripts
 {
     [RequireComponent(typeof(AudioSource))]
-    internal class BackgroundSound : MonoBehaviour
+    public class BackgroundSound : MonoBehaviour
     {
         [SerializeField] private AudioClip[] _backgroundClips;
 
@@ -22,6 +22,11 @@ namespace Sources.Modules.Sound.Scripts
             StartNewClip();
         }
 
+        public void ChangeVolume(float volume)
+        {
+            _audioSourceBackgroundClips.volume = volume;
+        }
+        
         private void StartNewClip()
         {
             if (_audioPlayWork != null)
