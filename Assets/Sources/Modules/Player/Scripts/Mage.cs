@@ -13,7 +13,7 @@ namespace Sources.Modules.Player.Scripts
         private const float MinDamageScaler = 1;
 
         private Animator _animator;
-        private float _maxHealth = 300;
+        private float _maxHealth = 100;
         private float _currentHealth;
         private PlayerSound _sound;
 
