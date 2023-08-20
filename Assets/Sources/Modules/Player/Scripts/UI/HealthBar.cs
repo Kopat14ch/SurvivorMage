@@ -1,10 +1,8 @@
-using Sources.Modules.Player;
-using Sources.Modules.Player.Scripts;
 using Sources.Modules.UI.Scripts.InGame.Common;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Sources.Modules.PlayerUI
+namespace Sources.Modules.Player.Scripts.UI
 {
     [RequireComponent(typeof(Slider))]
     internal class HealthBar : Bar

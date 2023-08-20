@@ -4,6 +4,7 @@ using Sources.Modules.Finder.Scripts;
 using Sources.Modules.Particles.Scripts;
 using Sources.Modules.Player.Scripts;
 using Sources.Modules.Player.Scripts.MVP;
+using Sources.Modules.Sound.Scripts;
 using Sources.Modules.Wallet.Scripts.MVP;
 using Sources.Modules.Weapons.Scripts;
 using Sources.Modules.Weapons.Scripts.Base;
@@ -25,13 +26,18 @@ namespace Sources.SurvivorMage.Scripts
         [SerializeField] private WalletSetup _walletSetup;
         [SerializeField] private PlayerView _playerView;
         [SerializeField] private SpellsShop _spellsShop;
+        [SerializeField] private PlayerSound _playerSound;
+        [SerializeField] private SoundContainer _soundContainer;
+        [SerializeField] private AudioSource _audioSourcePrefab;
 
         private FinderCloseEnemy _finderCloseEnemy;
 
         private void Awake()
         {
             _finderCloseEnemy = GetComponent<FinderCloseEnemy>();
+            _playerSound.Init(_soundContainer, _audioSourcePrefab);
 
+            _mage.Init(_playerSound);
             _playerSetup.Init(_mage);
             _finderCloseEnemy.Init(_mage);
             _enemyPool.Init(_particleSpawner);

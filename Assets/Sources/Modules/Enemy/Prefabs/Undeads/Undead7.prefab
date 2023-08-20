@@ -352,8 +352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9337ea75c5477db25b9905dcc63ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dieClip: {fileID: 8300000, guid: c162b3548c6bc9e4db7ea667ae05ad12, type: 3}
-  _attackClip: {fileID: 0}
+  _dieClip: {fileID: 8300000, guid: 15f4331e3e3c3bc4989ddd726b84ced8, type: 3}
+  _damagedClip: {fileID: 8300000, guid: dd6ae886d9472e448826fb957900da15, type: 3}
 --- !u!1001 &4007510826564229987
 PrefabInstance:
   m_ObjectHideFlags: 0
