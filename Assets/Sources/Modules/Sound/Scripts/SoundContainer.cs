@@ -1,3 +1,9 @@
 using UnityEngine;
 
-namespace Sources.Modules.Sound.Scripts { public class SoundContainer : MonoBehaviour { } }
+namespace Sources.Modules.Sound.Scripts
+{
+    public class SoundContainer : MonoBehaviour
+    {
+        
+    }
+}
