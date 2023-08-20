@@ -39,19 +39,30 @@ namespace Sources.Modules.UI.Scripts
 
         public void TurnOn()
         {
-            _isEnabled = true;
-            _canvasGroup.alpha = 1;
-            _canvasGroup.interactable = true;
-            _canvasGroup.blocksRaycasts = true;
-
-            if (_isPausePanel)
-                Time.timeScale = 0;
+            ShowCanvas();
             
             Enabled?.Invoke(this);
         }
         
         public void TurnOnWithoutInvoke()
         {
+            ShowCanvas();
+        }
+        
+        public void TurnOff()
+        {
+            HideCanvas();
+            
+            Disabled?.Invoke(this);
+        }
+        
+        public void TurnOffWithoutInvoke()
+        {
+            HideCanvas();
+        }
+
+        private void ShowCanvas()
+        {
             _isEnabled = true;
             _canvasGroup.alpha = 1;
             _canvasGroup.interactable = true;
@@ -60,21 +71,8 @@ namespace Sources.Modules.UI.Scripts
             if (_isPausePanel)
                 Time.timeScale = 0;
         }
-        
-        public void TurnOff()
-        {
-            _isEnabled = false;
-            _canvasGroup.alpha = 0;
-            _canvasGroup.interactable = false;
-            _canvasGroup.blocksRaycasts = false;
-            
-            if (_isPausePanel)
-                Time.timeScale = 1;
-            
-            Disabled?.Invoke(this);
-        }
-        
-        public void TurnOffWithoutInvoke()
+
+        private void HideCanvas()
         {
             _isEnabled = false;
             _canvasGroup.alpha = 0;
