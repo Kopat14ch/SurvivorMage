@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Sources.Modules.Finder.Scripts;
+using Sources.Modules.Wave.Scripts;
+using Sources.Modules.Wave.Scripts.UI;
 using Sources.Modules.Weapons.Scripts.Common;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Sources.Modules.Weapons.Scripts.Base
 {
@@ -10,8 +12,8 @@ namespace Sources.Modules.Weapons.Scripts.Base
     {
         [SerializeField] private List<SpellCaster> _spellCasterPrefabs;
         [SerializeField] private ShootPoint _shootPoint;
-        [SerializeField] private Button _startShootingButton;
-        [SerializeField] private Button _stopShootingButton;
+        [SerializeField] private WaveGenerator _waveGenerator;
+        [SerializeField] private WaveEndUI _waveEndUI;
 
         public int ActiveSpells => _activeSpellCasters.Count;
         
@@ -19,6 +21,24 @@ namespace Sources.Modules.Weapons.Scripts.Base
         private List<SpellCaster> _activeSpellCasters;
         private FinderCloseEnemy _finder;
         private ProjectilesPool _projectilesPool;
+
+
+        private void Start()
+        {
+            StartShooting();
+        }
+
+        private void OnEnable()
+        {
+            _waveEndUI.NextWaveButtonPressed += StartShooting;
+            _waveGenerator.WaveEnded += StopShooting;
+        }
+
+        private void OnDisable()
+        {
+            _waveEndUI.NextWaveButtonPressed -= StartShooting;
+            _waveGenerator.WaveEnded -= StopShooting;
+        }
 
         public void Init(FinderCloseEnemy finderCloseEnemy, ProjectilesPool projectilesPool)
         {
@@ -33,9 +53,6 @@ namespace Sources.Modules.Weapons.Scripts.Base
                 spawned.Init(_shootPoint, _finder, _projectilesPool);
                 _spellCasters.Add(spawned);
             }
-            
-            _startShootingButton.onClick.AddListener(StartShooting);
-            _stopShootingButton.onClick.AddListener(StopShooting);
         }
 
         public void AddSpellCaster(SpellType spellType)
@@ -60,12 +77,6 @@ namespace Sources.Modules.Weapons.Scripts.Base
                     break;
                 }
             }
-        }
-        
-        private void OnDisable()
-        {
-            _startShootingButton.onClick.RemoveListener(StartShooting);
-            _stopShootingButton.onClick.RemoveListener(StopShooting);
         }
 
         private void StartShooting()
