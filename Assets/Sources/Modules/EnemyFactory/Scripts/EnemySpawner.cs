@@ -35,21 +35,18 @@ namespace Sources.Modules.EnemyFactory.Scripts
             _allWaveUnits = new List<EnemyUnit>();
 
             int enemyTypeIndex = 0;
+            
+            enemyTypeIndex %= wave.Keys.ElementAt(0).Count;
+            _currentUnits = _enemyPool.GetObjects(wave.Keys.ElementAt(0)[enemyTypeIndex], wave.Values.ElementAt(0));
 
-            for (int i = 0; i < wave.Count; i++, enemyTypeIndex++)
+            foreach (EnemyUnit unit in _currentUnits)
             {
-                enemyTypeIndex %= wave.Keys.ElementAt(i).Count;
-                _currentUnits = _enemyPool.GetObjects(wave.Keys.ElementAt(i)[enemyTypeIndex], wave.Values.ElementAt(i));
+                if (_allWaveUnits.Contains(unit))
+                    continue;
 
-                foreach (EnemyUnit unit in _currentUnits)
-                {
-                    if (_allWaveUnits.Contains(unit))
-                        continue;
-                    
-                    unit.AddLevels(waveCount);
-                    _allWaveUnits.Add(unit);
-                    unit.SetTarget(_playerPosition);
-                }
+                unit.AddLevels(waveCount);
+                _allWaveUnits.Add(unit);
+                unit.SetTarget(_playerPosition);
             }
 
             if (_spawningWork != null)
