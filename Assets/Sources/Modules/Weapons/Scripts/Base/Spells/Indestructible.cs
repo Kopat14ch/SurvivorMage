@@ -16,7 +16,6 @@ namespace Sources.Modules.Weapons.Scripts.Base.Spells
 
             if (enemyReceived)
             {
-
                 _particleSpawner.SpawnParticle(_damagedParticle, transform.position);
                 enemy.TakeDamage(GetDamage());
 

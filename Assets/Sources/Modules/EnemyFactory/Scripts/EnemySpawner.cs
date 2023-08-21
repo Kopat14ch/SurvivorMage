@@ -60,6 +60,12 @@ namespace Sources.Modules.EnemyFactory.Scripts
 
         public List<EnemyUnit> GetEnemies() => _allWaveUnits.GetRange(0, _allWaveUnits.Count);
 
+        public void TryStopSpawning()
+        {
+            if (_spawningWork != null)
+                StopCoroutine(_spawningWork);
+        }
+
         private IEnumerator Spawning()
         {
             WaitForSeconds waitForSeconds = new (SpawningCooldown);

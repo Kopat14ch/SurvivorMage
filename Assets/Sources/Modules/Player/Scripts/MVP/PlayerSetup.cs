@@ -19,14 +19,9 @@ namespace Sources.Modules.Player.Scripts.MVP
         public void Init(Mage mage)
         {
             _view = GetComponent<PlayerView>();
-            
-            _playerModel = new (BaseMaxHealth,BaseSpeed,DamageScaler);
-            _presenter = new PlayerPresenter(_playerModel, _view);
             _mage = mage;
             
-            _playerMovement.SetSpeed(_playerModel.Speed);
-            _mage.SetMaxHealth(_playerModel.MaxHealth);
-            mage.OnChangeDamageScaler(_playerModel.DamageScaler);
+            SetDefault();
         }
 
         private void OnEnable()
@@ -45,6 +40,16 @@ namespace Sources.Modules.Player.Scripts.MVP
             _presenter.SpeedChanged -= _playerMovement.SetSpeed;
 
             _presenter.Disable();
+        }
+
+        private void SetDefault()
+        {
+            _playerModel = new (BaseMaxHealth,BaseSpeed,DamageScaler);
+            _presenter = new PlayerPresenter(_playerModel, _view);
+            
+            _playerMovement.SetSpeed(_playerModel.Speed);
+            _mage.SetMaxHealth(_playerModel.MaxHealth);
+            _mage.OnChangeDamageScaler(_playerModel.DamageScaler);
         }
     }
 }
