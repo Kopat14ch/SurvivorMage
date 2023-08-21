@@ -10,8 +10,10 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         [SerializeField] private UpgradePanel _coinMultiplierPanel;
         [SerializeField] private TMP_Text _inGameText;
         [SerializeField] private TMP_Text _workshopText;
-
+        
         public event Action<int> CoinIncreasedButtonPressed;
+
+        public UpgradePanel CoinMultiplierPanel => _coinMultiplierPanel;
 
         private void OnEnable()
         {
@@ -34,6 +36,5 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _coinMultiplierPanel.ChangeCurrentValueText(multiplier.ToString());
             _coinMultiplierPanel.ChangeUpgradeValueText((multiplier + increase).ToString());
         }
-        
     }
 }

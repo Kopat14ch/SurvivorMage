@@ -6,7 +6,7 @@ namespace Sources.Modules.Player.Scripts.MVP
     {
         private const float MaxHealthIncreaseValue = 3.5f;
         private const float DamageScalerIncreaseValue = 0.1f;
-        private const float SpeedIncreaseValue = 0.4f;
+        private const float SpeedIncreaseValue = 0.1f;
 
         public event Action<float, float> MaxHealthChanged;
         public event Action<float, float> DamageScalerChanged;
@@ -42,7 +42,7 @@ namespace Sources.Modules.Player.Scripts.MVP
             DamageScalerChanged?.Invoke(DamageScaler, DamageScalerIncreaseValue);
         }
         
-        public void AddSpeed()
+        public void TryAddSpeed()
         {
             Speed += SpeedIncreaseValue;
             SpeedChanged?.Invoke(Speed, SpeedIncreaseValue);

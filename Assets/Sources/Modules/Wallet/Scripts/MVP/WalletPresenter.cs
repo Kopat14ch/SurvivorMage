@@ -14,8 +14,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         private readonly PlayerView _playerView;
         private readonly SpellsShop _spellsShop;
         
-        private const int MaxHealthAddPrice = 20;
-        private const int DamageScalerAddPrice = 35;
+        private const int IncreaseCoinMultiplierPanel = 275;
 
         public WalletPresenter(WalletModel model, WalletView view, CoinSpawner coinSpawner, PlayerView playerView,
             SpellsShop spellsShop)
@@ -26,6 +25,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _playerView = playerView;
             _spellsShop = spellsShop;
             _coins = new List<Coin>();
+            _view.CoinMultiplierPanel.SetAddPrice(IncreaseCoinMultiplierPanel);
         }
 
         public void Enable()
@@ -85,6 +85,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         private void OnIncreaseChanged(int currentIncrease, int increase)
         {
             _view.ChangeCoinIncreaseText(currentIncrease, increase);
+            _view.CoinMultiplierPanel.AddPrice();
         }
 
         private void OnSpellSlotButtonPressed(int price, SpellSlot slot)
