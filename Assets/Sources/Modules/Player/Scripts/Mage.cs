@@ -61,6 +61,7 @@ namespace Sources.Modules.Player.Scripts
         public void UpdateCurrentHealth() 
         {
             _currentHealth = _maxHealth;
+            
             HealthChanged?.Invoke(_currentHealth);
         }
 
