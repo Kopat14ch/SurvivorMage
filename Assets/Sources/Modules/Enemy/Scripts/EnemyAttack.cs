@@ -7,10 +7,10 @@ namespace Sources.Modules.Enemy
 {
     internal class EnemyAttack : MonoBehaviour
     {
-        [SerializeField] private int _damage;
+        [SerializeField] private float _damage;
         [SerializeField] private float _cooldown;
 
-        private const int AddDamage = 10;
+        private const float AddDamage = 0.2f;
         private ParticleSpawner _particleSpawner;
         private float _passedTime;
         

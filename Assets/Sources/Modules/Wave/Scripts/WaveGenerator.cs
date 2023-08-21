@@ -24,9 +24,9 @@ namespace Sources.Modules.Wave.Scripts
         public event Action<int> WaveStarted;
         public event Action WaveEnded;
 
-        private const int StartMinEnemySpawn = 3;
+        private const int StartMinEnemySpawn = 1;
         private const int StartMaxEnemySpawn = 6;
-        private const int Step = 3;
+        private const int Step = 1;
         
         private List<EnemyWaveConfig> _enemyConfigs;
         private List<EnemyUnit> _spawnedEnemies;

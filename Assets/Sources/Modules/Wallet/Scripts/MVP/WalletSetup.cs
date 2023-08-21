@@ -10,7 +10,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
     {
         [SerializeField] private CoinSpawner _spawner;
 
-        private const int BaseCoins = 200;
+        private const int BaseCoins = 0;
         private const int BaseIncrease = 0;
         
         private WalletView _view;

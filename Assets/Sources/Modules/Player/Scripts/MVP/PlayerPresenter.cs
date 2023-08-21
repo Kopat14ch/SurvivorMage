@@ -86,6 +86,6 @@ namespace Sources.Modules.Player.Scripts.MVP
         
         private void OnMaxHealthIncreasingBought() => _model.AddMaxHealth();
         private void OnDamageScalerIncreasingBought() => _model.AddDamageScaler();
-        private void OnSpeedIncreasingBought() => _model.AddSpeed();
+        private void OnSpeedIncreasingBought() => _model.TryAddSpeed();
     }
 }

@@ -33,8 +33,8 @@ namespace Sources.Modules.Wave.Scripts.UI
 
         private void DecreaseValueByOne()
         {
-            float currentBarValue = Slider.value;
-            ChangeValue(--currentBarValue);
+            float currentBarValue = Slider.value - 1;
+            ChangeValue(currentBarValue);
         }
     }
 }
