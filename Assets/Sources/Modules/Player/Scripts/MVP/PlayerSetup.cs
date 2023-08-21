@@ -7,7 +7,7 @@ namespace Sources.Modules.Player.Scripts.MVP
     {
         [SerializeField] private PlayerMovement _playerMovement;
 
-        private const float BaseMaxHealth = 60;
+        private const float BaseMaxHealth = 10;
         private const float BaseSpeed = 7f;
         private const float DamageScaler = 1f;
         

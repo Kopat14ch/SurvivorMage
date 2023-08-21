@@ -10,23 +10,6 @@ namespace Sources.Modules.Wave.Scripts
             new(
                 new List<EnemyType>()
                 {
-                    EnemyType.Demon1,
-                    
-                    EnemyType.Demon5
-                }
-            ),
-            new(
-                new List<EnemyType>()
-                {
-                    EnemyType.Demon2,
-                    
-                    EnemyType.Demon5
-                }
-            ),
-            new(
-                new List<EnemyType>()
-                {
-                    EnemyType.Demon3,
                     EnemyType.Orc1
                 }
             ),
@@ -39,23 +22,79 @@ namespace Sources.Modules.Wave.Scripts
             new(
                 new List<EnemyType>()
                 {
-                    EnemyType.Orc3,
-                    EnemyType.Other1
-                }
-            ),
-            new(
-                new List<EnemyType>()
-                {
-                    EnemyType.Demon4,
-                    EnemyType.Other2
+                    EnemyType.Orc3
                 }
             ),
             new(
                 new List<EnemyType>()
                 {
                     EnemyType.Orc4,
-                    EnemyType.Demon5,
+                    EnemyType.Orc5
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Undead1,
+                    EnemyType.Undead2,
+                    EnemyType.Undead3,
                     EnemyType.Other3
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Undead4
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Undead5,
+                    EnemyType.Undead6
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Undead7
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Other2
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Demon1
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Demon2
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Demon3
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Demon4,
+                    EnemyType.Demon5
+                }
+            ),
+            new(
+                new List<EnemyType>()
+                {
+                    EnemyType.Other1
                 }
             )
         };

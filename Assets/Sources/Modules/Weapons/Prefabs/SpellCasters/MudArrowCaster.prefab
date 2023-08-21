@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa40a21870684a4c9d025f7c4364f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown: 3
+  _cooldown: 4
   _spellType: 4

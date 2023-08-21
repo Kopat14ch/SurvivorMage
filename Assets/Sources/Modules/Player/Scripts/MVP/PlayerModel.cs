@@ -4,7 +4,7 @@ namespace Sources.Modules.Player.Scripts.MVP
 {
     internal class PlayerModel
     {
-        private const float MaxHealthIncreaseValue = 3.5f;
+        private const float MaxHealthIncreaseValue = 5f;
         private const float DamageScalerIncreaseValue = 0.1f;
         private const float SpeedIncreaseValue = 0.1f;
 

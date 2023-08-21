@@ -15,7 +15,7 @@ namespace Sources.Modules.Enemy
         [SerializeField] private AIDestinationSetter _destinationSetter;
         [SerializeField] private ParticleType _diedType;
 
-        private const float AddMaxHealth = 35;
+        private const float AddMaxHealth = 0.2f;
 
         private float _currentHealth;
         private EnemySound _sound;

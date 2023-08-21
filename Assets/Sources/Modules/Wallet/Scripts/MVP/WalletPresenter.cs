@@ -14,7 +14,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         private readonly PlayerView _playerView;
         private readonly SpellsShop _spellsShop;
         
-        private const int IncreaseCoinMultiplierPanel = 275;
+        private const int IncreaseCoinMultiplierPanel = 100;
 
         public WalletPresenter(WalletModel model, WalletView view, CoinSpawner coinSpawner, PlayerView playerView,
             SpellsShop spellsShop)

@@ -103,7 +103,7 @@ MonoBehaviour:
   _speed: 5
   _timeToDestroy: 10
   DistanceToLaunch: 40
-  _baseDamage: 7
+  _baseDamage: 2.6
   _spellType: 10
   _damagedParticle: 29
   _destroyedParticle: 29
