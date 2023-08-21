@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Sources.Modules.Finder.Scripts;
+using Sources.Modules.Player.Scripts;
 using Sources.Modules.Wave.Scripts;
 using Sources.Modules.Wave.Scripts.UI;
 using Sources.Modules.Weapons.Scripts.Common;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Sources.Modules.Weapons.Scripts.Base
 {
@@ -40,7 +42,7 @@ namespace Sources.Modules.Weapons.Scripts.Base
             _activeSpellCasters = new List<SpellCaster>();
             _projectilesPool = projectilesPool;
             _finder = finderCloseEnemy;
-
+            
             foreach (SpellCaster prefab in _spellCasterPrefabs)
             {
                 SpellCaster spawned = Instantiate(prefab, transform.position, Quaternion.identity, transform);
@@ -53,7 +55,7 @@ namespace Sources.Modules.Weapons.Scripts.Base
         {
             foreach (SpellCaster caster in _spellCasters)
             {
-                if (caster.SpellType == spellType)
+                if (_activeSpellCasters.Contains(caster) == false && caster.SpellType == spellType)
                 {
                     _activeSpellCasters.Add(caster);
                     break;

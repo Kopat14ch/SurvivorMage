@@ -14,7 +14,7 @@ namespace Sources.Modules.Weapons.Scripts.Common
         private ShootPoint _shootPoint;
         private ProjectilesPool _pool;
         private bool _stopShooting;
-
+        
         private FinderCloseEnemy _finderCloseEnemy;
         private Coroutine _shootingWork;
 

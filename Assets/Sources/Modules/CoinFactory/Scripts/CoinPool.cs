@@ -45,6 +45,8 @@ namespace Sources.Modules.CoinFactory.Scripts
             return inactiveCoin;
         }
 
+        public List<Coin> GetCoins() => _coins.GetRange(0, _coins.Count);
+
         private Coin InitCoin()
         {
             Coin spawned = Instantiate(_prefab, transform.position, Quaternion.identity,

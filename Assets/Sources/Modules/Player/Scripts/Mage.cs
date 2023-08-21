@@ -11,12 +11,14 @@ namespace Sources.Modules.Player.Scripts
         [SerializeField] private ParticleSpawner _particleSpawner;
         
         private const float MinDamageScaler = 1;
+        private Vector3 _startPosition;
 
         private Animator _animator;
-        private float _maxHealth = 100;
+        private float _maxHealth;
         private float _currentHealth;
         private PlayerSound _sound;
 
+        public event Action Died;
         public event Action<float> HealthChanged;
         public event Action<float> MaxHealthIncreased;
 
@@ -25,6 +27,7 @@ namespace Sources.Modules.Player.Scripts
         public void Init(PlayerSound playerSound)
         {
             _sound = playerSound;
+            _startPosition = transform.position;
         }
 
         private void Awake()
@@ -55,6 +58,12 @@ namespace Sources.Modules.Player.Scripts
             }
         }
 
+        public void UpdateCurrentHealth() 
+        {
+            _currentHealth = _maxHealth;
+            HealthChanged?.Invoke(_currentHealth);
+        }
+
         public void SetMaxHealth(float maxHealth)
         {
             _maxHealth = maxHealth;
@@ -67,10 +76,13 @@ namespace Sources.Modules.Player.Scripts
             DamageScaler = Mathf.Clamp(damageScaler, MinDamageScaler, float.MaxValue);
         }
 
+        public void SetStartPosition() => transform.position = _startPosition;
+        
         private void Die()
         {
             _sound.DiePlay(transform.position);
             _particleSpawner.SpawnParticle(ParticleType.MageDied, transform.position);
+            Died?.Invoke();
         }
     }
 }

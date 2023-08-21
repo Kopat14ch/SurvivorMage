@@ -16,17 +16,28 @@ namespace Sources.Modules.Workshop.Scripts.UI
         [SerializeField] private Color _activeSpellsEnoughColor;
 
         private Staff _staff;
+        private SpellSlotData _slotData;
+        private List<SpellSlotData> _slotDates;
 
         public event Action<int, SpellSlot> SlotBuyButtonPressed;
 
         public void Init(Staff staff)
         {
             _staff = staff;
+            _slotDates = Saver.LoadSpells() ?? new List<SpellSlotData>();
 
             foreach (SpellSlot slot in _spellSlots)
             {
                 slot.BuyButtonPressed += OnSlotBuyButtonPressed;
                 slot.EquipButtonPressed += OnEquipButtonPressed;
+
+                foreach (var slotData in _slotDates)
+                {
+                    if (slotData.SpellType == slot.SpellType)
+                    {
+                        slot.BuySpell();
+                    }
+                }
                 
                 if (slot.IsEquipped)
                     _staff.AddSpellCaster(slot.SpellType);
@@ -49,7 +60,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
             if (spellSlot.IsEquipped == false)
                 EquipSpell(spellType, spellSlot);
             else
-                UnequipSpell(spellType, spellSlot);
+                UnEquipSpell(spellType, spellSlot);
         }
 
         private void EquipSpell(SpellType spellType, SpellSlot spellSlot)
@@ -59,7 +70,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
             CheckSpellsLimit();
         }
 
-        private void UnequipSpell(SpellType spellType, SpellSlot spellSlot)
+        private void UnEquipSpell(SpellType spellType, SpellSlot spellSlot)
         {
             _staff.RemoveSpellCaster(spellType);
             spellSlot.UnequipSpell();
@@ -71,7 +82,19 @@ namespace Sources.Modules.Workshop.Scripts.UI
             foreach (SpellSlot slot in _spellSlots)
             {
                 if (slot == spellSlot)
+                {
                     spellSlot.BuySpell();
+
+                    _slotData = new SpellSlotData()
+                    {
+                        SpellType = spellSlot.SpellType
+                    };
+                    
+                    _slotDates.Add(_slotData);
+                    
+                    Saver.SaveSpells(_slotDates);
+                }
+                
             }
         }
 

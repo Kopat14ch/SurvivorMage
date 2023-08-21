@@ -30,6 +30,20 @@ namespace Sources.Modules.CoinFactory.Scripts
                 enemy.Died += SpawnCoin;
         }
 
+        public void DisableCoins()
+        {
+            if (_enemies == null)
+                return;
+
+            foreach (EnemyUnit enemy in _enemies)
+                enemy.Died -= SpawnCoin;
+            
+            foreach (var coin in _pool.GetCoins())
+            {
+                coin.gameObject.SetActive(false);
+            }
+        }
+
         private void SpawnCoin(EnemyUnit enemy)
         {
             Coin coin = _pool.GetCoin();

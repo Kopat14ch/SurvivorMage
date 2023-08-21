@@ -4,6 +4,7 @@ using Sources.Modules.CoinFactory.Scripts;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory.Scripts;
 using Sources.Modules.Finder.Scripts;
+using Sources.Modules.Player.Scripts.UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,6 +16,7 @@ namespace Sources.Modules.Wave.Scripts
         [SerializeField] private FinderCloseEnemy _finder;
         [SerializeField] private List<EnemyUnit> _enemiesToSpawn;
         [SerializeField] private CoinSpawner _coinSpawner;
+        [SerializeField] private LosePanel _losePanel;
 
         public event Action UnitDied;
         public event Action<int> WaveStarted;
@@ -44,9 +46,29 @@ namespace Sources.Modules.Wave.Scripts
             _maxEnemySpawn = StartMaxEnemySpawn;
         }
 
+        private void OnEnable() => _losePanel.Rewarded += RestartWave;
+        
+        private void OnDisable() => _losePanel.Rewarded -= RestartWave;
+
 
         public void StartWave()
         {
+            SetNewWave();
+            StartWave(_wave);
+        }
+
+        private void RestartWave()
+        {
+            foreach (var enemyUnit in _spawnedEnemies)
+            {
+                enemyUnit.gameObject.SetActive(false);
+                enemyUnit.Died -= OnUnitDied;
+            }
+            
+            _spawner.TryStopSpawning();
+            _spawnedEnemies = null;
+            _coinSpawner.DisableCoins();
+            
             SetNewWave();
             StartWave(_wave);
         }
