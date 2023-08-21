@@ -4,6 +4,7 @@ using Sources.Modules.CoinFactory.Scripts;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory.Scripts;
 using Sources.Modules.Finder.Scripts;
+using Sources.Modules.Player.Scripts;
 using Sources.Modules.Player.Scripts.UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -17,6 +18,7 @@ namespace Sources.Modules.Wave.Scripts
         [SerializeField] private List<EnemyUnit> _enemiesToSpawn;
         [SerializeField] private CoinSpawner _coinSpawner;
         [SerializeField] private LosePanel _losePanel;
+        [SerializeField] private Mage _mage;
 
         public event Action UnitDied;
         public event Action<int> WaveStarted;
@@ -53,6 +55,8 @@ namespace Sources.Modules.Wave.Scripts
 
         public void StartWave()
         {
+            _mage.UpdateCurrentHealth();
+            
             SetNewWave();
             StartWave(_wave);
         }

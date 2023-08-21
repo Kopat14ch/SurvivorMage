@@ -11,6 +11,10 @@ namespace Sources.Modules.Wave.Scripts.UI
         protected override void Awake()
         {
             Slider = GetComponent<Slider>();
+        }
+
+        private void OnEnable()
+        {
             _waveGenerator.WaveStarted += UpdateMaxValue;
             _waveGenerator.UnitDied += DecreaseValueByOne;
         }
