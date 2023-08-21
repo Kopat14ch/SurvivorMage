@@ -6,24 +6,16 @@ using UnityEngine.UI;
 
 namespace Sources.Modules.Player.Scripts.UI
 {
-    [RequireComponent(typeof(Panel))]
     public class LosePanel : MonoBehaviour
     {
         [SerializeField] private Mage _mage;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _rewardButton;
-
-        private const string GameScene = nameof(GameScene);
+        [SerializeField] private Panel _panel;
         
-        private Panel _panel;
+        private const string GameScene = nameof(GameScene);
 
         public event Action Rewarded;
-
-        private void Awake()
-        {
-            _panel = GetComponent<Panel>();
-            _panel.TurnOff();
-        }
 
         private void OnEnable()
         {
