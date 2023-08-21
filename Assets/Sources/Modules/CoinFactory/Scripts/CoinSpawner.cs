@@ -15,6 +15,9 @@ namespace Sources.Modules.CoinFactory.Scripts
 
         private void OnDisable()
         {
+            if (_enemies == null)
+                return;
+
             foreach (EnemyUnit enemy in _enemies)
                 enemy.Died -= SpawnCoin;
         }
