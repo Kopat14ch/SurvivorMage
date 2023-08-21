@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sources.Modules.Enemy;
 using Sources.Modules.Particles.Scripts;
+using Sources.Modules.Sound.Scripts;
 using UnityEngine;
 
 namespace Sources.Modules.EnemyFactory.Scripts.Pool
@@ -9,16 +10,23 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
     {
         private EnemyUnit _prefab;
         private ParticleSpawner _particleSpawner;
+        private SoundContainer _soundContainer;
+        private AudioSource _audioSourcePrefab;
+        private EnemySound _enemySoundPrefab;
         
         public EnemyType EnemyType { get; private set; }
 
         private List<EnemyUnit> _units;
-        
-        public void Init(EnemyType enemyType, EnemyUnit prefab, ParticleSpawner particleSpawner)
+
+        public void Init(EnemyType enemyType, EnemyUnit prefab, ParticleSpawner particleSpawner,
+            SoundContainer soundContainer, AudioSource audioSourcePrefab, EnemySound enemySoundPrefab)
         {
             EnemyType = enemyType;
             _prefab = prefab;
             _particleSpawner = particleSpawner;
+            _soundContainer = soundContainer;
+            _audioSourcePrefab = audioSourcePrefab;
+            _enemySoundPrefab = enemySoundPrefab;
             _units = new List<EnemyUnit>();
         }
 
@@ -43,12 +51,15 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
 
                 for (int i = 0; i < difference; i++)
                 {
-                    EnemyUnit spawnedEnemy = Instantiate(_prefab, transform.position, Quaternion.identity,
+                    EnemyUnit spawned = Instantiate(_prefab, transform.position, Quaternion.identity,
                         gameObject.transform);
-                    
-                    spawnedEnemy.SetParticleSpawner(_particleSpawner);
-                    _units.Add(spawnedEnemy);
-                    inactiveUnits.Add(spawnedEnemy);
+                    EnemySound enemySound = Instantiate(_enemySoundPrefab, _soundContainer.transform.position,
+                        Quaternion.identity, _soundContainer.transform);
+                    enemySound.Init(_soundContainer, _audioSourcePrefab);
+                    spawned.Init(enemySound);
+                    spawned.SetParticleSpawner(_particleSpawner);
+                    _units.Add(spawned);
+                    inactiveUnits.Add(spawned);
                 }
             }
             else
