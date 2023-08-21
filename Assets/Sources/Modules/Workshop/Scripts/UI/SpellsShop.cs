@@ -100,7 +100,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         private void CheckSpellsLimit()
         {
-            if (_staff.ActiveSpells < _activeSpellsLimit)
+            if (_staff.ActiveSpellsCount < _activeSpellsLimit)
             {
                 foreach (SpellSlot slot in _spellSlots)
                     slot.EnableEquipButton();
@@ -120,7 +120,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
                 }
             }
             
-            RewriteActiveSpellsLimit(_staff.ActiveSpells);
+            RewriteActiveSpellsLimit(_staff.ActiveSpellsCount);
         }
 
         private void RewriteActiveSpellsLimit(int currentActiveSpells)

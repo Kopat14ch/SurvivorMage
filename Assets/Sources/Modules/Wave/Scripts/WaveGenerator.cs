@@ -15,11 +15,12 @@ namespace Sources.Modules.Wave.Scripts
     {
         [SerializeField] private EnemySpawner _spawner;
         [SerializeField] private FinderCloseEnemy _finder;
-        [SerializeField] private List<EnemyUnit> _enemiesToSpawn;
         [SerializeField] private CoinSpawner _coinSpawner;
         [SerializeField] private LosePanel _losePanel;
         [SerializeField] private Mage _mage;
 
+        private List<EnemyUnit> _enemiesToSpawn;
+        
         public event Action UnitDied;
         public event Action<int> WaveStarted;
         public event Action WaveEnded;
@@ -31,7 +32,7 @@ namespace Sources.Modules.Wave.Scripts
         private const int Step = 3;
         private const int WaveCountToAddStep = 23;
         
-        private List<EnemyWaveConfig> _enemyConfigs;
+        private EnemyWaveConfig _enemyConfig;
         private List<EnemyUnit> _spawnedEnemies;
         private Dictionary<List<EnemyType>, int> _wave;
 
@@ -48,6 +49,7 @@ namespace Sources.Modules.Wave.Scripts
             _waveConfigs = new WaveConfigs();
             _waveIndex = 0;
             _waveCount = _waveIndex;
+            _enemiesToSpawn = _spawner.GetEnemiesToSpawn();
 
             _minEnemySpawn = StartMinEnemySpawn;
             _maxEnemySpawn = StartMaxEnemySpawn;
@@ -58,8 +60,7 @@ namespace Sources.Modules.Wave.Scripts
         private void OnEnable() => _losePanel.Rewarded += RestartWave;
         
         private void OnDisable() => _losePanel.Rewarded -= RestartWave;
-
-
+        
         public void StartWave()
         {
             _mage.UpdateCurrentHealth();
@@ -85,16 +86,16 @@ namespace Sources.Modules.Wave.Scripts
         }
 
         private void StartWave(Dictionary<List<EnemyType>, int> wave)
-        { 
+        {
             _spawner.SpawnEnemies(wave, _waveIndex);
 
             _spawnedEnemies = _spawner.GetEnemies();
-
+            
             foreach (EnemyUnit unit in _spawnedEnemies)
             {
                 unit.Died += OnUnitDied;
             }
-            
+
             WaveStarted?.Invoke(_spawnedEnemies.Count);
             _finder.SetEnemyList(_spawnedEnemies);
             _coinSpawner.SetEnemies(_spawnedEnemies);
@@ -114,14 +115,11 @@ namespace Sources.Modules.Wave.Scripts
 
         private void SetRandomUnits()
         {
-            _enemyConfigs = new List<EnemyWaveConfig>();
-            
             EnemyWaveConfig tempEnemyWaveConfig =
                 new(_waveConfigs.GetWaveConfig(_waveIndex).GetEnemyTypes());
             tempEnemyWaveConfig.Init(Random.Range(_minEnemySpawn, _maxEnemySpawn));
 
-            _enemyConfigs.Add(tempEnemyWaveConfig);
-
+            _enemyConfig = tempEnemyWaveConfig;
         }
 
         private void SetNewWave()
@@ -130,7 +128,7 @@ namespace Sources.Modules.Wave.Scripts
 
             SetRandomUnits();
 
-            _wave.Add(_enemyConfigs[_waveIndex].GetEnemyTypes(), _enemyConfigs[_waveIndex].SpawnCount);
+            _wave.Add(_enemyConfig.GetEnemyTypes(), _enemyConfig.SpawnCount);
         }
         
         private void EndWave()

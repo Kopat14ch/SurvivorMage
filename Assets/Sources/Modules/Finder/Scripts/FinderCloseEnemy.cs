@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sources.Modules.Enemy;
-using Sources.Modules.Player;
 using Sources.Modules.Player.Scripts;
 using UnityEngine;
 

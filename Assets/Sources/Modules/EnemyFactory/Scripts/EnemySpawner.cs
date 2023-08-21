@@ -33,20 +33,21 @@ namespace Sources.Modules.EnemyFactory.Scripts
         {
             _currentUnits = new List<EnemyUnit>();
             _allWaveUnits = new List<EnemyUnit>();
-
-            int enemyTypeIndex = 0;
             
-            enemyTypeIndex %= wave.Keys.ElementAt(0).Count;
-            _currentUnits = _enemyPool.GetObjects(wave.Keys.ElementAt(0)[enemyTypeIndex], wave.Values.ElementAt(0));
-
-            foreach (EnemyUnit unit in _currentUnits)
+            foreach (var keyValuePair in wave)
             {
-                if (_allWaveUnits.Contains(unit))
-                    continue;
-
-                unit.AddLevels(waveCount);
-                _allWaveUnits.Add(unit);
-                unit.SetTarget(_playerPosition);
+                foreach (var enemyType in keyValuePair.Key)
+                {
+                    _currentUnits = _enemyPool.GetObjects(enemyType, keyValuePair.Value);
+                    
+                    foreach (EnemyUnit unit in _currentUnits)
+                    {
+                        unit.AddLevels(waveCount);
+                        unit.SetTarget(_playerPosition);
+                    }
+                        
+                    _allWaveUnits.AddRange(_currentUnits);
+                }
             }
 
             if (_spawningWork != null)
@@ -55,13 +56,15 @@ namespace Sources.Modules.EnemyFactory.Scripts
             _spawningWork = StartCoroutine(Spawning());
         }
 
-        public List<EnemyUnit> GetEnemies() => _allWaveUnits.GetRange(0, _allWaveUnits.Count);
-
         public void TryStopSpawning()
         {
             if (_spawningWork != null)
                 StopCoroutine(_spawningWork);
         }
+
+        public List<EnemyUnit> GetEnemiesToSpawn() => _enemyPool.GetPrefabs();
+
+        public List<EnemyUnit> GetEnemies() => _allWaveUnits.GetRange(0, _allWaveUnits.Count);
 
         private IEnumerator Spawning()
         {

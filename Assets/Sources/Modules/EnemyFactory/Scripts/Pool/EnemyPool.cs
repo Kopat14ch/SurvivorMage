@@ -23,14 +23,13 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
             _particleSpawner = particleSpawner;
             
             _containers = new List<Container>();
-            int enemyTypeIndex = 0;
 
             foreach (EnemyUnit prefab in _prefabs)
             {
                 Container container = Instantiate(_prefabContainer, transform.position, Quaternion.identity,
                     transform);
 
-                container.Init((EnemyType)enemyTypeIndex, prefab, _particleSpawner, _soundContainer, _audioSourcePrefab,
+                container.Init(prefab.EnemyType, prefab, _particleSpawner, _soundContainer, _audioSourcePrefab,
                     _enemySoundPrefab);
                 _containers.Add(container);
 
@@ -46,15 +45,15 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
                     spawned.gameObject.SetActive(false);
                     container.AddUnit(spawned);
                 }
-
-                enemyTypeIndex++;
             }
         }
+
+        public List<EnemyUnit> GetPrefabs() => _prefabs.GetRange(0, _prefabs.Count);
 
         public List<EnemyUnit> GetObjects(EnemyType enemyType, int unitCount)
         {
             List<EnemyUnit> units = new List<EnemyUnit>();
-
+            
             foreach (Container container in _containers)
             {
                 if (container.EnemyType == enemyType)

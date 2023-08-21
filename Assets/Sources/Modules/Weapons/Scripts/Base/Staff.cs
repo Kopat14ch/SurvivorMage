@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Sources.Modules.Finder.Scripts;
-using Sources.Modules.Player.Scripts;
 using Sources.Modules.Wave.Scripts;
 using Sources.Modules.Wave.Scripts.UI;
 using Sources.Modules.Weapons.Scripts.Common;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Sources.Modules.Weapons.Scripts.Base
 {
@@ -17,7 +14,7 @@ namespace Sources.Modules.Weapons.Scripts.Base
         [SerializeField] private WaveGenerator _waveGenerator;
         [SerializeField] private WaveStartWaveUI _waveStartWaveUI;
 
-        public int ActiveSpells => _activeSpellCasters.Count;
+        public int ActiveSpellsCount => _activeSpellCasters.Count;
         
         private List<SpellCaster> _spellCasters;
         private List<SpellCaster> _activeSpellCasters;
@@ -40,6 +37,7 @@ namespace Sources.Modules.Weapons.Scripts.Base
         {
             _spellCasters = new List<SpellCaster>();
             _activeSpellCasters = new List<SpellCaster>();
+            
             _projectilesPool = projectilesPool;
             _finder = finderCloseEnemy;
             
