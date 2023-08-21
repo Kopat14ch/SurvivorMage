@@ -99,26 +99,12 @@ namespace Sources.Modules.Wave.Scripts
             )
         };
 
-        public WaveConfigs()
-        {
-            SetWaves();
-        }
-
         public WaveConfig GetWaveConfig(int index)
         {
             return _wavesConfigs[index];
         }
 
         public int GetWaveConfigsCount() => _wavesConfigs.Count;
-
-        private void SetWaves()
-        {
-            int index = 1;
-
-            for (int i = index; i < _wavesConfigs.Count; i++)
-            {
-                _wavesConfigs[i].AddEnemyTypes(_wavesConfigs[i - 1].GetEnemyTypes());
-            }
-        }
+        
     }
 }

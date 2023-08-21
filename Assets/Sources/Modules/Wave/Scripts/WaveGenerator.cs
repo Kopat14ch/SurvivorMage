@@ -27,6 +27,7 @@ namespace Sources.Modules.Wave.Scripts
         private const int StartMinEnemySpawn = 1;
         private const int StartMaxEnemySpawn = 6;
         private const int Step = 1;
+        private const int WaveCountToAddStep = 3;
         
         private List<EnemyWaveConfig> _enemyConfigs;
         private List<EnemyUnit> _spawnedEnemies;
@@ -34,6 +35,7 @@ namespace Sources.Modules.Wave.Scripts
 
         private WaveConfigs _waveConfigs;
 
+        private int _waveIndex;
         private int _waveCount;
         private int _minEnemySpawn;
         private int _maxEnemySpawn;
@@ -42,7 +44,8 @@ namespace Sources.Modules.Wave.Scripts
         {
             _wave = new Dictionary<List<EnemyType>, int>();
             _waveConfigs = new WaveConfigs();
-            _waveCount = 1;
+            _waveIndex = 1;
+            _waveCount = _waveIndex;
 
             _minEnemySpawn = StartMinEnemySpawn;
             _maxEnemySpawn = StartMaxEnemySpawn;
@@ -79,7 +82,7 @@ namespace Sources.Modules.Wave.Scripts
 
         private void StartWave(Dictionary<List<EnemyType>, int> wave)
         { 
-            _spawner.SpawnEnemies(wave, _waveCount);
+            _spawner.SpawnEnemies(wave, _waveIndex);
 
             _spawnedEnemies = _spawner.GetEnemies();
 
@@ -111,9 +114,9 @@ namespace Sources.Modules.Wave.Scripts
 
             for (int i = 0; i < numberVariationEnemies; i++)
             {
-                _waveCount %= _waveConfigs.GetWaveConfigsCount();
-
-                EnemyWaveConfig tempEnemyWaveConfig = new (_waveConfigs.GetWaveConfig(_waveCount -1).GetEnemyTypes());
+                Debug.Log(_waveIndex % _waveConfigs.GetWaveConfigsCount());
+                
+                EnemyWaveConfig tempEnemyWaveConfig = new (_waveConfigs.GetWaveConfig(_waveIndex % _waveConfigs.GetWaveConfigsCount()).GetEnemyTypes());
                 tempEnemyWaveConfig.Init(Random.Range(_minEnemySpawn, _maxEnemySpawn));
 
                 _enemyConfigs.Add(tempEnemyWaveConfig);
@@ -132,9 +135,15 @@ namespace Sources.Modules.Wave.Scripts
         
         private void EndWave()
         {
-            _minEnemySpawn += Step;
-            _maxEnemySpawn += Step;
+            if (_waveCount % WaveCountToAddStep == 0)
+            {
+                _minEnemySpawn += Step;
+                _maxEnemySpawn += Step;
+            }
+
             _waveCount++;
+            _waveIndex++;
+            _waveIndex %= _waveConfigs.GetWaveConfigsCount();
             
             WaveEnded?.Invoke();
         }
