@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Sources.Modules.Pools.Scripts;
 
 namespace Sources.Modules.Particles.Scripts.Pool
 {
-    public class ParticlePool : MonoBehaviour
+    public class ParticlePool : Pool<Particle>
     {
-        [SerializeField] private List<Particle> _prefabs;
-        [SerializeField] private int _startCapacity;
         [SerializeField] private ParticleContainer _prefabContainer;
 
         private List<ParticleContainer> _containers;
@@ -15,14 +14,14 @@ namespace Sources.Modules.Particles.Scripts.Pool
         {
             _containers = new List<ParticleContainer>();
 
-            foreach (Particle prefab in _prefabs)
+            foreach (Particle prefab in Prefabs)
             {
                 ParticleContainer container = Instantiate(_prefabContainer, transform.position, Quaternion.identity,
                     transform);
                 container.Init(prefab.ParticleType, prefab);
                 _containers.Add(container);
                 
-                for (int i = 0; i < _startCapacity; i++)
+                for (int i = 0; i < StartCapacity; i++)
                 {
                     Particle spawned = Instantiate(prefab, transform.position, Quaternion.identity, container.transform);
                     spawned.Disable();

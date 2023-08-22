@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using Sources.Modules.Particles.Scripts;
 using Sources.Modules.Player.Scripts;
+using Sources.Modules.Pools.Scripts;
 using Sources.Modules.Weapons.Scripts.Common;
 using UnityEngine;
 
 namespace Sources.Modules.Weapons.Scripts
 {
-    public class ProjectilesPool : MonoBehaviour
+    public class ProjectilesPool : Pool<Projectile>
     {
-        [SerializeField] private List<Projectile> _prefabs;
-        [SerializeField] private int _startCapacity;
         [SerializeField] private ProjectileContainer _prefabContainer;
         [SerializeField] private Mage _mage;
 
@@ -21,14 +20,14 @@ namespace Sources.Modules.Weapons.Scripts
             _containers = new List<ProjectileContainer>();
             _particleSpawner = particleSpawner;
 
-            foreach (Projectile prefab in _prefabs)
+            foreach (Projectile prefab in Prefabs)
             {
                 ProjectileContainer container = Instantiate(_prefabContainer, transform.position, Quaternion.identity,
                     transform);
                 container.Init(prefab.SpellType, prefab, _particleSpawner);
                 _containers.Add(container);
                 
-                for (int i = 0; i < _startCapacity; i++)
+                for (int i = 0; i < StartCapacity; i++)
                 {
                     Projectile spawned = Instantiate(prefab, transform.position, Quaternion.identity, container.transform);
                     spawned.SetParticleSpawner(_particleSpawner);

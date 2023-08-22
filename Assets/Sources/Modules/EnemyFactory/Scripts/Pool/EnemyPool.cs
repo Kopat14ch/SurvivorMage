@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using Sources.Modules.Enemy;
 using Sources.Modules.Particles.Scripts;
+using Sources.Modules.Pools.Scripts;
 using Sources.Modules.Sound.Scripts;
 using UnityEngine;
 
 namespace Sources.Modules.EnemyFactory.Scripts.Pool
 {
-    public class EnemyPool : MonoBehaviour
+    public class EnemyPool : Pool<EnemyUnit>
     {
-        [SerializeField] private List<EnemyUnit> _prefabs;
-        [SerializeField] private int _startCapacity;
         [SerializeField] private Container _prefabContainer;
         [SerializeField] private SoundContainer _soundContainer;
         [SerializeField] private AudioSource _audioSourcePrefab;
@@ -24,7 +23,7 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
             
             _containers = new List<Container>();
 
-            foreach (EnemyUnit prefab in _prefabs)
+            foreach (EnemyUnit prefab in Prefabs)
             {
                 Container container = Instantiate(_prefabContainer, transform.position, Quaternion.identity,
                     transform);
@@ -33,7 +32,7 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
                     _enemySoundPrefab);
                 _containers.Add(container);
 
-                for (int i = 0; i < _startCapacity; i++)
+                for (int i = 0; i < StartCapacity; i++)
                 {
                     EnemyUnit spawned = Instantiate(prefab, transform.position, Quaternion.identity,
                         container.transform);
@@ -48,7 +47,7 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
             }
         }
 
-        public List<EnemyUnit> GetPrefabs() => _prefabs.GetRange(0, _prefabs.Count);
+        public List<EnemyUnit> GetPrefabs() => Prefabs.GetRange(0, Prefabs.Count);
 
         public List<EnemyUnit> GetObjects(EnemyType enemyType, int unitCount)
         {
