@@ -17,12 +17,14 @@ namespace Sources.Modules.Wave.Scripts.UI
         {
             _waveGenerator.WaveStarted += UpdateMaxValue;
             _waveGenerator.UnitDied += DecreaseValueByOne;
+            _waveGenerator.WaveEnded += SetMinValue;
         }
 
         private void OnDisable()
         {
             _waveGenerator.WaveStarted -= UpdateMaxValue;
             _waveGenerator.UnitDied -= DecreaseValueByOne;
+            _waveGenerator.WaveEnded -= SetMinValue;
         }
 
         private void UpdateMaxValue(int value)
@@ -35,6 +37,11 @@ namespace Sources.Modules.Wave.Scripts.UI
         {
             float currentBarValue = Slider.value - 1;
             ChangeValue(currentBarValue);
+        }
+
+        private void SetMinValue()
+        {
+            ChangeValue(0);
         }
     }
 }
