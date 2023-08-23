@@ -10,6 +10,7 @@ namespace Sources.Modules.UI.Scripts
         [SerializeField] private bool _isInGamePanel = false;
         [SerializeField] private bool _isEnabled = false;
         [SerializeField] private bool _isPausePanel = false;
+        [SerializeField] private bool _isLeaderboard;
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _openButton;
 
