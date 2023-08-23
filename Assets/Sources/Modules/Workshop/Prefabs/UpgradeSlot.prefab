@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 8039204511594480681}
   - component: {fileID: 1462132859387249106}
   - component: {fileID: 8087099895551740739}
+  - component: {fileID: 4719101937408699256}
   m_Layer: 5
   m_Name: Current
   m_TagString: Untagged
@@ -413,7 +414,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Current
+  m_text: "\u0422\u0435\u043A\u0443\u0449\u0435\u0435"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
   m_sharedMaterial: {fileID: -7962205595782950856, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
@@ -440,7 +441,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.8
+  m_fontSize: 42.6
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -482,6 +483,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4719101937408699256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776821624218464881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: UpgradeSlotCurrent
+  FallbackText: Current
 --- !u!1 &2693344818829079250
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,6 +854,7 @@ GameObject:
   - component: {fileID: 1747327366358777940}
   - component: {fileID: 6545501738204973285}
   - component: {fileID: 4838143009247315297}
+  - component: {fileID: 6848985088618016804}
   m_Layer: 5
   m_Name: Upgrade
   m_TagString: Untagged
@@ -894,7 +910,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Upgrade
+  m_text: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u043E\u0435"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
   m_sharedMaterial: {fileID: -7962205595782950856, guid: b5556696dabc64e498f5502e907e3a5d, type: 2}
@@ -921,7 +937,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.8
+  m_fontSize: 29.15
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -963,6 +979,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6848985088618016804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6451121328888660844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: UpgradeSlotUpgrade
+  FallbackText: Upgrade
 --- !u!1 &6806874120928702535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,7 +1108,7 @@ RectTransform:
   - {fileID: 6119451182413669128}
   - {fileID: 4540291893293541854}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1140,7 +1170,6 @@ MonoBehaviour:
   _priceText: {fileID: 749215079828060108}
   _buyButton: {fileID: 9085955345203896575}
   _price: 0
-  _maxText: MAX
 --- !u!1 &9187509888489930945
 GameObject:
   m_ObjectHideFlags: 0
