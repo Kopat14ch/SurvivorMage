@@ -10,13 +10,6 @@ namespace Sources.Modules.Wave.Scripts
             new(
                 new List<EnemyType>()
                 {
-                    EnemyType.Undead1,
-                    EnemyType.Orc1
-                }
-            ),
-            new(
-                new List<EnemyType>()
-                {
                     EnemyType.Orc1
                 }
             ),

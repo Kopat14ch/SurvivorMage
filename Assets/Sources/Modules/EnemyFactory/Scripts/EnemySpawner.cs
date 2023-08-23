@@ -14,8 +14,8 @@ namespace Sources.Modules.EnemyFactory.Scripts
         [SerializeField] private List<SpawnPoint> _spawnPoints;
         [SerializeField] private Transform _playerPosition;
 
-        private const float ObstacleCheckRadius = 2f;
-        private const float SpawningCooldown = 0.5f;
+        private const float ObstacleCheckRadius = 3f;
+        private const float SpawningCooldown = 1f;
 
         private int _collidersCount;
         private Collider2D[] _collidersBuffer = new Collider2D[10];

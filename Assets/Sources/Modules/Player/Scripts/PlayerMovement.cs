@@ -78,7 +78,7 @@ namespace Sources.Modules.Player.Scripts
             if (_moveWork != null)
                 StopCoroutine(_moveWork);
             
-            _moveWork = StartCoroutine(MobileMove());
+            _moveWork = StartCoroutine(PcMove());
         }
 
         private IEnumerator PcMove()
