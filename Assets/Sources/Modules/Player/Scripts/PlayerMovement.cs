@@ -2,6 +2,7 @@ using System.Collections;
 using Sources.Modules.Common;
 using Sources.Modules.Player.Scripts.Animation;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 
 namespace Sources.Modules.Player.Scripts
 {
@@ -10,19 +11,24 @@ namespace Sources.Modules.Player.Scripts
     [RequireComponent(typeof(Animator))]
     internal class PlayerMovement : MonoBehaviour
     {
+        [SerializeField] private Joystick _joystick;
+
         private const float IdleTick = 1;
         private const float MinMoveDirection = 0.1f;
 
+        private bool _isHolding;
         private float _speed;
         private Flipper _flipper;
         private Rigidbody2D _rigidbody2D;
         private Animator _animator;
         private PlayerInput _playerInput;
-        private Vector2 _moveDirection;
+        private Vector2 _moveDirectionPc;
+        private Vector2 _moveDirectionPhone;
         private Coroutine _moveWork;
         private Coroutine _idleWork;
 
-        private bool CanMove => _moveDirection.magnitude > MinMoveDirection;
+        private bool CanMovePhone => _joystick.Direction.magnitude > MinMoveDirection && _isHolding;
+        private bool CanMovePc => _moveDirectionPc.magnitude > MinMoveDirection;
 
         private void Awake()
         {
@@ -30,14 +36,31 @@ namespace Sources.Modules.Player.Scripts
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _flipper = GetComponent<Flipper>();
             _animator = GetComponent<Animator>();
-            
+
             _playerInput.Player.Move.performed += ctx => OnMove();
+            _playerInput.Player.MoveHold.performed += ctx => OnMove();
+            
+            _playerInput.Player.MoveHold.started += ctx =>
+            {
+                if (ctx.interaction is HoldInteraction)
+                {
+                    _isHolding = true;
+                }
+            };
+            _playerInput.Player.MoveHold.canceled += ctx =>
+            {
+                if (ctx.interaction is HoldInteraction)
+                {
+                    _isHolding = false;
+                }
+            };
             StartIdle();
         }
 
         private void OnEnable()
         {
             _playerInput.Enable();
+            
         }
 
         private void OnDisable()
@@ -54,49 +77,84 @@ namespace Sources.Modules.Player.Scripts
         {
             if (_moveWork != null)
                 StopCoroutine(_moveWork);
-
-            _moveWork = StartCoroutine(Move());
+            
+            _moveWork = StartCoroutine(MobileMove());
         }
 
-        private IEnumerator Move()
+        private IEnumerator PcMove()
         {
-            SetMoveDirection();
+            SetMoveDirectionPc();
             _animator.Play(PlayerAnimator.States.Run);
-            
-            while (CanMove)
+
+            while (CanMovePc)
             {
-                _rigidbody2D.velocity = _speed * _moveDirection;
+                _rigidbody2D.velocity = _speed * _moveDirectionPc;
                 _flipper.TryFlip(_rigidbody2D.velocity.x);
 
-                SetMoveDirection();
+                SetMoveDirectionPc();
 
                 yield return null;
             }
-            
+
             _rigidbody2D.velocity = Vector2.zero;
             StartIdle();
         }
 
-        private void StartIdle()
+        private IEnumerator MobileMove()
+        {
+            if (CanMovePhone == false)
+                yield break;
+
+            SetMoveDirectionPhone();
+            _animator.Play(PlayerAnimator.States.Run);
+            
+            while (CanMovePhone)
+            {
+                _rigidbody2D.velocity = _speed * _moveDirectionPhone;
+                _flipper.TryFlip(_rigidbody2D.velocity.x);
+                
+                SetMoveDirectionPhone();
+                
+                yield return null;
+            }
+
+            _rigidbody2D.velocity = Vector2.zero;
+            StartIdle(false);
+        }
+
+        private void StartIdle(bool isPc = true)
         {
             if (_idleWork != null)
                 StopCoroutine(_idleWork);
-
-            _idleWork = StartCoroutine(Idle());
+            
+            _idleWork = StartCoroutine(isPc ? IdlePc() : IdlePhone());
         }
-
-        private IEnumerator Idle()
+        
+        private IEnumerator IdlePhone()
         {
             WaitForSeconds waitForSeconds = new(IdleTick);
             _animator.Play(PlayerAnimator.States.Idle);
 
-            while (CanMove == false)
+            while (CanMovePhone == false)
             {
                 _rigidbody2D.velocity = Vector2.zero;
                 yield return waitForSeconds;
             }
         }
 
-        private void SetMoveDirection() => _moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
+        private IEnumerator IdlePc()
+        {
+            WaitForSeconds waitForSeconds = new(IdleTick);
+            _animator.Play(PlayerAnimator.States.Idle);
+
+            while (CanMovePc == false)
+            {
+                _rigidbody2D.velocity = Vector2.zero;
+                yield return waitForSeconds;
+            }
+        }
+
+        private void SetMoveDirectionPc() => _moveDirectionPc = _playerInput.Player.Move.ReadValue<Vector2>();
+        private void SetMoveDirectionPhone() => _moveDirectionPhone = _joystick.Direction.normalized;
     }
 }

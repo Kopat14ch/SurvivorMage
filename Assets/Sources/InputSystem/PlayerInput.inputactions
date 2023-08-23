@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "MoveHold",
+                    "type": "Button",
+                    "id": "4f8a46fd-0aa8-49fc-ba2e-92a87a0273b4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -70,6 +79,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "43b0b6bf-f8f6-4893-b946-0fe97816a9d9",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "Hold(duration=0.1,pressPoint=0.1)",
+                    "processors": "",
+                    "groups": "Phone",
+                    "action": "MoveHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -78,6 +98,11 @@
         {
             "name": "PC",
             "bindingGroup": "PC",
+            "devices": []
+        },
+        {
+            "name": "Phone",
+            "bindingGroup": "Phone",
             "devices": []
         }
     ]

@@ -35,6 +35,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f8a46fd-0aa8-49fc-ba2e-92a87a0273b4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +101,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43b0b6bf-f8f6-4893-b946-0fe97816a9d9"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.1)"",
+                    ""processors"": """",
+                    ""groups"": ""Phone"",
+                    ""action"": ""MoveHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -101,12 +121,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""name"": ""PC"",
             ""bindingGroup"": ""PC"",
             ""devices"": []
+        },
+        {
+            ""name"": ""Phone"",
+            ""bindingGroup"": ""Phone"",
+            ""devices"": []
         }
     ]
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_MoveHold = m_Player.FindAction("MoveHold", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -169,11 +195,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_MoveHold;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @MoveHold => m_Wrapper.m_Player_MoveHold;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -186,6 +214,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @MoveHold.started += instance.OnMoveHold;
+            @MoveHold.performed += instance.OnMoveHold;
+            @MoveHold.canceled += instance.OnMoveHold;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -193,6 +224,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @MoveHold.started -= instance.OnMoveHold;
+            @MoveHold.performed -= instance.OnMoveHold;
+            @MoveHold.canceled -= instance.OnMoveHold;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -219,8 +253,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_PCSchemeIndex];
         }
     }
+    private int m_PhoneSchemeIndex = -1;
+    public InputControlScheme PhoneScheme
+    {
+        get
+        {
+            if (m_PhoneSchemeIndex == -1) m_PhoneSchemeIndex = asset.FindControlSchemeIndex("Phone");
+            return asset.controlSchemes[m_PhoneSchemeIndex];
+        }
+    }
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnMoveHold(InputAction.CallbackContext context);
     }
 }
