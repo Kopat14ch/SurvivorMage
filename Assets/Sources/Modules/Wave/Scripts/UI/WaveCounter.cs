@@ -1,4 +1,4 @@
-using System;
+using Lean.Localization;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace Sources.Modules.Wave.Scripts.UI
         [SerializeField] private WaveGenerator _waveGenerator;
         [SerializeField] private TMP_Text _text;
 
-        private const string WaveString = "Wave:";
+        private const string WaveString = "WaveCounter";
 
         private void Awake()
         {
@@ -23,7 +23,7 @@ namespace Sources.Modules.Wave.Scripts.UI
 
         private void ChangeText(int waveCount)
         {
-            _text.text = (WaveString + waveCount);
+            _text.text = ($"{LeanLocalization.GetTranslationText(WaveString)}: {waveCount}");
         }
     }
 }
