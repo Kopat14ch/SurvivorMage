@@ -6,6 +6,7 @@ using Sources.Modules.EnemyFactory.Scripts;
 using Sources.Modules.Finder.Scripts;
 using Sources.Modules.Player.Scripts;
 using Sources.Modules.Player.Scripts.UI;
+using Sources.Modules.UI.Scripts.LeaderBoard;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +14,7 @@ namespace Sources.Modules.Wave.Scripts
 {
     public class WaveGenerator : MonoBehaviour
     {
+        [SerializeField] private LeaderList _leaderList;
         [SerializeField] private EnemySpawner _spawner;
         [SerializeField] private FinderCloseEnemy _finder;
         [SerializeField] private CoinSpawner _coinSpawner;
@@ -143,6 +145,7 @@ namespace Sources.Modules.Wave.Scripts
             _waveIndex++;
             _waveIndex %= _waveConfigs.GetWaveConfigsCount();
             
+            _leaderList.SetLeaderboardScore(_waveCount);
             WaveEnded?.Invoke();
         }
     }

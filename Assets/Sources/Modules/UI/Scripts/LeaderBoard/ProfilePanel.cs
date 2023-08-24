@@ -8,8 +8,12 @@ namespace Sources.Modules.UI.Scripts.LeaderBoard
         [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _score;
 
-        public void SetName(string userName) => _name.text = userName;
+        public void SetParams(string userName, int score)
+        {
+            if (string.IsNullOrEmpty(userName) == false)
+                _name.text = userName;
 
-        public void SetScore(int score) => _score.text = score.ToString();
+            _score.text = score.ToString();
+        }
     }
 }

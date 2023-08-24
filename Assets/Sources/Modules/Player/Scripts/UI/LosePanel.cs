@@ -1,5 +1,6 @@
 ﻿using System;
 using Sources.Modules.UI.Scripts;
+using Sources.Modules.YandexSDK.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ namespace Sources.Modules.Player.Scripts.UI
 {
     public class LosePanel : MonoBehaviour
     {
+        [SerializeField] private YandexSdk _yandex;
         [SerializeField] private Mage _mage;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _rewardButton;
@@ -39,6 +41,11 @@ namespace Sources.Modules.Player.Scripts.UI
         }
 
         private void OnRewardButtonClick()
+        {
+            _yandex.ShowVideo(OnRewarded);
+        }
+
+        private void OnRewarded()
         {
             _panel.TurnOff();
             _mage.UpdateCurrentHealth();
