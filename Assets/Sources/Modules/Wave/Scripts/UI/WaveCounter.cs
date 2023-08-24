@@ -23,7 +23,7 @@ namespace Sources.Modules.Wave.Scripts.UI
 
         private void ChangeText(int waveCount)
         {
-            _text.text = ($"{LeanLocalization.GetTranslationText(WaveString)}: {waveCount}");
+            _text.text = ($"{LeanLocalization.GetTranslationText(WaveString)}: {++waveCount}");
         }
     }
 }
