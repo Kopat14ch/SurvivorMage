@@ -1,4 +1,5 @@
 using System;
+using Lean.Localization;
 using Sources.Modules.Weapons.Scripts;
 using Sources.Modules.Weapons.Scripts.Common;
 using TMPro;
@@ -36,7 +37,10 @@ namespace Sources.Modules.Workshop.Scripts.UI
         {
             _priceText.text = _price.ToString();
             _damageText.text = _spellProjectile.BaseDamage.ToString();
-            
+        }
+
+        private void Start()
+        {
             TryChangeEquipStatus();
             TryHideBuyButton();
         }
@@ -83,12 +87,12 @@ namespace Sources.Modules.Workshop.Scripts.UI
         {
             if (IsEquipped)
             {
-                _equipText.text = EquippedString;
+                _equipText.text = LeanLocalization.GetTranslationText(EquippedString);
                 _equipButton.GetComponent<Image>().color = _equippedColor;
             }
             else
             {
-                _equipText.text = UnequippedString;
+                _equipText.text = LeanLocalization.GetTranslationText(UnequippedString);
                 _equipButton.GetComponent<Image>().color = _unequippedColor;
             }
                 
