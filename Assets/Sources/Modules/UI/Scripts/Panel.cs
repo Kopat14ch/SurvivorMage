@@ -1,4 +1,7 @@
 using System;
+using Agava.YandexGames;
+using Sources.Modules.UI.Scripts.LeaderBoard;
+using Sources.Modules.YandexSDK.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,20 +9,25 @@ namespace Sources.Modules.UI.Scripts
 {
     public class Panel : MonoBehaviour
     {
+        [SerializeField] private YandexSdk _yandex;
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private bool _isInGamePanel = false;
         [SerializeField] private bool _isEnabled = false;
         [SerializeField] private bool _isPausePanel = false;
         [SerializeField] private bool _isLeaderboard;
+        [SerializeField] private bool _isAuthorization;
+        [SerializeField] private bool _isWorkshop;
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _openButton;
 
         public event Action<Panel> Enabled;
-        public event Action<Panel> Disabled; 
+        public event Action<Panel> Disabled;
 
         public bool IsInGamePanel => _isInGamePanel;
         public bool IsEnabled => _isEnabled;
-
+        public bool IsLeaderboard => _isLeaderboard;
+        public bool IsAuthorization => _isAuthorization;
+        
         private void OnEnable()
         {
             if (_closeButton != null)
@@ -71,6 +79,12 @@ namespace Sources.Modules.UI.Scripts
             
             if (_isPausePanel)
                 Time.timeScale = 0;
+
+            if (_isLeaderboard && PlayerAccount.IsAuthorized)
+            {
+                LeaderList leaderboard = GetComponent<LeaderList>();
+                leaderboard.ShowResults();
+            }
         }
 
         private void HideCanvas()
@@ -82,6 +96,15 @@ namespace Sources.Modules.UI.Scripts
             
             if (_isPausePanel)
                 Time.timeScale = 1;
+            
+            if (_isWorkshop)
+                _yandex.ShowInterstitial();
+            
+            if (_isLeaderboard && PlayerAccount.IsAuthorized)
+            {
+                LeaderList leaderboard = GetComponent<LeaderList>();
+                leaderboard.Clear();
+            }
         }
     }
 }

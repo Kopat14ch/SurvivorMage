@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Agava.YandexGames;
 using UnityEngine;
 
 namespace Sources.Modules.UI.Scripts
@@ -38,6 +39,31 @@ namespace Sources.Modules.UI.Scripts
                 {
                     if (panel.IsEnabled && panel != activatedPanel)
                         panel.TurnOffWithoutInvoke();
+                }
+
+                if (activatedPanel.IsLeaderboard)
+                {
+                    bool isAuthorized = PlayerAccount.IsAuthorized;
+
+                    if (isAuthorized)
+                    {
+                        foreach (Panel panel in _panels)
+                        {
+                            if (panel.IsEnabled && panel != activatedPanel)
+                                panel.TurnOffWithoutInvoke();
+                        }
+                    }
+                    else
+                    {
+                        foreach (Panel panel in _panels)
+                        {
+                            if (panel.IsEnabled)
+                                panel.TurnOffWithoutInvoke();
+                            
+                            if (panel.IsAuthorization)
+                                panel.TurnOnWithoutInvoke();
+                        }
+                    }
                 }
             }
         }
