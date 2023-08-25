@@ -1,5 +1,6 @@
 using Sources.Modules.CoinFactory.Scripts;
 using Sources.Modules.Player.Scripts.MVP;
+using Sources.Modules.Workshop.Scripts;
 using Sources.Modules.Workshop.Scripts.UI;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
     public class WalletSetup : MonoBehaviour
     {
         [SerializeField] private CoinSpawner _spawner;
+        [SerializeField] private RewardCoin _rewardCoin;
 
         private const int BaseCoins = 0;
         private const int BaseIncrease = 0;
@@ -24,7 +26,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _view = GetComponent<WalletView>();
 
             _model = new (BaseCoins, BaseIncrease);
-            _presenter = new (_model, _view, _spawner, playerView, spellsShop);
+            _presenter = new (_model, _view, _spawner, playerView, spellsShop, _rewardCoin);
         }
 
         private void OnEnable() => _presenter.Enable();

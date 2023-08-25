@@ -26,9 +26,17 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             IncreaseChanged?.Invoke(_addCoins, IncreaseCoin);
         }
         
-        public void AddCoin()
+        public void AddCoin(int value = -1)
         {
-            _coins += _addCoins;
+            if (value > 0)
+            {
+                _coins += value;
+            }
+            else
+            {
+                _coins += _addCoins;
+            }
+
             CoinsChanged?.Invoke(_coins);
         }
 

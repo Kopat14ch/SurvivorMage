@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Agava.YandexGames;
 using Sources.Modules.YandexSDK.LanguageEnum;
 using UnityEngine;
