@@ -18,19 +18,25 @@ namespace Sources.Modules.UI.Scripts.LeaderBoard
 
         public void SetLeaderboardScore(int score)
         {
-            Leaderboard.GetPlayerEntry(_leaderboardName, (result) =>
+            if (_yandex.IsInitialized)
             {
-                if (result == null || result.score <= score)
-                    Leaderboard.SetScore(_leaderboardName, score);
-            });
+                Leaderboard.GetPlayerEntry(_leaderboardName, (result) =>
+                {
+                    if (result == null || result.score <= score)
+                        Leaderboard.SetScore(_leaderboardName, score);
+                });
+            }
         }
 
         public void ShowResults()
         {
-            if (PlayerAccount.HasPersonalProfileDataPermission == false)
-                _yandex.RequestPersonalProfileDataPermission();
+            if (_yandex.IsInitialized)
+            {
+                if (PlayerAccount.HasPersonalProfileDataPermission == false)
+                    _yandex.RequestPersonalProfileDataPermission();
 
-            GetLeaderboardEntries(_leaderboardName);
+                GetLeaderboardEntries(_leaderboardName);
+            }
         }
 
         public void Clear()

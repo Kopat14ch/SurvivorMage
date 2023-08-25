@@ -42,7 +42,8 @@ namespace Sources.Modules.Player.Scripts.UI
 
         private void OnRewardButtonClick()
         {
-            _yandex.ShowVideo(OnRewarded);
+            if (_yandex.IsInitialized)
+                _yandex.ShowVideo(OnRewarded);
         }
 
         private void OnRewarded()

@@ -80,7 +80,7 @@ namespace Sources.Modules.UI.Scripts
             if (_isPausePanel)
                 Time.timeScale = 0;
 
-            if (_isLeaderboard && PlayerAccount.IsAuthorized)
+            if (_yandex.IsInitialized && _isLeaderboard && PlayerAccount.IsAuthorized)
             {
                 LeaderList leaderboard = GetComponent<LeaderList>();
                 leaderboard.ShowResults();
@@ -97,10 +97,10 @@ namespace Sources.Modules.UI.Scripts
             if (_isPausePanel)
                 Time.timeScale = 1;
             
-            if (_isWorkshop)
+            if (_yandex.IsInitialized && _isWorkshop)
                 _yandex.ShowInterstitial();
             
-            if (_isLeaderboard && PlayerAccount.IsAuthorized)
+            if (_yandex.IsInitialized && _isLeaderboard && PlayerAccount.IsAuthorized)
             {
                 LeaderList leaderboard = GetComponent<LeaderList>();
                 leaderboard.Clear();

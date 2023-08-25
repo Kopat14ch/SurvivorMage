@@ -8,14 +8,22 @@ namespace Sources.Modules.YandexSDK.Scripts
 {
     public class YandexSdk : MonoBehaviour
     {
+        [SerializeField] private bool _isInitialized;
+        
         public Action AdOpened;
         public Action<bool> AdClosed;
+        
         private string _currentLanguage;
+
+        public bool IsInitialized => _isInitialized;
 
         private void Start()
         {
-            SetLanguage();
-            ShowStickyAd();
+            if (_isInitialized)
+            {
+                SetLanguage();
+                ShowStickyAd();
+            }
         }
 
         private void SetLanguage()
