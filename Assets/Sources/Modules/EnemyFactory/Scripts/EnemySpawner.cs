@@ -18,7 +18,7 @@ namespace Sources.Modules.EnemyFactory.Scripts
         private const float SpawningCooldown = 1f;
 
         private int _collidersCount;
-        private Collider2D[] _collidersBuffer = new Collider2D[10];
+        private Collider2D[] _collidersBuffer = new Collider2D[150];
         private EnemyPool _enemyPool;
         private List<EnemyUnit> _currentUnits;
         private List<EnemyUnit> _allWaveUnits;
