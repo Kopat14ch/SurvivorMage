@@ -44,6 +44,8 @@ namespace Sources.Modules.Player.Scripts.UI
         {
             if (_yandex.IsInitialized)
                 _yandex.ShowVideo(OnRewarded);
+            else
+                OnRewarded();
         }
 
         private void OnRewarded()

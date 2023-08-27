@@ -60,7 +60,6 @@ namespace Sources.Modules.Player.Scripts
         private void OnEnable()
         {
             _playerInput.Enable();
-            
         }
 
         private void OnDisable()

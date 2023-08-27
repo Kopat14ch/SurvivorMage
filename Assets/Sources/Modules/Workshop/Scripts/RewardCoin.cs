@@ -45,7 +45,10 @@ namespace Sources.Modules.Workshop.Scripts
         
         private void OnButtonClick()
         {
-            _yandex.ShowVideo(OnRewarded);
+            if (_yandex.IsInitialized)
+                _yandex.ShowVideo(OnRewarded);
+            else
+                OnRewarded();
         }
 
         private void OnRewarded()
