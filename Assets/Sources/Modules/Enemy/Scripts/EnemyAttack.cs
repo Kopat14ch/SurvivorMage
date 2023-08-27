@@ -1,5 +1,4 @@
 using Sources.Modules.Particles.Scripts;
-using Sources.Modules.Player;
 using Sources.Modules.Player.Scripts;
 using UnityEngine;
 

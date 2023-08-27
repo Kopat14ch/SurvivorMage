@@ -83,7 +83,6 @@ namespace Sources.Modules.YandexSDK.Scripts
 
         private void OnAdOpened()
         {
-            Time.timeScale = 0;
             AdOpened.Invoke();
         }
 
@@ -94,13 +93,11 @@ namespace Sources.Modules.YandexSDK.Scripts
 
         private void OnAdClosed(bool showed)
         {
-            Time.timeScale = 1;
             AdClosed.Invoke(showed);
         }
 
         private void OnAdClosed()
         {
-            Time.timeScale = 1;
             AdClosed.Invoke(true);
         }
     }

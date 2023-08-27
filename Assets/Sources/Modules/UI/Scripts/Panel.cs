@@ -1,5 +1,6 @@
 using System;
 using Agava.YandexGames;
+using Sources.Modules.Common;
 using Sources.Modules.Training.Scripts;
 using Sources.Modules.UI.Scripts.LeaderBoard;
 using Sources.Modules.YandexSDK.Scripts;
@@ -11,6 +12,7 @@ namespace Sources.Modules.UI.Scripts
     public class Panel : MonoBehaviour
     {
         [SerializeField] private YandexSdk _yandex;
+        [SerializeField] private StoppingTime _time;
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private bool _isInGamePanel = false;
         [SerializeField] private bool _isEnabled = false;
@@ -120,7 +122,7 @@ namespace Sources.Modules.UI.Scripts
             _canvasGroup.blocksRaycasts = true;
             
             if (_isPausePanel)
-                Time.timeScale = 0;
+                _time.PanelPause();
 
             if (_yandex.IsInitialized && _isLeaderboard && PlayerAccount.IsAuthorized)
             {
@@ -137,7 +139,7 @@ namespace Sources.Modules.UI.Scripts
             _canvasGroup.blocksRaycasts = false;
             
             if (_isPausePanel)
-                Time.timeScale = 1;
+                _time.PanelPlay();
             
             if (_yandex.IsInitialized && _isWorkshop)
                 _yandex.ShowInterstitial();
