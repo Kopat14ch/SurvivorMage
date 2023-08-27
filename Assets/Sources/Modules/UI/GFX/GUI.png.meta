@@ -560,6 +560,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Message
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 225
+        width: 46
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 2, y: 2, z: 2, w: 2}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83833610d9fc03c4f93878667458131a
+      internalID: 920646151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -573,9 +594,9 @@ TextureImporter:
     nameFileIdTable:
       DarkBlueButton: -110336346
       FullOuGame: 986092082
-      GUI_0: 920646151
       House: -1524679907
       LongBar: -2131304409
+      Message: 920646151
       MiniBar: -1448783724
       MiniBlueFill: -1816669507
       MiniButton: -856206942

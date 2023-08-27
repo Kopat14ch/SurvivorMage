@@ -83,7 +83,6 @@ namespace Sources.Modules.YandexSDK.Scripts
 
         private void OnAdOpened()
         {
-            StickyAd.Hide();
             Time.timeScale = 0;
             AdOpened.Invoke();
         }
@@ -95,14 +94,12 @@ namespace Sources.Modules.YandexSDK.Scripts
 
         private void OnAdClosed(bool showed)
         {
-            StickyAd.Show();
             Time.timeScale = 1;
             AdClosed.Invoke(showed);
         }
 
         private void OnAdClosed()
         {
-            StickyAd.Show();
             Time.timeScale = 1;
             AdClosed.Invoke(true);
         }
