@@ -1,3 +1,4 @@
+using Sources.Modules.Training.Scripts;
 using UnityEngine;
 
 namespace Sources.Modules.Workshop.Scripts.UI
@@ -6,6 +7,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
     {
         [SerializeField] private WorkshopTrigger _trigger;
         [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private TrainingView _trainingView;
 
         private void Awake()
         {
@@ -26,6 +28,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         private void TurnOn()
         {
+            _trainingView.TryNextSlide();
             _canvasGroup.alpha = 1;
             _canvasGroup.interactable = true;
             _canvasGroup.blocksRaycasts = true;

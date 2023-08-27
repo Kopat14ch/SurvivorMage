@@ -1,5 +1,6 @@
 using System;
 using Sources.Modules.Player.Scripts;
+using Sources.Modules.Training.Scripts;
 using Sources.Modules.Wave.Scripts;
 using Sources.Modules.Wave.Scripts.UI;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Sources.Modules.Workshop.Scripts
     {
         [SerializeField] private WaveGenerator _waveGenerator;
         [SerializeField] private WaveStartWaveUI _waveStartWaveUI;
+        [SerializeField] private TrainingView _trainingView;
 
         private bool _isWave = false;
         private bool _isPlayerIn = false;
@@ -34,7 +36,7 @@ namespace Sources.Modules.Workshop.Scripts
             if (other.gameObject.TryGetComponent<Mage>(out _))
             {
                 _isPlayerIn = true;
-                
+
                 if (_isWave == false)
                     PlayerEntered?.Invoke();
             }

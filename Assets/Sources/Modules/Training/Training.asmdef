@@ -1,0 +1,14 @@
+{
+    "name": "Training",
+    "rootNamespace": "",
+    "references": ["GUID:6af7b544855a77542bc8bfc4eb85c5c8"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

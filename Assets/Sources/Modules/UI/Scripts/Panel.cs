@@ -1,5 +1,6 @@
 using System;
 using Agava.YandexGames;
+using Sources.Modules.Training.Scripts;
 using Sources.Modules.UI.Scripts.LeaderBoard;
 using Sources.Modules.YandexSDK.Scripts;
 using UnityEngine;
@@ -19,7 +20,10 @@ namespace Sources.Modules.UI.Scripts
         [SerializeField] private bool _isWorkshop;
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _openButton;
+        [SerializeField] private TrainingView _trainingView;
 
+        private bool _canClose = true;
+        
         public event Action<Panel> Enabled;
         public event Action<Panel> Disabled;
 
@@ -30,6 +34,12 @@ namespace Sources.Modules.UI.Scripts
         
         private void OnEnable()
         {
+            if (_isWorkshop)
+            {
+                _trainingView.RequestExitButtonEnable += OnRequestExitButtonEnable;
+                _trainingView.RequestExitButtonDisable += OnRequestExitButtonDisable;
+            }
+
             if (_closeButton != null)
                 _closeButton.onClick.AddListener(TurnOff);
             
@@ -37,8 +47,24 @@ namespace Sources.Modules.UI.Scripts
                 _openButton.onClick.AddListener(TurnOn);
         }
 
+        private void OnRequestExitButtonDisable()
+        {
+            _canClose = false;
+        }
+
+        private void OnRequestExitButtonEnable()
+        {
+            _canClose = true;
+        }
+
         private void OnDisable()
         {
+            if (_isWorkshop)
+            {
+                _trainingView.RequestExitButtonEnable -= OnRequestExitButtonEnable;
+                _trainingView.RequestExitButtonDisable -= OnRequestExitButtonDisable;
+            }
+
             if (_closeButton != null)
                 _closeButton.onClick.RemoveListener(TurnOff);
             
@@ -48,8 +74,13 @@ namespace Sources.Modules.UI.Scripts
 
         public void TurnOn()
         {
+            if (_isWorkshop)
+            {
+                _trainingView.NextSlide();
+                _trainingView.EnableButton();
+            }
+
             ShowCanvas();
-            
             Enabled?.Invoke(this);
         }
         
@@ -60,9 +91,20 @@ namespace Sources.Modules.UI.Scripts
         
         public void TurnOff()
         {
-            HideCanvas();
-            
-            Disabled?.Invoke(this);
+            if (_isWorkshop)
+            {
+                if (_canClose)
+                {
+                    _trainingView.NextSlide();
+                    HideCanvas();
+                    Disabled?.Invoke(this);
+                }
+            }
+            else
+            {
+                HideCanvas();
+                Disabled?.Invoke(this);
+            }
         }
         
         public void TurnOffWithoutInvoke()
