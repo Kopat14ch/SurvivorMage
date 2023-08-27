@@ -92,14 +92,10 @@ namespace Sources.Modules.YandexSDK.Scripts
         {
             StickyAd.Show();
         }
-        
-        private void HideStickyAd()
-        {
-            StickyAd.Hide();
-        }
-        
+
         private void OnAdClosed(bool showed)
         {
+            StickyAd.Show();
             Time.timeScale = 1;
             AdClosed.Invoke(showed);
         }
