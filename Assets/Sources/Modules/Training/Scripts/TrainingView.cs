@@ -22,7 +22,7 @@ namespace Sources.Modules.Training.Scripts
         private void Start()
         {
             foreach (var element in _uiElementsToEnable)
-                element.gameObject.SetActive(false);
+                element.Disable();
             
             RequestDisableInput?.Invoke();
         }
@@ -97,7 +97,7 @@ namespace Sources.Modules.Training.Scripts
 
         private void EnableCurrentElement()
         {
-            _uiElementsToEnable[_elementIndex].gameObject.SetActive(true);
+            _uiElementsToEnable[_elementIndex].Enable();
             _elementIndex++;
         }
     }

@@ -4,11 +4,9 @@ namespace Sources.Modules.Training.Scripts
 {
     public class UIElement : MonoBehaviour
     {
-        public void Enable(UIElement disableElement = null)
+        public void Enable()
         {
-            if (disableElement != null)
-                disableElement.Disable();
-
+            
             gameObject.SetActive(true);
         }
 

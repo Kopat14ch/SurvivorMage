@@ -27,7 +27,7 @@ namespace Sources.Modules.Workshop.Scripts
 #if UNITY_EDITOR
             return;
 #endif
-            
+            Debug.Log($"SAVED: {JsonUtility.ToJson(spellCasters)}");
             PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(spellCasters));
         }
 
@@ -39,6 +39,16 @@ namespace Sources.Modules.Workshop.Scripts
             s_OnLoad?.Invoke();
         }
 
-        public static List<SpellSlotData> GetSpells() => s_spellSlotData.GetRange(0, s_spellSlotData.Count);
+        public static List<SpellSlotData> GetSpells()
+        {
+#if UNITY_EDITOR
+            return null;
+#endif
+            foreach (var spellSlotData in s_spellSlotData)
+            {
+                Debug.Log($"LOAD: {spellSlotData.SpellType}");
+            }
+            return s_spellSlotData.GetRange(0, s_spellSlotData.Count);
+        }
     }
 }

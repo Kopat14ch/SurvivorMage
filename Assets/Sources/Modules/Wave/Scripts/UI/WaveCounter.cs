@@ -11,7 +11,7 @@ namespace Sources.Modules.Wave.Scripts.UI
 
         private const string WaveString = "WaveCounter";
 
-        private void Awake()
+        private void OnEnable()
         {
             _waveGenerator.WaveCountChanged += ChangeText;
         }

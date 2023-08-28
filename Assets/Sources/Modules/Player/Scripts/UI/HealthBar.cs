@@ -1,3 +1,4 @@
+using System;
 using Sources.Modules.UI.Scripts.InGame.Common;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,10 @@ namespace Sources.Modules.Player.Scripts.UI
         protected override void Awake()
         {
             Slider = GetComponent<Slider>();
+        }
+
+        private void OnEnable()
+        {
             _mage.HealthChanged += ChangeValue;
             _mage.MaxHealthIncreased += UpdateMaxValue;
         }
