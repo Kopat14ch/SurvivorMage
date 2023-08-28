@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using Agava.YandexGames;
 using UnityEngine;
-using PlayerPrefs = UnityEngine.PlayerPrefs;
 
 namespace Sources.Modules.Workshop.Scripts
 {
     internal static class Saver
     {
         private const string Spells = nameof(Spells);
-        private static List<SpellSlotData> _spellSlotData;
+        private static List<SpellSlotData> s_spellSlotData;
+        private static event Action s_OnLoad;
+        private static bool s_isInitialize;
 
-        public static void Init()
+        public static void Init(Action onLoad)
         {
-            TryLoadSpells();
+            if (s_isInitialize == false)
+            {
+                s_isInitialize = true;
+                s_OnLoad = onLoad;
+                TryLoadSpells();
+            }
         }
 
         public static void SaveSpells(List<SpellSlotData> spellCasters)
@@ -31,9 +35,10 @@ namespace Sources.Modules.Workshop.Scripts
 
         private static void LoadSpells(string jsonLoaded)
         {
-            _spellSlotData = JsonUtility.FromJson<List<SpellSlotData>>(jsonLoaded);
+            s_spellSlotData = JsonUtility.FromJson<List<SpellSlotData>>(jsonLoaded);
+            s_OnLoad?.Invoke();
         }
 
-        public static List<SpellSlotData> GetSpells() => _spellSlotData.GetRange(0, _spellSlotData.Count);
+        public static List<SpellSlotData> GetSpells() => s_spellSlotData.GetRange(0, s_spellSlotData.Count);
     }
 }

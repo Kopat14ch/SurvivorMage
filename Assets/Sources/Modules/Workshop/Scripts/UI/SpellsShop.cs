@@ -23,11 +23,14 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         public void Init(Staff staff)
         {
-            Saver.Init();
+            Saver.Init(InitSaved);
             
             _staff = staff;
             _slotDates = Saver.GetSpells() ?? new List<SpellSlotData>();
+        }
 
+        private void InitSaved()
+        {
             foreach (SpellSlot slot in _spellSlots)
             {
                 slot.BuyButtonPressed += OnSlotBuyButtonPressed;
