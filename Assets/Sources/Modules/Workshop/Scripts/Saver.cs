@@ -2,42 +2,38 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Agava.YandexGames;
 using UnityEngine;
+using PlayerPrefs = UnityEngine.PlayerPrefs;
 
 namespace Sources.Modules.Workshop.Scripts
 {
     internal static class Saver
     {
         private const string Spells = nameof(Spells);
+        private static List<SpellSlotData> _spellSlotData;
+
+        public static void Init()
+        {
+            TryLoadSpells();
+        }
 
         public static void SaveSpells(List<SpellSlotData> spellCasters)
         {
-            PlayerPrefs.DeleteAll();
-            BinaryFormatter formatter = new();
-            MemoryStream memoryStream = new();
-
-            formatter.Serialize(memoryStream, spellCasters);
-            string data = Convert.ToBase64String(memoryStream.ToArray());
-
-            PlayerPrefs.SetString(Spells, data);
-            PlayerPrefs.Save();
+#if UNITY_EDITOR
+            return;
+#endif
+            
+            PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(spellCasters));
         }
-        
-        public static List<SpellSlotData> LoadSpells()
+
+        private static void TryLoadSpells() => PlayerAccount.GetCloudSaveData(onSuccessCallback: LoadSpells);
+
+        private static void LoadSpells(string jsonLoaded)
         {
-            if (PlayerPrefs.HasKey(Spells))
-            {
-                string data = PlayerPrefs.GetString(Spells);
-                byte[] bytes = Convert.FromBase64String(data);
-
-                BinaryFormatter formatter = new ();
-                MemoryStream memoryStream = new (bytes);
-
-                return formatter.Deserialize(memoryStream) as List<SpellSlotData>;
-            }
-
-
-            return null;
+            _spellSlotData = JsonUtility.FromJson<List<SpellSlotData>>(jsonLoaded);
         }
+
+        public static List<SpellSlotData> GetSpells() => _spellSlotData.GetRange(0, _spellSlotData.Count);
     }
 }

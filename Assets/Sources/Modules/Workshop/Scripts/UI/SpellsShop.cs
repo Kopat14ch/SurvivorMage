@@ -23,8 +23,10 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         public void Init(Staff staff)
         {
+            Saver.Init();
+            
             _staff = staff;
-            _slotDates = Saver.LoadSpells() ?? new List<SpellSlotData>();
+            _slotDates = Saver.GetSpells() ?? new List<SpellSlotData>();
 
             foreach (SpellSlot slot in _spellSlots)
             {
