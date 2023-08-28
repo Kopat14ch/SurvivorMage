@@ -21,17 +21,27 @@ namespace Sources.Modules.Training.Scripts
 
         private void Start()
         {
-            foreach (var element in _uiElementsToEnable)
-                element.Disable();
+            Saver.Init(isTrained =>
+            {
+                if (isTrained)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    foreach (var element in _uiElementsToEnable)
+                        element.Disable();
             
-            RequestDisableInput?.Invoke();
+                    RequestDisableInput?.Invoke();
+                }
+            });
         }
 
         public void NextSlide()
         {
             if (_currentSlideIndex >= _trainingUis.Length)
             {
-                gameObject.SetActive(false);
+                Disable();
                 return;
             }
 
@@ -93,7 +103,11 @@ namespace Sources.Modules.Training.Scripts
             RequestNextButtonEnable?.Invoke();
         }
 
-        public void Disable() => gameObject.SetActive(false);
+        public void Disable()
+        {
+            gameObject.SetActive(false);
+            Saver.EndTraining();
+        }
 
         private void EnableCurrentElement()
         {

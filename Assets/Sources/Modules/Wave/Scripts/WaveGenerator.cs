@@ -21,42 +21,53 @@ namespace Sources.Modules.Wave.Scripts
         [SerializeField] private LosePanel _losePanel;
         [SerializeField] private Mage _mage;
 
-        private List<EnemyUnit> _enemiesToSpawn;
-        
-        public event Action UnitDied;
-        public event Action<int> WaveStarted;
-        public event Action WaveEnded;
-
-        public event Action<int> WaveCountChanged; 
-
         private const int StartMinEnemySpawn = 3;
         private const int StartMaxEnemySpawn = 6;
         private const int Step = 3;
         private const int WaveCountToAddStep = 23;
         
-        private EnemyWaveConfig _enemyConfig;
-        private List<EnemyUnit> _spawnedEnemies;
-        private Dictionary<List<EnemyType>, int> _wave;
-
-        private WaveConfigs _waveConfigs;
-
         private int _waveIndex;
         private int _waveCount;
         private int _minEnemySpawn;
         private int _maxEnemySpawn;
+        
+        private EnemyWaveConfig _enemyConfig;
+        private List<EnemyUnit> _spawnedEnemies;
+        private Dictionary<List<EnemyType>, int> _wave;
+        private List<EnemyUnit> _enemiesToSpawn;
+        private WaveConfigs _waveConfigs;
+        private WaveData _waveData;
 
+        public event Action UnitDied;
+        public event Action<int> WaveStarted;
+        public event Action WaveEnded;
+        public event Action<int> WaveCountChanged;
+        
         private void Awake()
         {
             _wave = new Dictionary<List<EnemyType>, int>();
             _waveConfigs = new WaveConfigs();
-            _waveIndex = 0;
-            _waveCount = _waveIndex;
-            _enemiesToSpawn = _spawner.GetEnemiesToSpawn();
-
-            _minEnemySpawn = StartMinEnemySpawn;
-            _maxEnemySpawn = StartMaxEnemySpawn;
             
-            WaveCountChanged?.Invoke(_waveCount);
+            Saver.Init(() =>
+            {
+                _waveData = Saver.GetWaveData() ?? new WaveData();
+                _waveCount = _waveData.WaveCount;
+                _waveIndex = _waveData.WaveIndex;
+                _enemiesToSpawn = _spawner.GetEnemiesToSpawn();
+
+                if (_waveData.MaxEnemySpawn < StartMaxEnemySpawn || _waveData.MinEnemySpawn < StartMinEnemySpawn)
+                {
+                    _minEnemySpawn = StartMinEnemySpawn;
+                    _maxEnemySpawn = StartMaxEnemySpawn;
+                }
+                else
+                {
+                    _minEnemySpawn = _waveData.MinEnemySpawn;
+                    _maxEnemySpawn = _waveData.MaxEnemySpawn;
+                }
+
+                WaveCountChanged?.Invoke(_waveCount);
+            });
         }
 
         private void OnEnable() => _losePanel.Rewarded += RestartWave;
@@ -146,7 +157,18 @@ namespace Sources.Modules.Wave.Scripts
             _waveIndex %= _waveConfigs.GetWaveConfigsCount();
             
             _leaderList.SetLeaderboardScore(_waveCount);
+            
+            SaveAll();
             WaveEnded?.Invoke();
+        }
+
+        private void SaveAll()
+        {
+            _waveData.WaveCount = _waveCount;
+            _waveData.WaveIndex = _waveIndex;
+            _waveData.MinEnemySpawn = _minEnemySpawn;
+            _waveData.MaxEnemySpawn = _maxEnemySpawn;
+            Saver.SaveWaveData(_waveData);
         }
     }
 }

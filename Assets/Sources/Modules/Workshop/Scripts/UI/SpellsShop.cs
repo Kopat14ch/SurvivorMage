@@ -16,7 +16,6 @@ namespace Sources.Modules.Workshop.Scripts.UI
         [SerializeField] private Color _activeSpellsEnoughColor;
 
         private Staff _staff;
-        private SpellSlotData _slotData;
         private SpellSlotDates _slotDates;
 
         public event Action<int, SpellSlot> SlotBuyButtonPressed;
@@ -36,24 +35,36 @@ namespace Sources.Modules.Workshop.Scripts.UI
         {
             _slotDates = Saver.GetSpells() ?? new SpellSlotDates()
             {
-                SlotDates = new List<SpellSlotData>()
+                SlotDates = new List<SpellType>(),
+                ActiveSpells = new List<SpellType>()
             };
+
             foreach (SpellSlot slot in _spellSlots)
             {
                 slot.BuyButtonPressed += OnSlotBuyButtonPressed;
                 slot.EquipButtonPressed += OnEquipButtonPressed;
-
+                
                 foreach (var slotData in _slotDates.SlotDates)
                 {
-                    if (slotData.SpellType == slot.SpellType)
+                    if (slotData == slot.SpellType)
                     {
                         slot.BuySpell();
+
+                        if (_slotDates.ActiveSpells.Contains(slotData))
+                        {
+                            slot.EquipSpell();
+                        }
                     }
                 }
-                
+
                 if (slot.IsEquipped)
+                {
+                    AddActiveSpell(slot.SpellType);
                     _staff.AddSpellCaster(slot.SpellType);
+                }
             }
+            
+            
             
             CheckSpellsLimit();
         }
@@ -77,6 +88,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         private void EquipSpell(SpellType spellType, SpellSlot spellSlot)
         {
+            AddActiveSpell(spellType);
             _staff.AddSpellCaster(spellType);
             spellSlot.EquipSpell();
             CheckSpellsLimit();
@@ -84,6 +96,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         private void UnEquipSpell(SpellType spellType, SpellSlot spellSlot)
         {
+            RemoveActiveSpell(spellType);
             _staff.RemoveSpellCaster(spellType);
             spellSlot.UnequipSpell();
             CheckSpellsLimit();
@@ -97,16 +110,10 @@ namespace Sources.Modules.Workshop.Scripts.UI
                 {
                     spellSlot.BuySpell();
 
-                    _slotData = new SpellSlotData()
-                    {
-                        SpellType = spellSlot.SpellType
-                    };
-                    
-                    _slotDates.SlotDates.Add(_slotData);
+                    _slotDates.SlotDates.Add(spellSlot.SpellType);
                     
                     Saver.SaveSpells(_slotDates);
                 }
-                
             }
         }
 
@@ -139,7 +146,19 @@ namespace Sources.Modules.Workshop.Scripts.UI
         {
             _activeSpellsText.text = (currentActiveSpells + "/" + _activeSpellsLimit);
         }
-        
+
+        private void AddActiveSpell(SpellType spell)
+        {
+            _slotDates.ActiveSpells.Add(spell);
+            Saver.SaveSpells(_slotDates);
+        }
+
+        private void RemoveActiveSpell(SpellType spell)
+        {
+            _slotDates.ActiveSpells.Remove(spell);
+            Saver.SaveSpells(_slotDates);
+        }
+
         private void OnSlotBuyButtonPressed(int price, SpellSlot slot) => SlotBuyButtonPressed?.Invoke(price, slot);
     }
 }

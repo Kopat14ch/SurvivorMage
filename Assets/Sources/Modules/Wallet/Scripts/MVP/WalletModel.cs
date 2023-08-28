@@ -16,7 +16,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
 
         public WalletModel(int coins, int addCoins)
         {
-            _coins = coins;
+            _coins = Saver.GetWallet()?.Coins ?? coins;
             _addCoins = Mathf.Clamp(addCoins, MinAddCoin, Int32.MaxValue);
         }
 
@@ -29,14 +29,11 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         public void AddCoin(int value = -1)
         {
             if (value > 0)
-            {
                 _coins += value;
-            }
             else
-            {
                 _coins += _addCoins;
-            }
 
+            Saver.SaveWallet(_coins);
             CoinsChanged?.Invoke(_coins);
         }
 
@@ -46,6 +43,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
                 return false;
 
             _coins -= price;
+            Saver.SaveWallet(_coins);
             CoinsChanged?.Invoke(_coins);
             return true;
         }
@@ -57,6 +55,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
 
             _coins -= price;
             _addCoins += IncreaseCoin;
+            Saver.SaveWallet(_coins);
             CoinsChanged?.Invoke(_coins);
             IncreaseChanged?.Invoke(_addCoins, IncreaseCoin);
         }

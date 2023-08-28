@@ -6,18 +6,21 @@ namespace Sources.Modules.Workshop.Scripts
 {
     internal static class Saver
     {
-        private const string Spells = nameof(Spells);
         private static SpellSlotDates s_spellSlotData;
         private static event Action s_OnLoad;
-        private static bool s_isInitialize;
+        private static bool s_isInitialized;
 
         public static void Init(Action onLoad)
         {
-            if (s_isInitialize == false)
+            if (s_isInitialized == false)
             {
-                s_isInitialize = true;
+                s_isInitialized = true;
                 s_OnLoad = onLoad;
                 TryLoadSpells();
+            }
+            else
+            {
+                onLoad?.Invoke();
             }
         }
 

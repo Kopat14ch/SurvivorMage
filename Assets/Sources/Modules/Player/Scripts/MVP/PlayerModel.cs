@@ -7,6 +7,7 @@ namespace Sources.Modules.Player.Scripts.MVP
         private const float MaxHealthIncreaseValue = 5f;
         private const float DamageScalerIncreaseValue = 0.1f;
         private const float SpeedIncreaseValue = 0.1f;
+        private PlayerData _playerData;
 
         public event Action<float, float> MaxHealthChanged;
         public event Action<float, float> DamageScalerChanged;
@@ -21,6 +22,15 @@ namespace Sources.Modules.Player.Scripts.MVP
             MaxHealth = maxHealth;
             Speed = speed;
             DamageScaler = damageScaler;
+
+            _playerData = Saver.GetPlayerData() ?? new PlayerData
+            {
+                MaxHealth = maxHealth,
+                Speed = speed,
+                DamageScaler = damageScaler
+            };
+            
+            Saver.SaveData(_playerData);
         }
 
         public void InvokeAll()
@@ -34,18 +44,27 @@ namespace Sources.Modules.Player.Scripts.MVP
         {
             MaxHealth += MaxHealthIncreaseValue;
             MaxHealthChanged?.Invoke(MaxHealth, MaxHealthIncreaseValue);
+            
+            _playerData.MaxHealth = MaxHealth;
+            Saver.SaveData(_playerData);
         }
 
         public void AddDamageScaler()
         {
             DamageScaler += DamageScalerIncreaseValue;
             DamageScalerChanged?.Invoke(DamageScaler, DamageScalerIncreaseValue);
+            
+            _playerData.DamageScaler = DamageScaler;
+            Saver.SaveData(_playerData);
         }
         
         public void TryAddSpeed()
         {
             Speed += SpeedIncreaseValue;
             SpeedChanged?.Invoke(Speed, SpeedIncreaseValue);
+            _playerData.Speed = Speed;
+            
+            Saver.SaveData(_playerData);
         }
     }
 }
