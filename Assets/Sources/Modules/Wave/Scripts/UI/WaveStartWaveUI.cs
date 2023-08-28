@@ -1,4 +1,5 @@
 ﻿using System;
+using Sources.Modules.Training.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,10 @@ namespace Sources.Modules.Wave.Scripts.UI
     {
         [SerializeField] private WaveGenerator _waveGenerator;
         [SerializeField] private Button _nextWaveButton;
+        [SerializeField] private TrainingView _trainingView;
 
         public event Action NextWaveButtonPressed;
-
-        private void Start()
-        {
-            _nextWaveButton.gameObject.SetActive(true);
-        }
-
+        
         private void OnEnable()
         {
             _waveGenerator.WaveEnded += OnWaveEnded;
@@ -35,6 +32,7 @@ namespace Sources.Modules.Wave.Scripts.UI
 
         private void OnNextWaveButtonClick()
         {
+            _trainingView.Disable();
             _waveGenerator.StartWave();
             _nextWaveButton.gameObject.SetActive(false);
             NextWaveButtonPressed?.Invoke();

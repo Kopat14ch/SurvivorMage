@@ -1,4 +1,3 @@
-using Sources.Modules.UIElementTraining.Scripts;
-using UnityEngine;
+using Sources.Modules.Training.Scripts;
 
 namespace Sources.Modules.Buttons.Scripts { public class ButtonUIElement : UIElement { } }

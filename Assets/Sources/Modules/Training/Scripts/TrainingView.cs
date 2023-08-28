@@ -1,6 +1,5 @@
 using System;
 using Sources.Modules.Training.Enums;
-using Sources.Modules.UIElementTraining.Scripts;
 using UnityEngine;
 
 namespace Sources.Modules.Training.Scripts
@@ -8,20 +7,25 @@ namespace Sources.Modules.Training.Scripts
     public class TrainingView : MonoBehaviour
     {
         [SerializeField] private TrainingUI[] _trainingUis;
-        [SerializeField] private UIElement _playerHealthUI;
-        [SerializeField] private UIElement _playerWalletUI;
-        [SerializeField] private UIElement _waveBackground;
-        [SerializeField] private UIElement _waveCount;
-        [SerializeField] private UIElement _nextWaveButton;
-        [SerializeField] private UIElement _settingButton;
-        [SerializeField] private UIElement _leaderBoardButton;
+        [SerializeField] private UIElement[] _uiElementsToEnable;
 
         private int _currentSlideIndex = 1;
+        private int _elementIndex = 0;
 
         public event Action RequestNextButtonEnable;
         public event Action RequestNextButtonDisable;
         public event Action RequestExitButtonEnable;
         public event Action RequestExitButtonDisable;
+        public event Action RequestDisableInput;
+        public event Action RequestEnableInput;
+
+        private void Start()
+        {
+            foreach (var element in _uiElementsToEnable)
+                element.gameObject.SetActive(false);
+            
+            RequestDisableInput?.Invoke();
+        }
 
         public void NextSlide()
         {
@@ -36,19 +40,36 @@ namespace Sources.Modules.Training.Scripts
                 switch (_currentSlideIndex)
                 {
                     case (int) TrainingObjects.PlayerHealth:
-                        _playerHealthUI.Enable();
+                        EnableCurrentElement();
                         break;
                     case (int) TrainingObjects.PlayerWallet:
-                        _playerWalletUI.Enable();
+                        EnableCurrentElement();
                         break;
                     case (int) TrainingObjects.GoToShop:
                         RequestNextButtonDisable?.Invoke();
+                        RequestEnableInput?.Invoke();
                         break;
                     case (int) TrainingObjects.Upgrades:
                         RequestExitButtonDisable?.Invoke();
                         break;
                     case (int) TrainingObjects.CloseShop:
+                        RequestNextButtonDisable?.Invoke();
                         RequestExitButtonEnable?.Invoke();
+                        break;
+                    case (int) TrainingObjects.WaveIndicator:
+                        EnableCurrentElement();
+                        break;
+                    case (int) TrainingObjects.WaveCount:
+                        EnableCurrentElement();
+                        break;
+                    case (int) TrainingObjects.LeaderBoard:
+                        EnableCurrentElement();
+                        break;
+                    case (int) TrainingObjects.Settings:
+                        EnableCurrentElement();
+                        break;
+                    case (int) TrainingObjects.NextWave:
+                        EnableCurrentElement();
                         break;
                 }
 
@@ -70,6 +91,14 @@ namespace Sources.Modules.Training.Scripts
         public void EnableButton()
         {
             RequestNextButtonEnable?.Invoke();
+        }
+
+        public void Disable() => gameObject.SetActive(false);
+
+        private void EnableCurrentElement()
+        {
+            _uiElementsToEnable[_elementIndex].gameObject.SetActive(true);
+            _elementIndex++;
         }
     }
 }

@@ -97,6 +97,7 @@ namespace Sources.Modules.UI.Scripts
             {
                 if (_canClose)
                 {
+                    _trainingView.EnableButton();
                     _trainingView.NextSlide();
                     HideCanvas();
                     Disabled?.Invoke(this);

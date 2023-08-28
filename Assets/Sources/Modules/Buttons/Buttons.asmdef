@@ -1,4 +1,16 @@
 {
-	"name": "Buttons",
-	"references":[ "GUID:6af7b544855a77542bc8bfc4eb85c5c8" ]
+    "name": "Buttons",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e3894dde210761b418b8ad61c61690d5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

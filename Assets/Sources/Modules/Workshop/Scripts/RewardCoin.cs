@@ -1,4 +1,5 @@
 using System;
+using Sources.Modules.Training.Scripts;
 using Sources.Modules.YandexSDK.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace Sources.Modules.Workshop.Scripts
     public class RewardCoin : MonoBehaviour
     {
         [SerializeField] private YandexSdk _yandex;
+        [SerializeField] private TrainingView _trainingView;
 
         private Button _button;
         private const int MinCoins = 2;
@@ -45,6 +47,9 @@ namespace Sources.Modules.Workshop.Scripts
         
         private void OnButtonClick()
         {
+            if (_trainingView.isActiveAndEnabled)
+                return;
+            
             if (_yandex.IsInitialized)
                 _yandex.ShowVideo(OnRewarded);
             else

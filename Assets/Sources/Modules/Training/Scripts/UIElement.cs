@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Sources.Modules.UIElementTraining.Scripts
+namespace Sources.Modules.Training.Scripts
 {
     public class UIElement : MonoBehaviour
     {

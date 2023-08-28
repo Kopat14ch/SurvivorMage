@@ -1,6 +1,7 @@
 using System.Collections;
 using Sources.Modules.Common;
 using Sources.Modules.Player.Scripts.Animation;
+using Sources.Modules.Training.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 
@@ -12,6 +13,7 @@ namespace Sources.Modules.Player.Scripts
     internal class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private Joystick _joystick;
+        [SerializeField] private TrainingView _trainingView;
 
         private const float IdleTick = 1;
         private const float MinMoveDirection = 0.1f;
@@ -60,16 +62,32 @@ namespace Sources.Modules.Player.Scripts
         private void OnEnable()
         {
             _playerInput.Enable();
+            _trainingView.RequestEnableInput += OnRequestEnableInput;
+            _trainingView.RequestDisableInput += OnRequestDisableInput;
         }
 
         private void OnDisable()
         {
             _playerInput.Disable();
+            _trainingView.RequestEnableInput -= OnRequestEnableInput;
+            _trainingView.RequestDisableInput -= OnRequestDisableInput;
         }
 
         public void SetSpeed(float speed)
         {
             _speed = speed;
+        }
+        
+        private void OnRequestEnableInput()
+        {
+            _playerInput.Enable();
+            _joystick.gameObject.SetActive(true);
+        }
+        
+        private void OnRequestDisableInput()
+        {
+            _playerInput.Disable();
+            _joystick.gameObject.SetActive(false);
         }
 
         private void OnMove()

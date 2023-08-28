@@ -1,3 +1,3 @@
-using Sources.Modules.UIElementTraining.Scripts;
+using Sources.Modules.Training.Scripts;
 
 namespace Sources.Modules.Wave.Scripts.UI { public class WaveUIElement : UIElement { } }
