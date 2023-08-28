@@ -17,7 +17,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         private Staff _staff;
         private SpellSlotData _slotData;
-        private List<SpellSlotData> _slotDates;
+        private SpellSlotDates _slotDates;
 
         public event Action<int, SpellSlot> SlotBuyButtonPressed;
 
@@ -34,13 +34,16 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         private void InitSaved()
         {
-            _slotDates = Saver.GetSpells() ?? new List<SpellSlotData>();
+            _slotDates = Saver.GetSpells() ?? new SpellSlotDates()
+            {
+                SlotDates = new List<SpellSlotData>()
+            };
             foreach (SpellSlot slot in _spellSlots)
             {
                 slot.BuyButtonPressed += OnSlotBuyButtonPressed;
                 slot.EquipButtonPressed += OnEquipButtonPressed;
 
-                foreach (var slotData in _slotDates)
+                foreach (var slotData in _slotDates.SlotDates)
                 {
                     if (slotData.SpellType == slot.SpellType)
                     {
@@ -99,7 +102,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
                         SpellType = spellSlot.SpellType
                     };
                     
-                    _slotDates.Add(_slotData);
+                    _slotDates.SlotDates.Add(_slotData);
                     
                     Saver.SaveSpells(_slotDates);
                 }

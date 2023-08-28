@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Agava.YandexGames;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ namespace Sources.Modules.Workshop.Scripts
     internal static class Saver
     {
         private const string Spells = nameof(Spells);
-        private static List<SpellSlotData> s_spellSlotData;
+        private static SpellSlotDates s_spellSlotData;
         private static event Action s_OnLoad;
         private static bool s_isInitialize;
 
@@ -22,12 +21,12 @@ namespace Sources.Modules.Workshop.Scripts
             }
         }
 
-        public static void SaveSpells(List<SpellSlotData> spellCasters)
+        public static void SaveSpells(SpellSlotDates spellCasters)
         {
 #if UNITY_EDITOR
             return;
 #endif
-            Debug.Log($"SAVED: {JsonUtility.ToJson(spellCasters)}");
+            
             PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(spellCasters));
         }
 
@@ -35,20 +34,17 @@ namespace Sources.Modules.Workshop.Scripts
 
         private static void LoadSpells(string jsonLoaded)
         {
-            s_spellSlotData = JsonUtility.FromJson<List<SpellSlotData>>(jsonLoaded);
+            s_spellSlotData = JsonUtility.FromJson<SpellSlotDates>(jsonLoaded);
             s_OnLoad?.Invoke();
         }
 
-        public static List<SpellSlotData> GetSpells()
+        public static SpellSlotDates GetSpells()
         {
 #if UNITY_EDITOR
             return null;
 #endif
-            foreach (var spellSlotData in s_spellSlotData)
-            {
-                Debug.Log($"LOAD: {spellSlotData.SpellType}");
-            }
-            return s_spellSlotData.GetRange(0, s_spellSlotData.Count);
+            
+            return s_spellSlotData;
         }
     }
 }
