@@ -19,11 +19,10 @@ namespace Sources.Modules.Workshop.Scripts.UI
         private SpellSlotDates _slotDates;
 
         public event Action<int, SpellSlot> SlotBuyButtonPressed;
-
+        
         public void Init(Staff staff)
         {
             _staff = staff;
-
 #if UNITY_EDITOR
             InitSaved();
             return;

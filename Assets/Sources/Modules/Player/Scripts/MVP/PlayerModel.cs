@@ -22,15 +22,18 @@ namespace Sources.Modules.Player.Scripts.MVP
             MaxHealth = maxHealth;
             Speed = speed;
             DamageScaler = damageScaler;
-
-            _playerData = Saver.GetPlayerData() ?? new PlayerData
-            {
-                MaxHealth = maxHealth,
-                Speed = speed,
-                DamageScaler = damageScaler
-            };
             
-            Saver.SaveData(_playerData);
+            Saver.Init(() =>
+            {
+                _playerData = Saver.GetPlayerData() ?? new PlayerData
+                {
+                    MaxHealth = maxHealth,
+                    Speed = speed,
+                    DamageScaler = damageScaler
+                };
+            
+                Saver.SaveData(_playerData);
+            });
         }
 
         public void InvokeAll()

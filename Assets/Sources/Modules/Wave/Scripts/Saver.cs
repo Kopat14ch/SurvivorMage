@@ -12,6 +12,11 @@ namespace Sources.Modules.Wave.Scripts
 
         public static void Init(Action onLoaded)
         {
+#if UNITY_EDITOR
+            onLoaded?.Invoke();
+            return;
+#endif
+            
             if (s_isInitialized)
             {
                 s_OnLoaded = onLoaded;
@@ -26,8 +31,11 @@ namespace Sources.Modules.Wave.Scripts
 
         public static void SaveWaveData(WaveData waveData)
         {
+#if UNITY_EDITOR
+            return;
+#endif
             s_waveData = waveData;
-            
+
             PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(s_waveData));
         }
 

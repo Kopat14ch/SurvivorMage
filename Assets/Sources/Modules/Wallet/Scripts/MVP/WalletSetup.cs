@@ -24,15 +24,16 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         public void Init(PlayerView playerView, SpellsShop spellsShop)
         {
             _view = GetComponent<WalletView>();
-
+            
             Saver.Init(() =>
             {
                 _model = new (BaseCoins, BaseIncrease);
                 _presenter = new (_model, _view, _spawner, playerView, spellsShop, _rewardCoin);
             });
         }
+        
 
-        private void OnEnable() => _presenter.Enable();
-        private void OnDisable() => _presenter.Disable();
+        private void OnEnable() => _presenter?.Enable();
+        private void OnDisable() => _presenter?.Disable();
     }
 }

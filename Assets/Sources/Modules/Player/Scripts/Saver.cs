@@ -12,10 +12,15 @@ namespace Sources.Modules.Player.Scripts
 
         public static void Init(Action onLoaded)
         {
+#if UNITY_EDITOR
+            onLoaded?.Invoke();
+            return;
+#endif
             if (s_isInitialized)
             {
                 s_OnLoaded = onLoaded;
                 s_isInitialized = true;
+                TryLoadPlayer();
             }
             else
             {
@@ -34,6 +39,10 @@ namespace Sources.Modules.Player.Scripts
 
         public static void SaveData(PlayerData playerData)
         {
+#if UNITY_EDITOR
+            return;
+#endif
+            
             s_playerData = playerData;
             
             PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(s_playerData));

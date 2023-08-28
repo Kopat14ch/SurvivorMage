@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Sources.Modules.Player.Scripts.MVP
 {
@@ -15,6 +16,7 @@ namespace Sources.Modules.Player.Scripts.MVP
         private PlayerPresenter _presenter;
         private Mage _mage;
         private PlayerModel _playerModel;
+        
 
         public void Init(Mage mage)
         {

@@ -12,6 +12,11 @@ namespace Sources.Modules.Workshop.Scripts
 
         public static void Init(Action onLoad)
         {
+#if UNITY_EDITOR
+            onLoad?.Invoke();
+            return;
+#endif
+            
             if (s_isInitialized == false)
             {
                 s_isInitialized = true;
@@ -29,7 +34,6 @@ namespace Sources.Modules.Workshop.Scripts
 #if UNITY_EDITOR
             return;
 #endif
-            
             PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(spellCasters));
         }
 

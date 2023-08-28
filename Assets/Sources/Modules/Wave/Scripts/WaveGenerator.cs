@@ -43,7 +43,7 @@ namespace Sources.Modules.Wave.Scripts
         public event Action WaveEnded;
         public event Action<int> WaveCountChanged;
         
-        private void Awake()
+        private void Start()
         {
             _wave = new Dictionary<List<EnemyType>, int>();
             _waveConfigs = new WaveConfigs();

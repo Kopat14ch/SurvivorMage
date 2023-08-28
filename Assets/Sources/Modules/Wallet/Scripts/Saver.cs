@@ -12,6 +12,11 @@ namespace Sources.Modules.Wallet.Scripts
 
         public static void Init(Action onLoaded)
         {
+#if UNITY_EDITOR
+            onLoaded?.Invoke();
+            return;
+#endif
+            
             if (s_isInitialized == false)
             {
                 s_OnLoaded = onLoaded;
@@ -26,6 +31,10 @@ namespace Sources.Modules.Wallet.Scripts
 
         public static void SaveWallet(int coins)
         {
+#if UNITY_EDITOR
+            return;
+#endif
+            
             s_walletData.Coins = coins;
             
             PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(s_walletData));

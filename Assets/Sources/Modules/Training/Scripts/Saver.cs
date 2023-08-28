@@ -8,10 +8,15 @@ namespace Sources.Modules.Training.Scripts
     {
         private static bool s_isInitialized;
         private static TrainingData s_trainingData;
-        private static event Action<bool> s_OnLoaded;
+        private static event Action s_OnLoaded;
 
-        public static void Init(Action<bool> onLoaded)
+        public static void Init(Action onLoaded)
         {
+#if UNITY_EDITOR
+            onLoaded?.Invoke();
+            return;
+#endif
+            
             if (s_isInitialized == false)
             {
                 s_OnLoaded = onLoaded;
@@ -20,12 +25,18 @@ namespace Sources.Modules.Training.Scripts
             }
             else
             {
-                onLoaded?.Invoke(true);
+                onLoaded?.Invoke();
             }
         }
 
+        public static TrainingData GetTrainingData() => s_trainingData;
+
         public static void EndTraining()
         {
+#if UNITY_EDITOR
+            return;
+#endif
+
             s_trainingData.IsTrained = true;
             
             PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(s_trainingData));
@@ -37,7 +48,7 @@ namespace Sources.Modules.Training.Scripts
         {
             s_trainingData = JsonUtility.FromJson<TrainingData>(json);
             
-            s_OnLoaded?.Invoke(s_trainingData.IsTrained);
+            s_OnLoaded?.Invoke();
         }
     }
 }
