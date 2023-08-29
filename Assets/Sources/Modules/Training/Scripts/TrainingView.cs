@@ -21,20 +21,17 @@ namespace Sources.Modules.Training.Scripts
 
         private void Start()
         {
-            Saver.Init(() =>
+            if (TrainingSaver.Instance.GetData().IsTrained)
             {
-                if (Saver.GetTrainingData()?.IsTrained ?? false)
-                {
-                    gameObject.SetActive(false);
-                }
-                else
-                {
-                    foreach (var element in _uiElementsToEnable)
-                        element.Disable();
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                foreach (var element in _uiElementsToEnable)
+                    element.Disable();
             
-                    RequestDisableInput?.Invoke();
-                }
-            });
+                RequestDisableInput?.Invoke();
+            }
         }
 
         public void NextSlide()
@@ -105,8 +102,14 @@ namespace Sources.Modules.Training.Scripts
 
         public void Disable()
         {
-            gameObject.SetActive(false);
-            Saver.EndTraining();
+            if (gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+                TrainingSaver.Instance.SaveData(new TrainingData
+                {
+                    IsTrained = true
+                });
+            }
         }
 
         private void EnableCurrentElement()

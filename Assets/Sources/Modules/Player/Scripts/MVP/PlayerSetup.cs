@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sources.Modules.Player.Scripts.MVP
 {
@@ -15,16 +14,8 @@ namespace Sources.Modules.Player.Scripts.MVP
         private PlayerView _view;
         private PlayerPresenter _presenter;
         private Mage _mage;
-        private PlayerModel _playerModel;
-        
-
-        public void Init(Mage mage)
-        {
-            _view = GetComponent<PlayerView>();
-            _mage = mage;
-            
-            SetDefault();
-        }
+        private PlayerData _data;
+        private PlayerModel _model;
 
         private void OnEnable()
         {
@@ -43,15 +34,45 @@ namespace Sources.Modules.Player.Scripts.MVP
 
             _presenter.Disable();
         }
-
-        private void SetDefault()
+        
+        public void Init(Mage mage)
         {
-            _playerModel = new (BaseMaxHealth,BaseSpeed,DamageScaler);
-            _presenter = new PlayerPresenter(_playerModel, _view);
+            _view = GetComponent<PlayerView>();
+            _mage = mage;
             
-            _playerMovement.SetSpeed(_playerModel.Speed);
-            _mage.SetMaxHealth(_playerModel.MaxHealth);
-            _mage.OnChangeDamageScaler(_playerModel.DamageScaler);
+            SetProperties();
+        }
+
+        public void SetDefault()
+        {
+            _data.Speed = BaseSpeed;
+            _data.DamageScaler = DamageScaler;
+            _data.MaxHealth = BaseMaxHealth;
+            
+            _model.SetNewProperties(_data.MaxHealth,_data.DamageScaler,_data.Speed);
+            
+            UpdateProperties();
+        }
+
+        private void SetProperties()
+        { 
+            _data = PlayerSaver.Instance.GetData();
+
+            if (_data is {Speed: >= BaseSpeed, MaxHealth: >= BaseMaxHealth, DamageScaler: >= DamageScaler})
+                _model = new (_data.MaxHealth, _data.Speed, _data.DamageScaler);
+            else
+                _model = new (BaseMaxHealth,BaseSpeed,DamageScaler);
+
+            _presenter = new PlayerPresenter(_model, _view);
+            
+            UpdateProperties();
+        }
+
+        private void UpdateProperties()
+        {
+            _playerMovement.SetSpeed(_model.Speed);
+            _mage.SetMaxHealth(_model.MaxHealth);
+            _mage.OnChangeDamageScaler(_model.DamageScaler);
         }
     }
 }

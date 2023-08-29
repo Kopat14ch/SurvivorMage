@@ -10,13 +10,15 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         
         private int _coins;
         private int _addCoins;
+        private readonly WalletData _walletData;
         
         public event Action<int> CoinsChanged; 
         public event Action<int, int> IncreaseChanged;
 
-        public WalletModel(int coins, int addCoins)
+        public WalletModel(int addCoins)
         {
-            _coins = Saver.GetWallet()?.Coins ?? coins;
+            _walletData = WalletSaver.Instance.GetData();
+            _coins = _walletData.Coins;
             _addCoins = Mathf.Clamp(addCoins, MinAddCoin, Int32.MaxValue);
         }
 
@@ -24,6 +26,14 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         {
             CoinsChanged?.Invoke(_coins);
             IncreaseChanged?.Invoke(_addCoins, IncreaseCoin);
+        }
+
+        public void Restart()
+        {
+            _coins = 0;
+            _addCoins = MinAddCoin;
+            Save();
+            CoinsChanged?.Invoke(_coins);
         }
         
         public void AddCoin(int value = -1)
@@ -33,7 +43,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             else
                 _coins += _addCoins;
 
-            Saver.SaveWallet(_coins);
+            Save();
             CoinsChanged?.Invoke(_coins);
         }
 
@@ -43,7 +53,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
                 return false;
 
             _coins -= price;
-            Saver.SaveWallet(_coins);
+            Save();
             CoinsChanged?.Invoke(_coins);
             return true;
         }
@@ -55,9 +65,15 @@ namespace Sources.Modules.Wallet.Scripts.MVP
 
             _coins -= price;
             _addCoins += IncreaseCoin;
-            Saver.SaveWallet(_coins);
+            Save();
             CoinsChanged?.Invoke(_coins);
             IncreaseChanged?.Invoke(_addCoins, IncreaseCoin);
+        }
+
+        private void Save()
+        {
+            _walletData.Coins = _coins;
+            WalletSaver.Instance.SaveData(_walletData);
         }
     }
 }

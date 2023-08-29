@@ -34,7 +34,6 @@ namespace Sources.Modules.Wave.Scripts
         private EnemyWaveConfig _enemyConfig;
         private List<EnemyUnit> _spawnedEnemies;
         private Dictionary<List<EnemyType>, int> _wave;
-        private List<EnemyUnit> _enemiesToSpawn;
         private WaveConfigs _waveConfigs;
         private WaveData _waveData;
 
@@ -48,31 +47,35 @@ namespace Sources.Modules.Wave.Scripts
             _wave = new Dictionary<List<EnemyType>, int>();
             _waveConfigs = new WaveConfigs();
             
-            Saver.Init(() =>
+            _waveData = WaveSaver.Instance.GetData() ?? new WaveData();
+            _waveCount = _waveData.WaveCount;
+            _waveIndex = _waveData.WaveIndex;
+
+            if (_waveData.MaxEnemySpawn < StartMaxEnemySpawn || _waveData.MinEnemySpawn < StartMinEnemySpawn)
             {
-                _waveData = Saver.GetWaveData() ?? new WaveData();
-                _waveCount = _waveData.WaveCount;
-                _waveIndex = _waveData.WaveIndex;
-                _enemiesToSpawn = _spawner.GetEnemiesToSpawn();
+                _minEnemySpawn = StartMinEnemySpawn;
+                _maxEnemySpawn = StartMaxEnemySpawn;
+            }
+            else
+            {
+                _minEnemySpawn = _waveData.MinEnemySpawn;
+                _maxEnemySpawn = _waveData.MaxEnemySpawn;
+            }
 
-                if (_waveData.MaxEnemySpawn < StartMaxEnemySpawn || _waveData.MinEnemySpawn < StartMinEnemySpawn)
-                {
-                    _minEnemySpawn = StartMinEnemySpawn;
-                    _maxEnemySpawn = StartMaxEnemySpawn;
-                }
-                else
-                {
-                    _minEnemySpawn = _waveData.MinEnemySpawn;
-                    _maxEnemySpawn = _waveData.MaxEnemySpawn;
-                }
-
-                WaveCountChanged?.Invoke(_waveCount);
-            });
+            WaveCountChanged?.Invoke(_waveCount);
         }
 
-        private void OnEnable() => _losePanel.Rewarded += RestartWave;
-        
-        private void OnDisable() => _losePanel.Rewarded -= RestartWave;
+        private void OnEnable()
+        {
+            _losePanel.Rewarded += Reload;
+            _losePanel.Restarted += Restart;
+        }
+
+        private void OnDisable()
+        {
+            _losePanel.Rewarded -= Reload;
+            _losePanel.Restarted -= Restart;
+        }
         
         public void StartWave()
         {
@@ -82,20 +85,29 @@ namespace Sources.Modules.Wave.Scripts
             StartWave(_wave);
         }
 
-        private void RestartWave()
+        private void Restart()
         {
-            foreach (var enemyUnit in _spawnedEnemies)
-            {
-                enemyUnit.gameObject.SetActive(false);
-                enemyUnit.Died -= OnUnitDied;
-            }
+            Disable();
             
-            _spawner.TryStopSpawning();
-            _spawnedEnemies = null;
-            _coinSpawner.DisableCoins();
+            _waveCount = 0;
+            _waveIndex = 0;
+            _minEnemySpawn = StartMinEnemySpawn;
+            _maxEnemySpawn = StartMaxEnemySpawn;
+            
+            WaveCountChanged?.Invoke(_waveCount);
+            WaveEnded?.Invoke();
+            
+            SaveAll();
+        }
+
+        private void Reload()
+        {
+            Disable();
             
             SetNewWave();
             StartWave(_wave);
+            
+            WaveEnded?.Invoke();
         }
 
         private void StartWave(Dictionary<List<EnemyType>, int> wave)
@@ -162,13 +174,26 @@ namespace Sources.Modules.Wave.Scripts
             WaveEnded?.Invoke();
         }
 
+        private void Disable()
+        {
+            foreach (var enemyUnit in _spawnedEnemies)
+            {
+                enemyUnit.gameObject.SetActive(false);
+                enemyUnit.Died -= OnUnitDied;
+            }
+            
+            _spawner.TryStopSpawning();
+            _spawnedEnemies = null;
+            _coinSpawner.DisableCoins();
+        }
+
         private void SaveAll()
         {
             _waveData.WaveCount = _waveCount;
             _waveData.WaveIndex = _waveIndex;
             _waveData.MinEnemySpawn = _minEnemySpawn;
             _waveData.MaxEnemySpawn = _maxEnemySpawn;
-            Saver.SaveWaveData(_waveData);
+            WaveSaver.Instance.SaveData(_waveData);
         }
     }
 }

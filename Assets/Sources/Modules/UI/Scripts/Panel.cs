@@ -23,11 +23,13 @@ namespace Sources.Modules.UI.Scripts
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _openButton;
         [SerializeField] private TrainingView _trainingView;
-
+        
         private bool _canClose = true;
         
         public event Action<Panel> Enabled;
         public event Action<Panel> Disabled;
+
+        public event Action DisabledWithoutPanel;
 
         public bool IsInGamePanel => _isInGamePanel;
         public bool IsEnabled => _isEnabled;
@@ -47,16 +49,6 @@ namespace Sources.Modules.UI.Scripts
             
             if (_openButton != null)
                 _openButton.onClick.AddListener(TurnOn);
-        }
-
-        private void OnRequestExitButtonDisable()
-        {
-            _canClose = false;
-        }
-
-        private void OnRequestExitButtonEnable()
-        {
-            _canClose = true;
         }
 
         private void OnDisable()
@@ -100,6 +92,7 @@ namespace Sources.Modules.UI.Scripts
                     _trainingView.EnableButton();
                     _trainingView.NextSlide();
                     HideCanvas();
+                    DisabledWithoutPanel?.Invoke();
                     Disabled?.Invoke(this);
                 }
             }
@@ -115,6 +108,15 @@ namespace Sources.Modules.UI.Scripts
             HideCanvas();
         }
 
+        private void OnRequestExitButtonDisable()
+        {
+            _canClose = false;
+        }
+
+        private void OnRequestExitButtonEnable()
+        {
+            _canClose = true;
+        }
         private void ShowCanvas()
         {
             _isEnabled = true;

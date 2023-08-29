@@ -38,18 +38,15 @@ namespace Sources.SurvivorMage.Scripts
             _finderCloseEnemy = GetComponent<FinderCloseEnemy>();
             _playerSound.Init(_soundContainer, _audioSourcePrefab);
             _mage.Init(_playerSound);
-            _playerSetup.Init(_mage);
-            _staff.Init(_finderCloseEnemy, _projectilesPool);
-            _spellsShop.Init(_staff);
-            _walletSetup.Init(_playerView, _spellsShop);
-        }
-
-        private void Start()
-        {
             _finderCloseEnemy.Init(_mage);
             _enemyPool.Init(_particleSpawner);
             _enemySpawner.Init(_enemyPool);
             _projectilesPool.Init(_particleSpawner);
+            _playerSetup.Init(_mage);
+            _staff.Init(_finderCloseEnemy, _projectilesPool);
+            _spellsShop.Init(_staff);
+            _walletSetup.Init(_playerView, _spellsShop);
+            
         }
     }
 }

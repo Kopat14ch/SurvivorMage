@@ -1,5 +1,6 @@
 using Sources.Modules.CoinFactory.Scripts;
 using Sources.Modules.Player.Scripts.MVP;
+using Sources.Modules.Player.Scripts.UI;
 using Sources.Modules.Workshop.Scripts;
 using Sources.Modules.Workshop.Scripts.UI;
 using UnityEngine;
@@ -11,8 +12,8 @@ namespace Sources.Modules.Wallet.Scripts.MVP
     {
         [SerializeField] private CoinSpawner _spawner;
         [SerializeField] private RewardCoin _rewardCoin;
-
-        private const int BaseCoins = 0;
+        [SerializeField] private LosePanel _losePanel;
+        
         private const int BaseIncrease = 0;
         
         private WalletView _view;
@@ -25,15 +26,26 @@ namespace Sources.Modules.Wallet.Scripts.MVP
         {
             _view = GetComponent<WalletView>();
             
-            Saver.Init(() =>
-            {
-                _model = new (BaseCoins, BaseIncrease);
-                _presenter = new (_model, _view, _spawner, playerView, spellsShop, _rewardCoin);
-            });
+            _model = new (BaseIncrease);
+            _presenter = new (_model, _view, _spawner, playerView, spellsShop, _rewardCoin);
+        }
+
+        private void OnEnable()
+        {
+            _presenter.Enable();
+            _losePanel.Restarted += OnRestarted;
+        }
+
+        private void OnDisable()
+        {
+            _losePanel.Restarted -= OnRestarted;
+            _presenter.Disable();
         }
         
-
-        private void OnEnable() => _presenter?.Enable();
-        private void OnDisable() => _presenter?.Disable();
+        private void OnRestarted()
+        {
+            _model.Restart();
+            _presenter.Restart();
+        }
     }
 }

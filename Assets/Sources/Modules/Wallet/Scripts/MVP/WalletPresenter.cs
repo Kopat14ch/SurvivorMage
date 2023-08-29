@@ -63,6 +63,13 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             _model.CoinsChanged -= OnCoinsChanged;
         }
 
+        public void Restart()
+        {
+            if (_coins.Count > 0) 
+                foreach (Coin coin in _coins) 
+                    coin.Taken -= OnCoinTaken;
+        }
+
         private void OnMaxHealthIncreasingButtonPressed(int price)
         {
             if (_model.TryBuy(price))

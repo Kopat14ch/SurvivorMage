@@ -1,4 +1,5 @@
 ﻿using System;
+using Sources.Modules.Player.Scripts.MVP;
 using Sources.Modules.UI.Scripts;
 using Sources.Modules.YandexSDK.Scripts;
 using UnityEngine;
@@ -11,13 +12,13 @@ namespace Sources.Modules.Player.Scripts.UI
     {
         [SerializeField] private YandexSdk _yandex;
         [SerializeField] private Mage _mage;
+        [SerializeField] private PlayerSetup _playerSetup;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _rewardButton;
         [SerializeField] private Panel _panel;
-        
-        private const string GameScene = nameof(GameScene);
 
         public event Action Rewarded;
+        public event Action Restarted;
 
         private void OnEnable()
         {
@@ -37,7 +38,8 @@ namespace Sources.Modules.Player.Scripts.UI
 
         private void OnRestartButtonClick()
         {
-            SceneManager.LoadScene(GameScene);
+            OnRestarted();
+            Restarted?.Invoke();
         }
 
         private void OnRewardButtonClick()
@@ -50,10 +52,22 @@ namespace Sources.Modules.Player.Scripts.UI
 
         private void OnRewarded()
         {
+            SetDefault();
+            Rewarded?.Invoke();
+        }
+
+        private void OnRestarted()
+        {
+            SetDefault();
+            _playerSetup.SetDefault();
+            Restarted?.Invoke();
+        }
+
+        private void SetDefault()
+        {
             _panel.TurnOff();
             _mage.UpdateCurrentHealth();
             _mage.SetStartPosition();
-            Rewarded?.Invoke();
         }
     }
 }

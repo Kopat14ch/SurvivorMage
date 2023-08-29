@@ -3,13 +3,12 @@ using System.Collections;
 using Agava.WebUtility;
 using Agava.YandexGames;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Sources.Modules.YandexSDK.Scripts
 {
     public class YandexInitialization : MonoBehaviour
     {
-        private const string GameScene = nameof(GameScene);
+        public event Action Initialized;
         
         private void Awake()
         {
@@ -37,8 +36,8 @@ namespace Sources.Modules.YandexSDK.Scripts
         
         private void OnInitialized()
         {
+            Initialized?.Invoke();
             InterstitialAd.Show(OnAdOpened, OnAdClosed);
-            SceneManager.LoadScene(GameScene);
         }
         
         private void OnAdOpened()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sources.Modules.UI.Scripts;
 using Sources.Modules.Weapons.Scripts;
 using Sources.Modules.Weapons.Scripts.Base;
 using TMPro;
@@ -14,6 +15,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
         [SerializeField] private TMP_Text _activeSpellsText;
         [SerializeField] private Color _activeSpellsAvailableColor;
         [SerializeField] private Color _activeSpellsEnoughColor;
+        [SerializeField] private Panel _workShopPanel;
 
         private Staff _staff;
         private SpellSlotDates _slotDates;
@@ -23,26 +25,17 @@ namespace Sources.Modules.Workshop.Scripts.UI
         public void Init(Staff staff)
         {
             _staff = staff;
-#if UNITY_EDITOR
-            InitSaved();
-            return;
-#endif
-            Saver.Init(InitSaved);
-        }
-
-        private void InitSaved()
-        {
-            _slotDates = Saver.GetSpells() ?? new SpellSlotDates()
+            
+            _slotDates = WorkShopSaver.Instance.GetData();
+            
+            _slotDates = new SpellSlotDates
             {
-                SlotDates = new List<SpellType>(),
-                ActiveSpells = new List<SpellType>()
+                ActiveSpells = new List<SpellType>(_slotDates.ActiveSpells),
+                SlotDates = new List<SpellType>(_slotDates.SlotDates)
             };
 
             foreach (SpellSlot slot in _spellSlots)
             {
-                slot.BuyButtonPressed += OnSlotBuyButtonPressed;
-                slot.EquipButtonPressed += OnEquipButtonPressed;
-                
                 foreach (var slotData in _slotDates.SlotDates)
                 {
                     if (slotData == slot.SpellType)
@@ -58,18 +51,38 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
                 if (slot.IsEquipped)
                 {
-                    AddActiveSpell(slot.SpellType);
+                    if (_slotDates.SlotDates.Contains(slot.SpellType) == false)
+                    {
+                        _slotDates.SlotDates.Add(slot.SpellType);
+                    }
+                    
+                    if (_slotDates.ActiveSpells.Contains(slot.SpellType) == false)
+                    {
+                        _slotDates.ActiveSpells.Add(slot.SpellType);
+                    }
                     _staff.AddSpellCaster(slot.SpellType);
                 }
             }
             
-            
+            Save();
             
             CheckSpellsLimit();
+        }
+        private void OnEnable()
+        {
+            _workShopPanel.DisabledWithoutPanel += TrySave;
+            
+            foreach (SpellSlot slot in _spellSlots)
+            {
+                slot.BuyButtonPressed += OnSlotBuyButtonPressed;
+                slot.EquipButtonPressed += OnEquipButtonPressed;
+            }
         }
 
         private void OnDisable()
         {
+            _workShopPanel.DisabledWithoutPanel -= TrySave;
+            
             foreach (SpellSlot slot in _spellSlots)
             {
                 slot.BuyButtonPressed -= OnSlotBuyButtonPressed;
@@ -98,6 +111,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
             RemoveActiveSpell(spellType);
             _staff.RemoveSpellCaster(spellType);
             spellSlot.UnequipSpell();
+
             CheckSpellsLimit();
         }
         
@@ -110,10 +124,54 @@ namespace Sources.Modules.Workshop.Scripts.UI
                     spellSlot.BuySpell();
 
                     _slotDates.SlotDates.Add(spellSlot.SpellType);
-                    
-                    Saver.SaveSpells(_slotDates);
+
+                    Save();
                 }
             }
+        }
+
+        private void TrySave()
+        {
+            bool canSave = _slotDates.ActiveSpells.Count != WorkShopSaver.Instance.GetData().ActiveSpells.Count;
+
+            if (canSave == false)
+            {
+                if(WorkShopSaver.Instance.GetData().ActiveSpells.Count > 0)
+                {
+                    foreach (var spellType in WorkShopSaver.Instance.GetData().ActiveSpells)
+                    {
+                        if (_slotDates.ActiveSpells.Contains(spellType) == false)
+                        {
+                            canSave = true;
+                            break;
+                        }
+                    }
+                }
+                else if (_slotDates.ActiveSpells.Count > 0)
+                {
+                    canSave = true;
+                }
+            }
+
+            if (canSave == false)
+            {
+                foreach (var spellType in _slotDates.SlotDates)
+                {
+                    if (WorkShopSaver.Instance.GetData().SlotDates.Contains(spellType) == false)
+                    {
+                        canSave = true;
+                        break;
+                    }
+                }
+            }
+
+            if (canSave)
+                WorkShopSaver.Instance.SaveData(_slotDates);
+        }
+
+        private void Save()
+        {
+            WorkShopSaver.Instance.SaveData(_slotDates);
         }
 
         private void CheckSpellsLimit()
@@ -149,13 +207,11 @@ namespace Sources.Modules.Workshop.Scripts.UI
         private void AddActiveSpell(SpellType spell)
         {
             _slotDates.ActiveSpells.Add(spell);
-            Saver.SaveSpells(_slotDates);
         }
 
         private void RemoveActiveSpell(SpellType spell)
         {
             _slotDates.ActiveSpells.Remove(spell);
-            Saver.SaveSpells(_slotDates);
         }
 
         private void OnSlotBuyButtonPressed(int price, SpellSlot slot) => SlotBuyButtonPressed?.Invoke(price, slot);

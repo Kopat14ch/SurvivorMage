@@ -2,7 +2,8 @@
     "name": "Training",
     "rootNamespace": "",
     "references": [
-        "GUID:ef7e0e3eb213f324c87b70a782844fb6"
+        "GUID:ef7e0e3eb213f324c87b70a782844fb6",
+        "GUID:dd54c311aca11134bb260add876b2d09"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

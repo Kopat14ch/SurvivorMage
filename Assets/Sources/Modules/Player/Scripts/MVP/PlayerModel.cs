@@ -7,7 +7,7 @@ namespace Sources.Modules.Player.Scripts.MVP
         private const float MaxHealthIncreaseValue = 5f;
         private const float DamageScalerIncreaseValue = 0.1f;
         private const float SpeedIncreaseValue = 0.1f;
-        private PlayerData _playerData;
+        private readonly PlayerData _playerData;
 
         public event Action<float, float> MaxHealthChanged;
         public event Action<float, float> DamageScalerChanged;
@@ -23,17 +23,23 @@ namespace Sources.Modules.Player.Scripts.MVP
             Speed = speed;
             DamageScaler = damageScaler;
             
-            Saver.Init(() =>
+            _playerData = PlayerSaver.Instance.GetData() ?? new PlayerData
             {
-                _playerData = Saver.GetPlayerData() ?? new PlayerData
-                {
-                    MaxHealth = maxHealth,
-                    Speed = speed,
-                    DamageScaler = damageScaler
-                };
+                MaxHealth = maxHealth,
+                Speed = speed,
+                DamageScaler = damageScaler
+            };
             
-                Saver.SaveData(_playerData);
-            });
+            PlayerSaver.Instance.SaveData(_playerData);
+        }
+
+        public void SetNewProperties(float maxHealth, float damageScaler, float speed)
+        {
+            MaxHealth = maxHealth;
+            DamageScaler = damageScaler;
+            Speed = speed;
+            
+            PlayerSaver.Instance.SaveData(_playerData);
         }
 
         public void InvokeAll()
@@ -49,7 +55,7 @@ namespace Sources.Modules.Player.Scripts.MVP
             MaxHealthChanged?.Invoke(MaxHealth, MaxHealthIncreaseValue);
             
             _playerData.MaxHealth = MaxHealth;
-            Saver.SaveData(_playerData);
+            PlayerSaver.Instance.SaveData(_playerData);
         }
 
         public void AddDamageScaler()
@@ -58,7 +64,7 @@ namespace Sources.Modules.Player.Scripts.MVP
             DamageScalerChanged?.Invoke(DamageScaler, DamageScalerIncreaseValue);
             
             _playerData.DamageScaler = DamageScaler;
-            Saver.SaveData(_playerData);
+            PlayerSaver.Instance.SaveData(_playerData);
         }
         
         public void TryAddSpeed()
@@ -67,7 +73,7 @@ namespace Sources.Modules.Player.Scripts.MVP
             SpeedChanged?.Invoke(Speed, SpeedIncreaseValue);
             _playerData.Speed = Speed;
             
-            Saver.SaveData(_playerData);
+            PlayerSaver.Instance.SaveData(_playerData);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Sources.Modules.Workshop.Scripts
     {
         [SerializeField] private WaveGenerator _waveGenerator;
         [SerializeField] private WaveStartWaveUI _waveStartWaveUI;
-        [SerializeField] private TrainingView _trainingView;
 
         private bool _isWave = false;
         private bool _isPlayerIn = false;
