@@ -45,6 +45,10 @@ namespace Sources.Modules.Initialization
 
         private void Load(string json)
         {
+            #if !UNITY_WEBGL || UNITY_EDITOR
+            OnLoaded?.Invoke();
+            #endif
+            
             _allDates = JsonUtility.FromJson<AllDates>(json);
             _wave.Init(_allDates.Wave);
             _workShop.Init(_allDates.WorkShop);
@@ -84,6 +88,10 @@ namespace Sources.Modules.Initialization
 
         private void Save()
         {
+            #if !UNITY_WEBGL || UNITY_EDITOR
+            return;
+            #endif
+            
             PlayerAccount.SetCloudSaveData(JsonUtility.ToJson(_allDates));
         }
     }
