@@ -14,7 +14,7 @@ namespace Sources.Modules.EnemyFactory.Scripts
         [SerializeField] private List<SpawnPoint> _spawnPoints;
         [SerializeField] private Transform _playerPosition;
 
-        private const float ObstacleCheckRadius = 3f;
+        private const float ObstacleCheckRadius = 4f;
         private const float SpawningCooldown = 1f;
         private const float GetNewPositionCoolDown = 0.1f;
         private const int MaxColliders = 500;
