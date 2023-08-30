@@ -1,4 +1,5 @@
 using System.Collections;
+using Agava.WebUtility;
 using Sources.Modules.Common;
 using Sources.Modules.Player.Scripts.Animation;
 using Sources.Modules.Training.Scripts;
@@ -28,6 +29,7 @@ namespace Sources.Modules.Player.Scripts
         private Vector2 _moveDirectionPhone;
         private Coroutine _moveWork;
         private Coroutine _idleWork;
+        private bool _isMobile;
 
         private bool CanMovePhone => _joystick.Direction.magnitude > MinMoveDirection && _isHolding;
         private bool CanMovePc => _moveDirectionPc.magnitude > MinMoveDirection;
@@ -39,23 +41,38 @@ namespace Sources.Modules.Player.Scripts
             _flipper = GetComponent<Flipper>();
             _animator = GetComponent<Animator>();
 
+#if UNITY_EDITOR
             _playerInput.Player.Move.performed += ctx => OnMove();
-            _playerInput.Player.MoveHold.performed += ctx => OnMove();
+            _joystick.gameObject.SetActive(false);
+            StartIdle();
+            return;
+#endif
+            _isMobile = Device.IsMobile;
             
-            _playerInput.Player.MoveHold.started += ctx =>
+            if (_isMobile)
             {
-                if (ctx.interaction is HoldInteraction)
+                _playerInput.Player.MoveHold.performed += ctx => OnMove();
+                _playerInput.Player.MoveHold.started += ctx =>
                 {
-                    _isHolding = true;
-                }
-            };
-            _playerInput.Player.MoveHold.canceled += ctx =>
+                    if (ctx.interaction is HoldInteraction)
+                    {
+                        _isHolding = true;
+                    }
+                };
+                _playerInput.Player.MoveHold.canceled += ctx =>
+                {
+                    if (ctx.interaction is HoldInteraction)
+                    {
+                        _isHolding = false;
+                    }
+                };
+            }
+            else
             {
-                if (ctx.interaction is HoldInteraction)
-                {
-                    _isHolding = false;
-                }
-            };
+                _joystick.gameObject.SetActive(false);
+                _playerInput.Player.Move.performed += ctx => OnMove();
+            }
+            
             StartIdle();
         }
 
@@ -80,22 +97,34 @@ namespace Sources.Modules.Player.Scripts
         
         private void OnRequestEnableInput()
         {
-            _playerInput.Enable();
-            _joystick.gameObject.SetActive(true);
+            if (_isMobile)
+            {
+                _joystick.gameObject.SetActive(true);
+            }
+            else
+            {
+                _playerInput.Enable();
+            }
         }
         
         private void OnRequestDisableInput()
         {
-            _playerInput.Disable();
-            _joystick.gameObject.SetActive(false);
+            if (_isMobile)
+            {
+                _joystick.gameObject.SetActive(false);
+            }
+            else
+            {
+                _playerInput.Disable();
+            }
         }
 
         private void OnMove()
         {
             if (_moveWork != null)
                 StopCoroutine(_moveWork);
-            
-            _moveWork = StartCoroutine(PcMove());
+
+            _moveWork = StartCoroutine(_isMobile ? MobileMove() : PcMove());
         }
 
         private IEnumerator PcMove()
@@ -136,15 +165,15 @@ namespace Sources.Modules.Player.Scripts
             }
 
             _rigidbody2D.velocity = Vector2.zero;
-            StartIdle(false);
+            StartIdle();
         }
 
-        private void StartIdle(bool isPc = true)
+        private void StartIdle()
         {
             if (_idleWork != null)
                 StopCoroutine(_idleWork);
             
-            _idleWork = StartCoroutine(isPc ? IdlePc() : IdlePhone());
+            _idleWork = StartCoroutine(_isMobile ? IdlePhone() : IdlePc());
         }
         
         private IEnumerator IdlePhone()
