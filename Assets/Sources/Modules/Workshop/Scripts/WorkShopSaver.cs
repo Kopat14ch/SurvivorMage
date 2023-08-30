@@ -37,6 +37,10 @@ namespace Sources.Modules.Workshop.Scripts
         
         public override void SaveData(SpellSlotDates data)
         {
+#if UNITY_EDITOR
+            return;
+#endif
+            
             MyData = new SpellSlotDates()
             {
                 ActiveSpells = new List<SpellType>(data.ActiveSpells),

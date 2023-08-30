@@ -23,6 +23,13 @@ namespace Sources.Modules.Initialization
 
         public void Init(Action onLoaded)
         {
+#if UNITY_EDITOR
+            s_instance = this;
+            Load(JsonUtility.ToJson("popka"));
+            onLoaded.Invoke();
+            return;
+#endif
+            
             if (s_instance == null)
             {
                 TryLoad();
@@ -45,10 +52,6 @@ namespace Sources.Modules.Initialization
 
         private void Load(string json)
         {
-            #if !UNITY_WEBGL || UNITY_EDITOR
-            OnLoaded?.Invoke();
-            #endif
-            
             _allDates = JsonUtility.FromJson<AllDates>(json);
             _wave.Init(_allDates.Wave);
             _workShop.Init(_allDates.WorkShop);

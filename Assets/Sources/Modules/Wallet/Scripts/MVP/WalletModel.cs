@@ -17,7 +17,10 @@ namespace Sources.Modules.Wallet.Scripts.MVP
 
         public WalletModel(int addCoins)
         {
-            _walletData = WalletSaver.Instance.GetData();
+            _walletData = WalletSaver.Instance.GetData() ?? new WalletData()
+            {
+                Coins = 0
+            };
             _coins = _walletData.Coins;
             _addCoins = Mathf.Clamp(addCoins, MinAddCoin, Int32.MaxValue);
         }

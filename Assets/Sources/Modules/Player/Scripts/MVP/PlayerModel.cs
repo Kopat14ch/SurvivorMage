@@ -23,14 +23,14 @@ namespace Sources.Modules.Player.Scripts.MVP
             Speed = speed;
             DamageScaler = damageScaler;
             
-            _playerData = PlayerSaver.Instance.GetData() ?? new PlayerData
+            _playerData = PlayerSaver.Instance?.GetData() ?? new PlayerData
             {
                 MaxHealth = maxHealth,
                 Speed = speed,
                 DamageScaler = damageScaler
             };
             
-            PlayerSaver.Instance.SaveData(_playerData);
+            PlayerSaver.Instance?.SaveData(_playerData);
         }
 
         public void SetNewProperties(float maxHealth, float damageScaler, float speed)

@@ -26,13 +26,12 @@ namespace Sources.Modules.Workshop.Scripts.UI
         {
             _staff = staff;
             
-            _slotDates = WorkShopSaver.Instance.GetData();
-            
-            _slotDates = new SpellSlotDates
+            _slotDates = WorkShopSaver.Instance.GetData() ?? new SpellSlotDates
             {
-                ActiveSpells = new List<SpellType>(_slotDates.ActiveSpells),
-                SlotDates = new List<SpellType>(_slotDates.SlotDates)
+                ActiveSpells = new List<SpellType>(),
+                SlotDates = new List<SpellType>()
             };
+            
 
             foreach (SpellSlot slot in _spellSlots)
             {
@@ -132,13 +131,19 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         private void TrySave()
         {
-            bool canSave = _slotDates.ActiveSpells.Count != WorkShopSaver.Instance.GetData().ActiveSpells.Count;
+            SpellSlotDates workShopSaverData = WorkShopSaver.Instance.GetData() ?? new SpellSlotDates
+            {
+                ActiveSpells = new List<SpellType>(),
+                SlotDates = new List<SpellType>()
+            };
+            
+            bool canSave = _slotDates.ActiveSpells.Count != workShopSaverData.ActiveSpells.Count;
 
             if (canSave == false)
             {
-                if(WorkShopSaver.Instance.GetData().ActiveSpells.Count > 0)
+                if(workShopSaverData.ActiveSpells.Count > 0)
                 {
-                    foreach (var spellType in WorkShopSaver.Instance.GetData().ActiveSpells)
+                    foreach (var spellType in workShopSaverData.ActiveSpells)
                     {
                         if (_slotDates.ActiveSpells.Contains(spellType) == false)
                         {
@@ -157,7 +162,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
             {
                 foreach (var spellType in _slotDates.SlotDates)
                 {
-                    if (WorkShopSaver.Instance.GetData().SlotDates.Contains(spellType) == false)
+                    if (workShopSaverData.SlotDates.Contains(spellType) == false)
                     {
                         canSave = true;
                         break;
@@ -166,7 +171,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
             }
 
             if (canSave)
-                WorkShopSaver.Instance.SaveData(_slotDates);
+                Save();
         }
 
         private void Save()

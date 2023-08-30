@@ -21,7 +21,7 @@ namespace Sources.Modules.Training.Scripts
 
         private void Start()
         {
-            if (TrainingSaver.Instance.GetData().IsTrained)
+            if (TrainingSaver.Instance.GetData()?.IsTrained ?? false)
             {
                 gameObject.SetActive(false);
             }

@@ -56,7 +56,7 @@ namespace Sources.Modules.Player.Scripts.MVP
 
         private void SetProperties()
         { 
-            _data = PlayerSaver.Instance.GetData();
+            _data = PlayerSaver.Instance?.GetData() ?? new PlayerData();
 
             if (_data is {Speed: >= BaseSpeed, MaxHealth: >= BaseMaxHealth, DamageScaler: >= DamageScaler})
                 _model = new (_data.MaxHealth, _data.Speed, _data.DamageScaler);

@@ -12,6 +12,10 @@ namespace Sources.Modules.YandexSDK.Scripts
         
         private void Awake()
         {
+#if UNITY_EDITOR
+            return;
+#endif
+            
             YandexGamesSdk.CallbackLogging = true;
         }
         
@@ -23,6 +27,7 @@ namespace Sources.Modules.YandexSDK.Scripts
         private IEnumerator Start()
         {
             #if !UNITY_WEBGL || UNITY_EDITOR
+            Initialized?.Invoke();
             yield break;
             #endif
 
@@ -31,7 +36,7 @@ namespace Sources.Modules.YandexSDK.Scripts
         
         private void OnDisable()
         {
-            WebApplication.InBackgroundChangeEvent -= OnInBackgroundChange;
+            //WebApplication.InBackgroundChangeEvent -= OnInBackgroundChange;
         }
         
         private void OnInitialized()
