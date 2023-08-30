@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 13
-  _maxHealth: 0.8
+  _maxHealth: 0.9
   _destinationSetter: {fileID: 8143390584236590701}
   _diedType: 9
 --- !u!114 &2048458872966939314
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11abe583a684434caf101ce1482fadf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0.6
+  _damage: 1.5
   _cooldown: 1
 --- !u!70 &7765023724417458078
 CapsuleCollider2D:

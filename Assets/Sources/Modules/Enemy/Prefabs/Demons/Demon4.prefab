@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 4
-  _cooldown: 1
+  _cooldown: 0.8
 --- !u!70 &9080485657008339062
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
