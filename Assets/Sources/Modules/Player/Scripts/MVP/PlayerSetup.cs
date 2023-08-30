@@ -49,20 +49,23 @@ namespace Sources.Modules.Player.Scripts.MVP
             _data.DamageScaler = DamageScaler;
             _data.MaxHealth = BaseMaxHealth;
             
-            _model.SetNewProperties(_data.MaxHealth,_data.DamageScaler,_data.Speed);
+            _model.SetNewProperties(BaseMaxHealth,DamageScaler,BaseSpeed);
             
             UpdateProperties();
         }
 
         private void SetProperties()
-        { 
-            _data = PlayerSaver.Instance?.GetData() ?? new PlayerData();
+        {
+            _data = PlayerSaver.Instance.GetData() ?? new PlayerData();
 
-            if (_data is {Speed: >= BaseSpeed, MaxHealth: >= BaseMaxHealth, DamageScaler: >= DamageScaler})
-                _model = new (_data.MaxHealth, _data.Speed, _data.DamageScaler);
-            else
-                _model = new (BaseMaxHealth,BaseSpeed,DamageScaler);
-
+            if (_data is {Speed: < BaseSpeed, MaxHealth: < BaseMaxHealth, DamageScaler: < DamageScaler})
+            {
+                _data.Speed = BaseSpeed;
+                _data.DamageScaler = DamageScaler;
+                _data.MaxHealth = BaseMaxHealth;
+            }
+            
+            _model = new (_data.MaxHealth, _data.Speed, _data.DamageScaler);
             _presenter = new PlayerPresenter(_model, _view);
             
             UpdateProperties();
