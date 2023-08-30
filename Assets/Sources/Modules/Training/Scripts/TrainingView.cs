@@ -11,6 +11,7 @@ namespace Sources.Modules.Training.Scripts
 
         private int _currentSlideIndex = 1;
         private int _elementIndex = 0;
+        private bool _isTrained;
 
         public event Action RequestNextButtonEnable;
         public event Action RequestNextButtonDisable;
@@ -21,7 +22,9 @@ namespace Sources.Modules.Training.Scripts
 
         private void Start()
         {
-            if (TrainingSaver.Instance.GetData()?.IsTrained ?? false)
+            _isTrained = TrainingSaver.Instance.GetData()?.IsTrained ?? false;
+            
+            if (_isTrained)
             {
                 gameObject.SetActive(false);
             }
@@ -36,6 +39,9 @@ namespace Sources.Modules.Training.Scripts
 
         public void NextSlide()
         {
+            if (_isTrained)
+                return;
+            
             if (_currentSlideIndex >= _trainingUis.Length)
             {
                 Disable();
@@ -91,6 +97,9 @@ namespace Sources.Modules.Training.Scripts
 
         public void TryNextSlide()
         {
+            if (_isTrained)
+                return;
+            
             if ((int)TrainingObjects.GoToShop == _currentSlideIndex - 1)
                 NextSlide();
         }
@@ -114,6 +123,9 @@ namespace Sources.Modules.Training.Scripts
 
         private void EnableCurrentElement()
         {
+            if (_isTrained)
+                return;
+
             _uiElementsToEnable[_elementIndex].Enable();
             _elementIndex++;
         }
