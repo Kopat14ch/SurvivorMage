@@ -22,15 +22,9 @@ namespace Sources.Modules.Player.Scripts.MVP
             MaxHealth = maxHealth;
             Speed = speed;
             DamageScaler = damageScaler;
-            
-            _playerData = PlayerSaver.Instance?.GetData() ?? new PlayerData
-            {
-                MaxHealth = maxHealth,
-                Speed = speed,
-                DamageScaler = damageScaler
-            };
-            
-            PlayerSaver.Instance?.SaveData(_playerData);
+            _playerData = new PlayerData();
+
+            SaveAll();
         }
 
         public void SetNewProperties(float maxHealth, float damageScaler, float speed)
@@ -38,6 +32,8 @@ namespace Sources.Modules.Player.Scripts.MVP
             MaxHealth = maxHealth;
             DamageScaler = damageScaler;
             Speed = speed;
+
+            SaveAll();
             
             PlayerSaver.Instance.SaveData(_playerData);
         }
@@ -74,6 +70,13 @@ namespace Sources.Modules.Player.Scripts.MVP
             _playerData.Speed = Speed;
             
             PlayerSaver.Instance.SaveData(_playerData);
+        }
+
+        private void SaveAll()
+        {
+            _playerData.Speed = Speed;
+            _playerData.DamageScaler = DamageScaler;
+            _playerData.MaxHealth = MaxHealth;
         }
     }
 }
