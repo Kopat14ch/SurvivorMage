@@ -16,9 +16,11 @@ namespace Sources.Modules.EnemyFactory.Scripts
 
         private const float ObstacleCheckRadius = 3f;
         private const float SpawningCooldown = 1f;
+        private const float GetNewPositionCoolDown = 0.1f;
+        private const int MaxColliders = 500;
 
         private int _collidersCount;
-        private Collider2D[] _collidersBuffer = new Collider2D[150];
+        private Collider2D[] _collidersBuffer = new Collider2D[MaxColliders];
         private EnemyPool _enemyPool;
         private List<EnemyUnit> _currentUnits;
         private List<EnemyUnit> _allWaveUnits;
@@ -62,13 +64,12 @@ namespace Sources.Modules.EnemyFactory.Scripts
                 StopCoroutine(_spawningWork);
         }
 
-        public List<EnemyUnit> GetEnemiesToSpawn() => _enemyPool.GetPrefabs();
-
         public List<EnemyUnit> GetEnemies() => _allWaveUnits.GetRange(0, _allWaveUnits.Count);
 
         private IEnumerator Spawning()
         {
-            WaitForSeconds waitForSeconds = new (SpawningCooldown);
+            WaitForSeconds spawnCooldown = new (SpawningCooldown);
+            WaitForSeconds changePositionCooldown = new (GetNewPositionCoolDown);
 
             foreach (var enemyUnit in _allWaveUnits)
             {
@@ -88,18 +89,16 @@ namespace Sources.Modules.EnemyFactory.Scripts
 
                             _collidersCount = Physics2D.OverlapCircleNonAlloc(enemyUnit.transform.position, ObstacleCheckRadius, _collidersBuffer);
                             inObstacle = _collidersBuffer[i] != enemyUnit.Collider2D && _collidersBuffer[i].TryGetComponent(out Obstacle _);
-
-                            yield return waitForSeconds;
+                            yield return changePositionCooldown;
                         }
                         break;
                     }
                 }
-                
+
                 enemyUnit.gameObject.SetActive(true);
 
-                yield return waitForSeconds;
+                yield return spawnCooldown;
             }
-            
         }
     }
 }

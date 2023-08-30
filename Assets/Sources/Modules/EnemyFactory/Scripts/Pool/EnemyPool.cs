@@ -47,8 +47,6 @@ namespace Sources.Modules.EnemyFactory.Scripts.Pool
             }
         }
 
-        public List<EnemyUnit> GetPrefabs() => Prefabs.GetRange(0, Prefabs.Count);
-
         public List<EnemyUnit> GetObjects(EnemyType enemyType, int unitCount)
         {
             List<EnemyUnit> units = new List<EnemyUnit>();
