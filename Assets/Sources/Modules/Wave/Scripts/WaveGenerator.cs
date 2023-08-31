@@ -94,7 +94,7 @@ namespace Sources.Modules.Wave.Scripts
             Disable();
             
             _waveCount = StartWaveCount;
-            _waveIndex = StartMinEnemySpawn;
+            _waveIndex = StartWaveIndex;
             _minEnemySpawn = StartMinEnemySpawn;
             _maxEnemySpawn = StartMaxEnemySpawn;
             
@@ -107,10 +107,8 @@ namespace Sources.Modules.Wave.Scripts
         private void Reload()
         {
             Disable();
-            
-            SetNewWave();
-            StartWave(_wave);
-            
+
+            WaveCountChanged?.Invoke(_waveCount);
             WaveEnded?.Invoke();
         }
 

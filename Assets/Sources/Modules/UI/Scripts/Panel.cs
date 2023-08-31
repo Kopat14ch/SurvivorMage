@@ -99,6 +99,7 @@ namespace Sources.Modules.UI.Scripts
             else
             {
                 HideCanvas();
+                DisabledWithoutPanel?.Invoke();
                 Disabled?.Invoke(this);
             }
         }

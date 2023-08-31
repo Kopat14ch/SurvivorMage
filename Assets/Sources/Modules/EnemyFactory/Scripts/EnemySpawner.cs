@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Sources.Modules.Common;
 using Sources.Modules.Enemy;
 using Sources.Modules.EnemyFactory.Scripts.Pool;
@@ -14,13 +13,13 @@ namespace Sources.Modules.EnemyFactory.Scripts
         [SerializeField] private List<SpawnPoint> _spawnPoints;
         [SerializeField] private Transform _playerPosition;
 
-        private const float ObstacleCheckRadius = 4f;
+        private const float ObstacleCheckRadius = 2f;
         private const float SpawningCooldown = 1f;
         private const float GetNewPositionCoolDown = 0.1f;
-        private const int MaxColliders = 500;
+        private const int MaxColliders = 450;
 
         private int _collidersCount;
-        private Collider2D[] _collidersBuffer = new Collider2D[MaxColliders];
+        private readonly Collider2D[] _collidersBuffer = new Collider2D[MaxColliders];
         private EnemyPool _enemyPool;
         private List<EnemyUnit> _currentUnits;
         private List<EnemyUnit> _allWaveUnits;
@@ -91,7 +90,6 @@ namespace Sources.Modules.EnemyFactory.Scripts
                             inObstacle = _collidersBuffer[i] != enemyUnit.Collider2D && _collidersBuffer[i].TryGetComponent(out Obstacle _);
                             yield return changePositionCooldown;
                         }
-                        break;
                     }
                 }
 

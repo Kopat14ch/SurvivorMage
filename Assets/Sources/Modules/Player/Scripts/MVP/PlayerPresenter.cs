@@ -1,4 +1,5 @@
 ﻿using System;
+using Sources.Modules.Player.Scripts.UI;
 
 namespace Sources.Modules.Player.Scripts.MVP
 {
@@ -6,22 +7,25 @@ namespace Sources.Modules.Player.Scripts.MVP
     {
         private readonly PlayerModel _model;
         private readonly PlayerView _view;
+        private readonly LosePanel _losePanel;
 
         public event Action<float> MaxHealthChanged;
         public event Action<float> DamageScalerChanged;
         public event Action<float> SpeedChanged;
 
-        public PlayerPresenter(PlayerModel model, PlayerView view)
+        public PlayerPresenter(PlayerModel model, PlayerView view, LosePanel losePanel)
         {
             _model = model;
             _view = view;
+            _losePanel = losePanel;
         }
 
         public void Enable()
         {
             ViewEnable();
             ModelEnable();
-            
+
+            _losePanel.Rewarded += OnRewardedView;
             _model.InvokeAll();
         }
 
@@ -29,6 +33,7 @@ namespace Sources.Modules.Player.Scripts.MVP
         {
             ViewDisable();
             ModelDisable();
+            _losePanel.Rewarded -= OnRewardedView;
         }
 
         private void OnMaxHealthIncreasingButtonPressed(int price)
@@ -75,6 +80,7 @@ namespace Sources.Modules.Player.Scripts.MVP
             _model.MaxHealthChanged += OnMaxHealthChanged;
             _model.DamageScalerChanged += OnDamageScalerChanged;
             _model.SpeedChanged += OnSpeedChanged;
+            _model.CanRewardChanged += OnRewardedChanged;
         }
 
         private void ModelDisable()
@@ -82,7 +88,12 @@ namespace Sources.Modules.Player.Scripts.MVP
             _model.MaxHealthChanged -= OnMaxHealthChanged;
             _model.DamageScalerChanged -= OnDamageScalerChanged;
             _model.SpeedChanged -= OnSpeedChanged;
+            _model.CanRewardChanged -= OnRewardedChanged;
         }
+
+        private void OnRewardedChanged(bool value) => _losePanel.OnRewardedChanged(value);
+
+        private void OnRewardedView() => _model.RewardedViewed();
         
         private void OnMaxHealthIncreasingBought() => _model.AddMaxHealth();
         private void OnDamageScalerIncreasingBought() => _model.AddDamageScaler();

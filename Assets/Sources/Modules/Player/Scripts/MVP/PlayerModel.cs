@@ -9,22 +9,27 @@ namespace Sources.Modules.Player.Scripts.MVP
         private const float SpeedIncreaseValue = 0.1f;
         private readonly PlayerData _playerData;
 
+        public bool CanRewarded;
+
         public event Action<float, float> MaxHealthChanged;
         public event Action<float, float> DamageScalerChanged;
         public event Action<float, float> SpeedChanged;
-        
+        public event Action<bool> CanRewardChanged;
+
         public float MaxHealth { get; private set; }
         public float DamageScaler { get; private set; }
         public float Speed { get; private set; }
 
-        public PlayerModel(float maxHealth, float speed, float damageScaler)
+        public PlayerModel(float maxHealth, float speed, float damageScaler, bool canRewarded)
         {
             MaxHealth = maxHealth;
             Speed = speed;
             DamageScaler = damageScaler;
             _playerData = new PlayerData();
+            CanRewarded = canRewarded;
 
             SaveAll();
+            CanRewardChanged?.Invoke(CanRewarded);
         }
 
         public void SetNewProperties(float maxHealth, float damageScaler, float speed)
@@ -32,7 +37,10 @@ namespace Sources.Modules.Player.Scripts.MVP
             MaxHealth = maxHealth;
             DamageScaler = damageScaler;
             Speed = speed;
-
+            CanRewarded = true;
+            _playerData.CanReward = CanRewarded;
+            CanRewardChanged?.Invoke(CanRewarded);
+            
             SaveAll();
             
             PlayerSaver.Instance.SaveData(_playerData);
@@ -43,6 +51,7 @@ namespace Sources.Modules.Player.Scripts.MVP
             MaxHealthChanged?.Invoke(MaxHealth, MaxHealthIncreaseValue);
             DamageScalerChanged?.Invoke(DamageScaler, DamageScalerIncreaseValue);
             SpeedChanged?.Invoke(Speed, SpeedIncreaseValue);
+            CanRewardChanged?.Invoke(CanRewarded);
         }
 
         public void AddMaxHealth()
@@ -72,11 +81,21 @@ namespace Sources.Modules.Player.Scripts.MVP
             PlayerSaver.Instance.SaveData(_playerData);
         }
 
+        public void RewardedViewed()
+        {
+            CanRewarded = false;
+            _playerData.CanReward = CanRewarded;
+            
+            CanRewardChanged?.Invoke(CanRewarded);
+            PlayerSaver.Instance.SaveData(_playerData);
+        }
+
         private void SaveAll()
         {
             _playerData.Speed = Speed;
             _playerData.DamageScaler = DamageScaler;
             _playerData.MaxHealth = MaxHealth;
+            _playerData.CanReward = CanRewarded;
         }
     }
 }

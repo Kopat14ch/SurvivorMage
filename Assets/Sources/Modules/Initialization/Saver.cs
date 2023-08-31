@@ -2,6 +2,7 @@
 using Agava.YandexGames;
 using Sources.Modules.Player.Scripts;
 using Sources.Modules.Training.Scripts;
+using Sources.Modules.UI.Scripts;
 using Sources.Modules.Wallet.Scripts;
 using Sources.Modules.Wave.Scripts;
 using Sources.Modules.Workshop.Scripts;
@@ -17,6 +18,7 @@ namespace Sources.Modules.Initialization
         private WalletSaver _wallet = new();
         private TrainingSaver _training = new();
         private PlayerSaver _player = new();
+        private VolumeSaver _volume = new();
         
         private AllDates _allDates;
         private event Action OnLoaded;
@@ -25,7 +27,7 @@ namespace Sources.Modules.Initialization
         {
 #if UNITY_EDITOR
             s_instance = this;
-            Load(JsonUtility.ToJson("popka"));
+            Load(JsonUtility.ToJson("Test"));
             onLoaded.Invoke();
             return;
 #endif
@@ -41,6 +43,7 @@ namespace Sources.Modules.Initialization
                 _wallet.RequestSave += OnRequestSave;
                 _training.RequestSave += OnRequestSave;
                 _player.RequestSave += OnRequestSave;
+                _volume.RequestSave += OnRequestSave;
             }
             else
             {
@@ -58,6 +61,7 @@ namespace Sources.Modules.Initialization
             _wallet.Init(_allDates.Wallet);
             _training.Init(_allDates.Training);
             _player.Init(_allDates.Player);
+            _volume.Init(_allDates.Volume);
             
             OnLoaded?.Invoke();
         }
@@ -84,6 +88,10 @@ namespace Sources.Modules.Initialization
                     break;
                 case PlayerData playerData:
                     _allDates.Player = playerData;
+                    Save();
+                    break;
+                case VolumeData volumeData:
+                    _allDates.Volume = volumeData;
                     Save();
                     break;
             }

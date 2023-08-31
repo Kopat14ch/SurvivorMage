@@ -3,7 +3,6 @@ using Sources.Modules.Player.Scripts.MVP;
 using Sources.Modules.UI.Scripts;
 using Sources.Modules.YandexSDK.Scripts;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Sources.Modules.Player.Scripts.UI
@@ -16,6 +15,7 @@ namespace Sources.Modules.Player.Scripts.UI
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _rewardButton;
         [SerializeField] private Panel _panel;
+        [SerializeField] private GameObject _parentReward;
 
         public event Action Rewarded;
         public event Action Restarted;
@@ -23,7 +23,7 @@ namespace Sources.Modules.Player.Scripts.UI
         private void OnEnable()
         {
             _mage.Died += _panel.TurnOn;
-            
+
             _restartButton.onClick.AddListener(OnRestartButtonClick);
             _rewardButton.onClick.AddListener(OnRewardButtonClick);
         }
@@ -34,6 +34,11 @@ namespace Sources.Modules.Player.Scripts.UI
             
             _restartButton.onClick.RemoveListener(OnRestartButtonClick);
             _rewardButton.onClick.RemoveListener(OnRewardButtonClick);
+        }
+
+        public void OnRewardedChanged(bool value)
+        {
+            _parentReward.SetActive(value);
         }
 
         private void OnRestartButtonClick()

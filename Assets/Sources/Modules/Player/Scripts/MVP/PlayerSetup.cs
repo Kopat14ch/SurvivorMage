@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sources.Modules.Player.Scripts.UI;
+using UnityEngine;
 
 namespace Sources.Modules.Player.Scripts.MVP
 {
@@ -6,6 +7,7 @@ namespace Sources.Modules.Player.Scripts.MVP
     public class PlayerSetup : MonoBehaviour
     {
         [SerializeField] private PlayerMovement _playerMovement;
+        [SerializeField] private LosePanel _losePanel;
 
         private const float BaseMaxHealth = 10;
         private const float BaseSpeed = 6.8f;
@@ -63,10 +65,11 @@ namespace Sources.Modules.Player.Scripts.MVP
                 _data.Speed = BaseSpeed;
                 _data.DamageScaler = DamageScaler;
                 _data.MaxHealth = BaseMaxHealth;
+                _data.CanReward = true;
             }
             
-            _model = new (_data.MaxHealth, _data.Speed, _data.DamageScaler);
-            _presenter = new PlayerPresenter(_model, _view);
+            _model = new (_data.MaxHealth, _data.Speed, _data.DamageScaler, _data.CanReward);
+            _presenter = new PlayerPresenter(_model, _view, _losePanel);
             
             UpdateProperties();
         }

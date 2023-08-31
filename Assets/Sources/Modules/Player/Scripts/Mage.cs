@@ -1,7 +1,6 @@
 ﻿using System;
 using Sources.Modules.Particles.Scripts;
 using Sources.Modules.Player.Scripts.Animation;
-using Sources.Modules.Player.Scripts.UI;
 using UnityEngine;
 
 namespace Sources.Modules.Player.Scripts
@@ -41,7 +40,7 @@ namespace Sources.Modules.Player.Scripts
             MaxHealthIncreased?.Invoke(_maxHealth);
             HealthChanged?.Invoke(_currentHealth);
         }
-
+        
         public void TryTakeDamage(float damage)
         {
             if (damage > 0 && _currentHealth > 0)

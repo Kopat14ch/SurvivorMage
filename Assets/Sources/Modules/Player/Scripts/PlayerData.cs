@@ -8,5 +8,6 @@ namespace Sources.Modules.Player.Scripts
         public float MaxHealth;
         public float DamageScaler;
         public float Speed;
+        public bool CanReward;
     }
 }
