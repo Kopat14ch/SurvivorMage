@@ -13,13 +13,10 @@ namespace Sources.Modules.EnemyFactory.Scripts
         [SerializeField] private List<SpawnPoint> _spawnPoints;
         [SerializeField] private Transform _playerPosition;
 
-        private const float ObstacleCheckRadius = 2f;
+        private const float ObstacleCheckRadius = 2.5f;
         private const float SpawningCooldown = 1f;
-        private const float GetNewPositionCoolDown = 0.1f;
-        private const int MaxColliders = 450;
 
-        private int _collidersCount;
-        private readonly Collider2D[] _collidersBuffer = new Collider2D[MaxColliders];
+        private int _collidersCount; 
         private EnemyPool _enemyPool;
         private List<EnemyUnit> _currentUnits;
         private List<EnemyUnit> _allWaveUnits;
@@ -68,30 +65,32 @@ namespace Sources.Modules.EnemyFactory.Scripts
         private IEnumerator Spawning()
         {
             WaitForSeconds spawnCooldown = new (SpawningCooldown);
-            WaitForSeconds changePositionCooldown = new (GetNewPositionCoolDown);
 
             foreach (var enemyUnit in _allWaveUnits)
             {
-                enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
+                Collider2D enemyCollider = enemyUnit.Collider2D;
+                bool inObstacle = false;
                 
-                _collidersCount = Physics2D.OverlapCircleNonAlloc(enemyUnit.transform.position, ObstacleCheckRadius, _collidersBuffer);
-
-                for (int i = 0; i < _collidersCount; i++)
+                do
                 {
-                    bool inObstacle = _collidersBuffer[i] != enemyUnit.Collider2D && _collidersBuffer[i].TryGetComponent(out Obstacle _);
-                    
-                    if (inObstacle)
-                    {
-                        while (inObstacle)
-                        {
-                            enemyUnit.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
+                    Vector3 newPosition = _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
+                    enemyUnit.transform.position = newPosition;
 
-                            _collidersCount = Physics2D.OverlapCircleNonAlloc(enemyUnit.transform.position, ObstacleCheckRadius, _collidersBuffer);
-                            inObstacle = _collidersBuffer[i] != enemyUnit.Collider2D && _collidersBuffer[i].TryGetComponent(out Obstacle _);
-                            yield return changePositionCooldown;
-                        }
+                    Collider2D[] colliders = Physics2D.OverlapCircleAll(newPosition, ObstacleCheckRadius);
+                    
+                    foreach (var collider in colliders)
+                    {
+                        inObstacle = collider != enemyCollider && collider.TryGetComponent(out Obstacle _);
+                        
+                        if (inObstacle) 
+                            break;
+                        
+                        yield return null;
                     }
-                }
+
+                    yield return null;
+
+                } while (inObstacle);
 
                 enemyUnit.gameObject.SetActive(true);
 

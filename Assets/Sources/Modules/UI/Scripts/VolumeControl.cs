@@ -93,7 +93,7 @@ namespace Sources.Modules.UI.Scripts
 
         private void TrySave()
         {
-            VolumeData tempData = VolumeSaver.Instance.GetData();
+            VolumeData tempData = VolumeSaver.Instance.GetData() ?? new VolumeData();
 
             bool canSave = _volumeData.MusicVolume != tempData.MusicVolume
                            || _volumeData.SoundVolume != tempData.SoundVolume

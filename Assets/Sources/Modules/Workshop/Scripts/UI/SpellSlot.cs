@@ -30,7 +30,6 @@ namespace Sources.Modules.Workshop.Scripts.UI
         public event Action<SpellType, SpellSlot> EquipButtonPressed;
 
         public SpellType SpellType => _spellCasterType;
-        public bool IsBought => _isBought;
         public bool IsEquipped => _isEquipped;
         
         private void Awake()
@@ -69,7 +68,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
             TryChangeEquipStatus();
         }
         
-        public void UnequipSpell()
+        public void UnEquipSpell()
         {
             _isEquipped = false;
             TryChangeEquipStatus();

@@ -109,7 +109,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
         {
             RemoveActiveSpell(spellType);
             _staff.RemoveSpellCaster(spellType);
-            spellSlot.UnequipSpell();
+            spellSlot.UnEquipSpell();
 
             CheckSpellsLimit();
         }
@@ -123,7 +123,13 @@ namespace Sources.Modules.Workshop.Scripts.UI
                     spellSlot.BuySpell();
 
                     _slotDates.SlotDates.Add(spellSlot.SpellType);
-
+                    
+                    if (_staff.ActiveSpellsCount < _activeSpellsLimit)
+                    {
+                        EquipSpell(spellSlot.SpellType, spellSlot);
+                        _slotDates.ActiveSpells.Add(spellSlot.SpellType);
+                    }
+                    
                     Save();
                 }
             }

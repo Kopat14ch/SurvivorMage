@@ -34,6 +34,14 @@ namespace Sources.Modules.Training.Scripts
             }
         }
 
+        private void OnEnable()
+        {
+            foreach (var trainingUI in _trainingUis)
+            {
+                trainingUI.CloseButton.RequestClose += OnRequestClose;
+            }
+        }
+
         public void NextSlide()
         {
             if (_currentSlideIndex >= _trainingUis.Length)
@@ -110,6 +118,17 @@ namespace Sources.Modules.Training.Scripts
                     IsTrained = true
                 });
             }
+        }
+
+        private void OnRequestClose()
+        {
+            RequestEnableInput?.Invoke();
+            RequestExitButtonEnable?.Invoke();
+
+            foreach (var uiElement in _uiElementsToEnable)
+                uiElement.Enable();
+
+            Disable();
         }
 
         private void EnableCurrentElement()

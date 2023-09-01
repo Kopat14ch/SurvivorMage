@@ -136,7 +136,6 @@ namespace Sources.Modules.Player.Scripts
             {
                 _rigidbody2D.velocity = _speed * _moveDirectionPc;
                 _flipper.TryFlip(_rigidbody2D.velocity.x);
-
                 SetMoveDirectionPc();
 
                 yield return null;
