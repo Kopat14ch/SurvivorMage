@@ -21,7 +21,7 @@ namespace Sources.Modules.Wallet.Scripts.MVP
             {
                 Coins = 0
             };
-            _coins = 555;
+            _coins = _walletData.Coins;
             _addCoins = Mathf.Clamp(addCoins, MinAddCoin, Int32.MaxValue);
         }
 
