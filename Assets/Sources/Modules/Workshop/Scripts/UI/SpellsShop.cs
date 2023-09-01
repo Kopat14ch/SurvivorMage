@@ -31,38 +31,42 @@ namespace Sources.Modules.Workshop.Scripts.UI
                 ActiveSpells = new List<SpellType>(),
                 SlotDates = new List<SpellType>()
             };
-            
 
             foreach (SpellSlot slot in _spellSlots)
             {
-                foreach (var slotData in _slotDates.SlotDates)
+                if (_slotDates.SlotDates.Contains(slot.SpellType))
                 {
-                    if (slotData == slot.SpellType)
+                    slot.BuySpell();
+                    
+                    if (_slotDates.ActiveSpells.Contains(slot.SpellType))
                     {
-                        slot.BuySpell();
-
-                        if (_slotDates.ActiveSpells.Contains(slotData))
-                        {
-                            slot.EquipSpell();
-                        }
+                        EquipSpell(slot.SpellType, slot);
                     }
                 }
+            }
 
-                if (slot.IsEquipped)
+            foreach (SpellSlot slot in _spellSlots)
+            {
+                if (slot.IsEquipped && staff.ActiveSpellsCount < _activeSpellsLimit)
                 {
                     if (_slotDates.SlotDates.Contains(slot.SpellType) == false)
                     {
                         _slotDates.SlotDates.Add(slot.SpellType);
                     }
-                    
+
                     if (_slotDates.ActiveSpells.Contains(slot.SpellType) == false)
                     {
                         _slotDates.ActiveSpells.Add(slot.SpellType);
                     }
+                    
                     _staff.AddSpellCaster(slot.SpellType);
                 }
+                else if(slot.IsEquipped && _slotDates.ActiveSpells.Contains(slot.SpellType) == false)
+                {
+                    slot.UnEquipSpell();
+                }
             }
-            
+
             Save();
             
             CheckSpellsLimit();
@@ -92,14 +96,19 @@ namespace Sources.Modules.Workshop.Scripts.UI
         private void OnEquipButtonPressed(SpellType spellType, SpellSlot spellSlot)
         {
             if (spellSlot.IsEquipped == false)
+            {
                 EquipSpell(spellType, spellSlot);
+                AddActiveSpell(spellType);
+            }
             else
+            {
                 UnEquipSpell(spellType, spellSlot);
+                RemoveActiveSpell(spellType);
+            }
         }
 
         private void EquipSpell(SpellType spellType, SpellSlot spellSlot)
         {
-            AddActiveSpell(spellType);
             _staff.AddSpellCaster(spellType);
             spellSlot.EquipSpell();
             CheckSpellsLimit();
@@ -107,7 +116,6 @@ namespace Sources.Modules.Workshop.Scripts.UI
 
         private void UnEquipSpell(SpellType spellType, SpellSlot spellSlot)
         {
-            RemoveActiveSpell(spellType);
             _staff.RemoveSpellCaster(spellType);
             spellSlot.UnEquipSpell();
 
@@ -127,7 +135,7 @@ namespace Sources.Modules.Workshop.Scripts.UI
                     if (_staff.ActiveSpellsCount < _activeSpellsLimit)
                     {
                         EquipSpell(spellSlot.SpellType, spellSlot);
-                        _slotDates.ActiveSpells.Add(spellSlot.SpellType);
+                        AddActiveSpell(spellSlot.SpellType);
                     }
                     
                     Save();

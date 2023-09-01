@@ -44,6 +44,9 @@ namespace Sources.Modules.Training.Scripts
 
         public void NextSlide()
         {
+            if (TrainingSaver.Instance.GetData()?.IsTrained ?? false)
+                return;
+
             if (_currentSlideIndex >= _trainingUis.Length)
             {
                 Disable();
@@ -90,8 +93,7 @@ namespace Sources.Modules.Training.Scripts
 
                 _trainingUis[_currentSlideIndex - 1].gameObject.SetActive(false);
             }
-
-
+            
             _trainingUis[_currentSlideIndex].gameObject.SetActive(true);
             _currentSlideIndex++;
         }
@@ -99,6 +101,9 @@ namespace Sources.Modules.Training.Scripts
 
         public void TryNextSlide()
         {
+            if (TrainingSaver.Instance.GetData()?.IsTrained ?? false)
+                return;
+            
             if ((int)TrainingObjects.GoToShop == _currentSlideIndex - 1)
                 NextSlide();
         }
@@ -122,6 +127,9 @@ namespace Sources.Modules.Training.Scripts
 
         private void OnRequestClose()
         {
+            if (TrainingSaver.Instance.GetData()?.IsTrained ?? false)
+                return;
+
             RequestEnableInput?.Invoke();
             RequestExitButtonEnable?.Invoke();
 

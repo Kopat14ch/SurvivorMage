@@ -146,7 +146,7 @@ namespace Sources.Modules.UI.Scripts
             if (_isPausePanel)
                 _time.PanelPlay();
 
-            if (_canShowInterstitial == false)
+            if (_canShowInterstitial == false && _isWorkshop)
                 _canShowInterstitial = true;
             else if (_yandex.IsInitialized && _isWorkshop)
                 _yandex.ShowInterstitial();
