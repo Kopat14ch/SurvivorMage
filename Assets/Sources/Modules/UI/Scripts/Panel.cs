@@ -25,6 +25,7 @@ namespace Sources.Modules.UI.Scripts
         [SerializeField] private TrainingView _trainingView;
         
         private bool _canClose = true;
+        private bool _canShowInterstitial;
         
         public event Action<Panel> Enabled;
         public event Action<Panel> Disabled;
@@ -144,8 +145,10 @@ namespace Sources.Modules.UI.Scripts
             
             if (_isPausePanel)
                 _time.PanelPlay();
-            
-            if (_yandex.IsInitialized && _isWorkshop)
+
+            if (_canShowInterstitial == false)
+                _canShowInterstitial = true;
+            else if (_yandex.IsInitialized && _isWorkshop)
                 _yandex.ShowInterstitial();
             
             if (_yandex.IsInitialized && _isLeaderboard && PlayerAccount.IsAuthorized)
