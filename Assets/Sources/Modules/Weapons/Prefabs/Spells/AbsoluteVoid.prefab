@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _timeToDestroy: 6
-  DistanceToLaunch: 10
+  DistanceToLaunch: 11
   _baseDamage: 2
   _spellType: 7
   _damagedParticle: 24
